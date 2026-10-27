@@ -46,7 +46,7 @@ class Piskeeconnector extends Module
     {
         $this->name = 'piskeeconnector';
         $this->tab = 'administration';
-        $this->version = '2.2.0';
+        $this->version = '2.3.0';
         $this->author = 'Piskee';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -54,14 +54,10 @@ class Piskeeconnector extends Module
 
         parent::__construct();
 
-        $fr = isset($this->context->language) && Tools::strtolower((string) $this->context->language->iso_code) === 'fr';
-        $this->displayName = $fr ? 'Piskee, l\'assistant IA de votre boutique (compatible Claude)' : 'Piskee, the AI assistant for your shop (works with Claude)';
-        $this->description = $fr
-            ? 'Pilotez votre boutique avec Claude : catalogue, déclinaisons, images, stocks, vente croisée, service client et thème enfant. Redirections 301 avec Piskee Pro. Module indépendant, non officiel.'
-            : 'Run your shop with Claude: catalogue, combinations, images, stock, cross-selling, customer service and child theme. 301 redirects with Piskee Pro. Independent, unofficial module.';
-        $this->confirmUninstall = $fr
-            ? 'Tous les assistants connectés seront déconnectés. Continuer ?'
-            : 'Every connected assistant will be disconnected. Continue?';
+        $texts = PiskeeConnectorI18n::module(PiskeeConnectorI18n::lang(isset($this->context->language) ? (string) $this->context->language->iso_code : 'en'));
+        $this->displayName = $texts['display_name'];
+        $this->description = $texts['description'];
+        $this->confirmUninstall = $texts['confirm_uninstall'];
     }
 
     public function install(): bool
@@ -178,7 +174,7 @@ class Piskeeconnector extends Module
             $groups[$info['group']]['label'] = PiskeeConnectorI18n::groupLabel($info['group'], $lang);
             $groups[$info['group']]['tools'][] = [
                 'name' => $name,
-                'title' => PiskeeConnectorI18n::toolTitle($name, $lang),
+                'title' => is_array($info['title']) ? PiskeeConnectorI18n::pick($info['title'], $lang, $name) : PiskeeConnectorI18n::toolTitle($name, $lang),
                 'writes' => $info['writes'],
             ];
         }
@@ -190,7 +186,7 @@ class Piskeeconnector extends Module
         }
 
         $docs = [];
-        foreach (['fr' => 'docs/README.fr.md', 'en' => 'docs/README.en.md'] as $code => $file) {
+        foreach (PiskeeConnectorI18n::docFiles() as $code => $file) {
             $docs[$code] = is_file(__DIR__ . '/' . $file) ? $this->markdown((string) file_get_contents(__DIR__ . '/' . $file)) : '';
         }
 
@@ -199,7 +195,9 @@ class Piskeeconnector extends Module
             'pk' => [
                 't' => $t,
                 'lang' => $lang,
-                'switch_url' => $this->pageUrl(['pklang' => $lang === 'fr' ? 'en' : 'fr']),
+                'switch_url' => $this->pageUrl(['pklang' => PiskeeConnectorI18n::switchTarget($lang)]),
+                'lang_urls' => $this->langUrls(),
+                'lang_names' => PiskeeConnectorI18n::languages(),
                 'action_url' => $this->pageUrl([]),
                 'token' => $this->csrfToken(),
                 'notice' => $notice,
@@ -220,8 +218,8 @@ class Piskeeconnector extends Module
                     'used' => $used,
                     'allowance' => PiskeeConnectorLicense::FREE_MONTHLY_WRITES,
                     'percent' => min(100, (int) round($used * 100 / PiskeeConnectorLicense::FREE_MONTHLY_WRITES)),
-                    'price' => $lang === 'fr' ? PiskeeConnectorLicense::PRO_PRICE : PiskeeConnectorLicense::PRO_PRICE_EN,
-                    'onboarding' => $lang === 'fr' ? PiskeeConnectorLicense::ONBOARDING_PRICE : PiskeeConnectorLicense::ONBOARDING_PRICE_EN,
+                    'price' => PiskeeConnectorI18n::price($lang),
+                    'onboarding' => PiskeeConnectorI18n::onboardingPrice($lang),
                 ],
                 'docs' => $docs,
                 'logo' => $this->_path . 'views/img/piskee-white.png',
@@ -239,8 +237,10 @@ class Piskeeconnector extends Module
             ],
         ]);
 
-        $this->context->controller->addCSS($this->_path . 'views/css/admin.css?v=' . $this->version);
-        $this->context->controller->addJS($this->_path . 'views/js/admin.js?v=' . $this->version);
+        // PrestaShop 1.7 checks the file on disk with its query string, so the version is added on 8 and later only.
+        $bust = version_compare(_PS_VERSION_, '8.0.0', '>=') ? '?v=' . $this->version : '';
+        $this->context->controller->addCSS($this->_path . 'views/css/admin.css' . $bust);
+        $this->context->controller->addJS($this->_path . 'views/js/admin.js' . $bust);
 
         return $this->display(__FILE__, 'views/templates/admin/configure.tpl');
     }
@@ -453,17 +453,30 @@ class Piskeeconnector extends Module
         return defined('_PS_ADMIN_DIR_') ? basename(_PS_ADMIN_DIR_) : (string) Configuration::get('PISKEECONNECTOR_ADMIN_DIR');
     }
 
+    /**
+     * @return array<string, string>
+     */
+    private function langUrls(): array
+    {
+        $out = [];
+        foreach (PiskeeConnectorI18n::LANGS as $code) {
+            $out[$code] = $this->pageUrl(['pklang' => $code]);
+        }
+
+        return $out;
+    }
+
     private function uiLang(): string
     {
         $forced = (string) Tools::getValue('pklang', '');
-        if (in_array($forced, ['fr', 'en'], true)) {
+        if (PiskeeConnectorI18n::isSupported($forced)) {
             $this->context->cookie->__set('piskee_lang', $forced);
             $this->context->cookie->write();
 
             return $forced;
         }
         $saved = (string) $this->context->cookie->__get('piskee_lang');
-        if (in_array($saved, ['fr', 'en'], true)) {
+        if (PiskeeConnectorI18n::isSupported($saved)) {
             return $saved;
         }
 

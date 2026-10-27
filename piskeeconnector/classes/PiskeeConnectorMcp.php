@@ -266,24 +266,22 @@ class PiskeeConnectorMcp
      */
     public static function prompts(string $lang): array
     {
-        $fr = $lang === 'fr';
-
         return [
             'daily-brief' => [
-                'title' => $fr ? 'Point du jour' : 'Daily brief',
-                'description' => $fr ? 'Ventes, stocks bas et messages clients en attente, en un seul point.' : 'Sales, low stock and pending customer messages in one brief.',
+                'title' => PiskeeConnectorI18n::promptText('daily-brief', 'title', $lang),
+                'description' => PiskeeConnectorI18n::promptText('daily-brief', 'description', $lang),
                 'scopes' => ['sales.read', 'catalog.read', 'service.read'],
                 'arguments' => [],
             ],
             'catalog-optimisation' => [
-                'title' => $fr ? 'Optimiser le catalogue' : 'Optimise the catalogue',
-                'description' => $fr ? 'Audit du catalogue puis corrections SEO et GEO priorisées, produit par produit.' : 'Catalogue audit, then prioritised SEO and GEO fixes, product by product.',
+                'title' => PiskeeConnectorI18n::promptText('catalog-optimisation', 'title', $lang),
+                'description' => PiskeeConnectorI18n::promptText('catalog-optimisation', 'description', $lang),
                 'scopes' => ['catalog.read', 'catalog.write'],
-                'arguments' => [['name' => 'focus', 'description' => $fr ? 'Ce qui compte le plus (ex. : une catégorie)' : 'What matters most (e.g. one category)', 'required' => false]],
+                'arguments' => [['name' => 'focus', 'description' => PiskeeConnectorI18n::promptText('catalog-optimisation', 'arg.focus', $lang), 'required' => false]],
             ],
             'theme-headings-breadcrumb' => [
-                'title' => $fr ? 'Nettoyer les Hn et poser un fil d\'Ariane' : 'Clean headings and add a breadcrumb',
-                'description' => $fr ? 'Audit des balises Hn et du fil d\'Ariane, corrections dans un thème enfant brouillon.' : 'Audit of headings and breadcrumb, fixes in a draft child theme.',
+                'title' => PiskeeConnectorI18n::promptText('theme-headings-breadcrumb', 'title', $lang),
+                'description' => PiskeeConnectorI18n::promptText('theme-headings-breadcrumb', 'description', $lang),
                 'scopes' => ['theme.read', 'theme.write'],
                 'arguments' => [],
             ],

@@ -20,7 +20,10 @@
 <p align="center">
   <a href="https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest"><strong>⬇ Download the module</strong></a> ·
   <a href="#set-up-in-5-minutes">Set up in 5 minutes</a> ·
-  <a href="#-en-français">Français</a>
+  <a href="#-en-français">Français</a> ·
+  <a href="#-en-español">Español</a> ·
+  <a href="#-in-italiano">Italiano</a> ·
+  <a href="#-po-polsku">Polski</a>
 </p>
 
 ---
@@ -108,7 +111,7 @@ Then type `/mcp` to sign in.
 | All 60 tools | ✓ | ✓ |
 | Reading, searches, audits | Unlimited | Unlimited |
 | Changes | 100 per month | **Unlimited** |
-| 301 redirect management, with an auto redirect when a URL changes | — | Coming soon |
+| 301 redirects: managed by Claude or in bulk, automatic when a product, category or page URL changes or is deleted, 404 follow-up | — | ✓ |
 | Scheduled rules (stock alerts, weekly report) | — | Coming soon |
 | GEO content fields, `llms.txt`, AI product feed | — | Coming soon |
 | Credit slips and returns, multistore with an audit log | — | Coming soon |
@@ -177,6 +180,9 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 - 🇬🇧 [Full documentation](piskeeconnector/docs/README.en.md)
 - 🇫🇷 [Documentation complète](piskeeconnector/docs/README.fr.md)
+- 🇪🇸 [Documentación completa](piskeeconnector/docs/README.es.md)
+- 🇮🇹 [Documentazione completa](piskeeconnector/docs/README.it.md)
+- 🇵🇱 [Pełna dokumentacja](piskeeconnector/docs/README.pl.md)
 - [Changelog](CHANGELOG.md)
 
 ---
@@ -199,6 +205,75 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 **Envie qu'on le fasse avec vous ?**
 - Session d'onboarding à 300 € HT.
 - Audit SEO & GEO gratuit en 48 h.
+
+[piskee.com/contact](https://www.piskee.com/contact/) · louisalexandre@piskee.com · WhatsApp +33 7 69 15 39 92
+
+---
+
+## 🇪🇸 En español
+
+**Gestiona tu tienda PrestaShop hablando con Claude.** Describes el resultado, por ejemplo «reescribe las meta descriptions de la categoría Vestidos», «crea las tallas S a XL» o «¿qué pedidos están esperando un número de seguimiento?». Claude hace los clics en tu back office, con tus permisos y después de tu aprobación.
+
+- **60 herramientas:** catálogo, SEO, traducciones, combinaciones, stock, imágenes, venta cruzada, pedidos, atención al cliente, CMS y tema hijo.
+- **Sin riesgos:**
+  - apruebas cada modificación;
+  - el tema publicado nunca se toca: Claude trabaja en un borrador que publicas con un clic;
+  - todo se guarda en copias de seguridad;
+  - ningún dato pasa por Piskee.
+- **Instalación en 5 minutos:** sin módulos ni cuenta PrestaShop adicionales. Compatible con **PrestaShop 1.7.6 a 9**, PHP 7.2 o superior.
+- **Gratis** hasta 100 modificaciones al mes. **Pro ilimitado** por 29 € + IVA al mes, precio garantizado de por vida para los 100 primeros clientes, sin permanencia.
+
+[⬇ Descargar el módulo](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Documentación en español](piskeeconnector/docs/README.es.md)
+
+**¿Prefieres que lo hagamos contigo?**
+- Sesión de puesta en marcha por 300 € + IVA.
+- Auditoría SEO y GEO gratuita en 48 h.
+
+[piskee.com/contact](https://www.piskee.com/contact/) · louisalexandre@piskee.com · WhatsApp +33 7 69 15 39 92
+
+---
+
+## 🇮🇹 In italiano
+
+**Gestisci il tuo negozio PrestaShop parlando con Claude.** Descrivi il risultato, per esempio «riscrivi le meta description della categoria Abiti», «crea le taglie dalla S alla XL» o «quali ordini aspettano ancora un numero di tracciamento?». Claude fa i clic nel tuo back office, con i tuoi permessi, dopo la tua approvazione.
+
+- **60 strumenti:** catalogo, SEO, traduzioni, combinazioni, giacenze, immagini, vendita incrociata, ordini, assistenza clienti, CMS e tema figlio.
+- **Senza rischi:**
+  - approvi ogni modifica;
+  - il tema online non viene mai toccato: Claude lavora su una bozza che metti online con un clic;
+  - tutto viene salvato in un backup;
+  - nessun dato passa da Piskee.
+- **Installazione in 5 minuti:** nessun modulo né account PrestaShop aggiuntivo. Compatibile con **PrestaShop dalla 1.7.6 alla 9**, PHP 7.2 o successivo.
+- **Gratis** fino a 100 modifiche al mese. **Pro illimitato** a 29 € + IVA al mese, prezzo garantito a vita per i primi 100 clienti, senza vincoli.
+
+[⬇ Scarica il modulo](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Documentazione in italiano](piskeeconnector/docs/README.it.md)
+
+**Preferisci che lo facciamo insieme?**
+- Sessione di avvio a 300 € + IVA.
+- Audit SEO e GEO gratuito in 48 h.
+
+[piskee.com/contact](https://www.piskee.com/contact/) · louisalexandre@piskee.com · WhatsApp +33 7 69 15 39 92
+
+---
+
+## 🇵🇱 Po polsku
+
+**Zarządzaj sklepem PrestaShop, rozmawiając z Claude.** Opisujesz efekt, na przykład „przepisz meta opisy kategorii Sukienki”, „utwórz rozmiary od S do XL” albo „które zamówienia czekają na numer przesyłki?”. Claude wykonuje kliknięcia w Twoim panelu administracyjnym, z Twoimi uprawnieniami, po Twojej akceptacji.
+
+- **60 narzędzi:** katalog, SEO, tłumaczenia, kombinacje, stany magazynowe, zdjęcia, sprzedaż krzyżowa, zamówienia, obsługa klienta, CMS i motyw potomny.
+- **Bez ryzyka:**
+  - akceptujesz każdą zmianę;
+  - opublikowany motyw nigdy nie jest zmieniany: Claude pracuje na szkicu, który publikujesz jednym kliknięciem;
+  - wszystko trafia do kopii zapasowej;
+  - żadne dane nie przechodzą przez Piskee.
+- **Instalacja w 5 minut:** bez dodatkowych modułów i bez konta PrestaShop. Działa z **PrestaShop od 1.7.6 do 9**, PHP 7.2 lub nowszym.
+- **Za darmo** do 100 zmian miesięcznie. **Pro bez limitu** za 29 € netto miesięcznie, cena gwarantowana dożywotnio dla pierwszych 100 klientów, bez zobowiązań.
+
+[⬇ Pobierz moduł](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Dokumentacja po polsku](piskeeconnector/docs/README.pl.md)
+
+**Wolisz, żebyśmy zrobili to razem z Tobą?**
+- Sesja wdrożeniowa za 300 € netto.
+- Bezpłatny audyt SEO i GEO w 48 h.
 
 [piskee.com/contact](https://www.piskee.com/contact/) · louisalexandre@piskee.com · WhatsApp +33 7 69 15 39 92
 

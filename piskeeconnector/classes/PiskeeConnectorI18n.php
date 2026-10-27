@@ -13,130 +13,554 @@ if (!defined('_PS_VERSION_')) {
 }
 
 /**
- * French and English texts shown to the merchant. Everything read by the
- * assistant (tool descriptions) stays in English in PiskeeConnectorTools.
+ * Texts shown to the merchant, in French, English, Spanish, Italian and
+ * Polish. Any text missing in a language falls back to English. Everything
+ * read by the assistant (tool descriptions) stays in English in
+ * PiskeeConnectorTools.
  */
 class PiskeeConnectorI18n
 {
+    /** Languages of the merchant interface, in display order. */
+    public const LANGS = ['fr', 'en', 'es', 'it', 'pl'];
+
+    /** Language used when a text is missing in the requested one. */
+    public const FALLBACK = 'en';
+
+    /**
+     * PrestaShop language iso codes mapped to an interface language.
+     * mx, ag and cb are the iso codes PrestaShop gives to Spanish (Mexico),
+     * Spanish (Argentina) and Spanish (Colombia). Note that "ar" is Arabic.
+     */
+    private const ISO_MAP = [
+        'fr' => 'fr',
+        'en' => 'en',
+        'gb' => 'en',
+        'es' => 'es',
+        'mx' => 'es',
+        'ag' => 'es',
+        'cb' => 'es',
+        'it' => 'it',
+        'pl' => 'pl',
+    ];
+
+    private const LANGUAGE_NAMES = [
+        'fr' => 'Français',
+        'en' => 'English',
+        'es' => 'Español',
+        'it' => 'Italiano',
+        'pl' => 'Polski',
+    ];
+
     private const TOOL_TITLES = [
-        'shop_info' => ['Informations de la boutique', 'Shop information'],
-        'search_products' => ['Rechercher des produits', 'Search products'],
-        'get_product' => ['Lire un produit', 'Read a product'],
-        'update_product' => ['Modifier un produit', 'Update a product'],
-        'create_product' => ['Créer un produit', 'Create a product'],
-        'set_stock' => ['Modifier le stock', 'Set stock'],
-        'list_categories' => ['Lister les catégories', 'List categories'],
-        'get_category' => ['Lire une catégorie', 'Read a category'],
-        'update_category' => ['Modifier une catégorie', 'Update a category'],
-        'set_product_categories' => ['Classer un produit', 'Set product categories'],
-        'list_combinations' => ['Lister les déclinaisons', 'List combinations'],
-        'list_attribute_groups' => ['Lister les attributs', 'List attributes'],
-        'create_attribute_group' => ['Créer un attribut', 'Create an attribute group'],
-        'create_attribute_value' => ['Créer une valeur d\'attribut', 'Create an attribute value'],
-        'create_combinations' => ['Créer des déclinaisons', 'Create combinations'],
-        'update_combination' => ['Modifier une déclinaison', 'Update a combination'],
-        'list_product_images' => ['Lister les images', 'List images'],
-        'add_product_image_from_url' => ['Ajouter une image', 'Add an image'],
-        'update_product_image' => ['Modifier une image (alt, couverture)', 'Update an image (alt, cover)'],
-        'optimize_product_images' => ['Redimensionner les images', 'Resize images'],
-        'list_features' => ['Lister les caractéristiques', 'List features'],
-        'create_feature' => ['Créer une caractéristique', 'Create a feature'],
-        'set_product_feature' => ['Renseigner une caractéristique', 'Set a product feature'],
-        'list_brands' => ['Lister les marques', 'List brands'],
-        'set_related_products' => ['Produits associés', 'Related products'],
-        'get_cross_selling' => ['Vente croisée d\'un produit', 'Cross-selling of a product'],
-        'suggest_related_products' => ['Suggestions « achetés ensemble »', '"Bought together" suggestions'],
-        'bulk_set_related_products' => ['Produits associés en masse', 'Related products in bulk'],
-        'configure_cross_selling_block' => ['Bloc « ont aussi acheté » (fiche et panier)', '"Also bought" block (product and cart)'],
-        'list_promotions' => ['Lister les promotions', 'List promotions'],
-        'create_promotion' => ['Créer une promotion', 'Create a promotion'],
-        'delete_promotion' => ['Supprimer une promotion', 'Delete a promotion'],
-        'catalog_audit' => ['Audit du catalogue', 'Catalogue audit'],
-        'search_customers' => ['Rechercher des clients', 'Search customers'],
-        'get_customer' => ['Lire un client', 'Read a customer'],
-        'sales_summary' => ['Synthèse des ventes', 'Sales summary'],
-        'low_stock' => ['Stocks bas', 'Low stock'],
-        'list_customer_messages' => ['Messages clients', 'Customer messages'],
-        'get_customer_messages' => ['Lire une conversation', 'Read a conversation'],
-        'reply_to_customer' => ['Répondre à un client', 'Reply to a customer'],
-        'create_voucher' => ['Créer un bon de réduction', 'Create a voucher'],
-        'list_themes' => ['Lister les thèmes', 'List themes'],
-        'create_child_theme' => ['Créer un thème enfant brouillon', 'Create a draft child theme'],
-        'list_theme_files' => ['Lister les fichiers du thème', 'List theme files'],
-        'read_theme_file' => ['Lire un fichier du thème', 'Read a theme file'],
-        'search_theme_files' => ['Chercher dans le thème', 'Search the theme'],
-        'write_theme_file' => ['Modifier un fichier (brouillon)', 'Write a file (draft)'],
-        'remove_theme_file' => ['Retirer une surcharge (brouillon)', 'Remove an override (draft)'],
-        'list_theme_backups' => ['Lister les sauvegardes', 'List backups'],
-        'restore_theme_file' => ['Restaurer une sauvegarde', 'Restore a backup'],
-        'audit_page' => ['Audit Hn et fil d\'Ariane', 'Headings and breadcrumb audit'],
-        'search_orders' => ['Rechercher des commandes', 'Search orders'],
-        'get_order' => ['Lire une commande et son suivi', 'Read an order and its tracking'],
-        'list_order_statuses' => ['Lister les statuts de commande', 'List order statuses'],
-        'set_order_status' => ['Changer le statut d\'une commande', 'Change an order status'],
-        'set_tracking_number' => ['Renseigner un numéro de suivi', 'Set a tracking number'],
-        'list_cms_pages' => ['Lister les pages CMS', 'List CMS pages'],
-        'get_cms_page' => ['Lire une page CMS', 'Read a CMS page'],
-        'update_cms_page' => ['Modifier une page CMS', 'Update a CMS page'],
-        'bulk_update_products' => ['Modifier des produits en masse', 'Bulk update products'],
+        'shop_info' => ['fr' => 'Informations de la boutique', 'en' => 'Shop information', 'es' => 'Información de la tienda', 'it' => 'Informazioni sul negozio', 'pl' => 'Informacje o sklepie'],
+        'search_products' => ['fr' => 'Rechercher des produits', 'en' => 'Search products', 'es' => 'Buscar productos', 'it' => 'Cerca prodotti', 'pl' => 'Wyszukaj produkty'],
+        'get_product' => ['fr' => 'Lire un produit', 'en' => 'Read a product', 'es' => 'Ver un producto', 'it' => 'Leggi un prodotto', 'pl' => 'Wyświetl produkt'],
+        'update_product' => ['fr' => 'Modifier un produit', 'en' => 'Update a product', 'es' => 'Modificar un producto', 'it' => 'Modifica un prodotto', 'pl' => 'Edytuj produkt'],
+        'create_product' => ['fr' => 'Créer un produit', 'en' => 'Create a product', 'es' => 'Crear un producto', 'it' => 'Crea un prodotto', 'pl' => 'Utwórz produkt'],
+        'set_stock' => ['fr' => 'Modifier le stock', 'en' => 'Set stock', 'es' => 'Modificar el stock', 'it' => 'Aggiorna le giacenze', 'pl' => 'Zmień stan magazynowy'],
+        'list_categories' => ['fr' => 'Lister les catégories', 'en' => 'List categories', 'es' => 'Listar las categorías', 'it' => 'Elenca le categorie', 'pl' => 'Lista kategorii'],
+        'get_category' => ['fr' => 'Lire une catégorie', 'en' => 'Read a category', 'es' => 'Ver una categoría', 'it' => 'Leggi una categoria', 'pl' => 'Wyświetl kategorię'],
+        'update_category' => ['fr' => 'Modifier une catégorie', 'en' => 'Update a category', 'es' => 'Modificar una categoría', 'it' => 'Modifica una categoria', 'pl' => 'Edytuj kategorię'],
+        'set_product_categories' => ['fr' => 'Classer un produit', 'en' => 'Set product categories', 'es' => 'Asignar categorías a un producto', 'it' => 'Assegna le categorie di un prodotto', 'pl' => 'Przypisz kategorie produktu'],
+        'list_combinations' => ['fr' => 'Lister les déclinaisons', 'en' => 'List combinations', 'es' => 'Listar las combinaciones', 'it' => 'Elenca le combinazioni', 'pl' => 'Lista kombinacji'],
+        'list_attribute_groups' => ['fr' => 'Lister les attributs', 'en' => 'List attributes', 'es' => 'Listar los atributos', 'it' => 'Elenca gli attributi', 'pl' => 'Lista atrybutów'],
+        'create_attribute_group' => ['fr' => 'Créer un attribut', 'en' => 'Create an attribute group', 'es' => 'Crear un atributo', 'it' => 'Crea un attributo', 'pl' => 'Utwórz atrybut'],
+        'create_attribute_value' => ['fr' => 'Créer une valeur d\'attribut', 'en' => 'Create an attribute value', 'es' => 'Crear un valor de atributo', 'it' => 'Crea un valore di attributo', 'pl' => 'Utwórz wartość atrybutu'],
+        'create_combinations' => ['fr' => 'Créer des déclinaisons', 'en' => 'Create combinations', 'es' => 'Crear combinaciones', 'it' => 'Crea combinazioni', 'pl' => 'Utwórz kombinacje'],
+        'update_combination' => ['fr' => 'Modifier une déclinaison', 'en' => 'Update a combination', 'es' => 'Modificar una combinación', 'it' => 'Modifica una combinazione', 'pl' => 'Edytuj kombinację'],
+        'list_product_images' => ['fr' => 'Lister les images', 'en' => 'List images', 'es' => 'Listar las imágenes', 'it' => 'Elenca le immagini', 'pl' => 'Lista zdjęć'],
+        'add_product_image_from_url' => ['fr' => 'Ajouter une image', 'en' => 'Add an image', 'es' => 'Añadir una imagen', 'it' => 'Aggiungi un\'immagine', 'pl' => 'Dodaj zdjęcie'],
+        'update_product_image' => ['fr' => 'Modifier une image (alt, couverture)', 'en' => 'Update an image (alt, cover)', 'es' => 'Modificar una imagen (alt, portada)', 'it' => 'Modifica un\'immagine (alt, copertina)', 'pl' => 'Edytuj zdjęcie (alt, zdjęcie główne)'],
+        'optimize_product_images' => ['fr' => 'Redimensionner les images', 'en' => 'Resize images', 'es' => 'Redimensionar las imágenes', 'it' => 'Ridimensiona le immagini', 'pl' => 'Zmień rozmiar zdjęć'],
+        'list_features' => ['fr' => 'Lister les caractéristiques', 'en' => 'List features', 'es' => 'Listar las características', 'it' => 'Elenca le caratteristiche', 'pl' => 'Lista cech'],
+        'create_feature' => ['fr' => 'Créer une caractéristique', 'en' => 'Create a feature', 'es' => 'Crear una característica', 'it' => 'Crea una caratteristica', 'pl' => 'Utwórz cechę'],
+        'set_product_feature' => ['fr' => 'Renseigner une caractéristique', 'en' => 'Set a product feature', 'es' => 'Asignar una característica', 'it' => 'Imposta una caratteristica', 'pl' => 'Ustaw cechę produktu'],
+        'list_brands' => ['fr' => 'Lister les marques', 'en' => 'List brands', 'es' => 'Listar las marcas', 'it' => 'Elenca i marchi', 'pl' => 'Lista marek'],
+        'set_related_products' => ['fr' => 'Produits associés', 'en' => 'Related products', 'es' => 'Productos relacionados', 'it' => 'Prodotti correlati', 'pl' => 'Produkty powiązane'],
+        'get_cross_selling' => ['fr' => 'Vente croisée d\'un produit', 'en' => 'Cross-selling of a product', 'es' => 'Venta cruzada de un producto', 'it' => 'Vendita incrociata di un prodotto', 'pl' => 'Sprzedaż krzyżowa produktu'],
+        'suggest_related_products' => ['fr' => 'Suggestions « achetés ensemble »', 'en' => '"Bought together" suggestions', 'es' => 'Sugerencias «comprados juntos»', 'it' => 'Suggerimenti «acquistati insieme»', 'pl' => 'Sugestie „kupowane razem”'],
+        'bulk_set_related_products' => ['fr' => 'Produits associés en masse', 'en' => 'Related products in bulk', 'es' => 'Productos relacionados en bloque', 'it' => 'Prodotti correlati in blocco', 'pl' => 'Masowe produkty powiązane'],
+        'configure_cross_selling_block' => ['fr' => 'Bloc « ont aussi acheté » (fiche et panier)', 'en' => '"Also bought" block (product and cart)', 'es' => 'Bloque «también compraron» (ficha y carrito)', 'it' => 'Blocco «hanno acquistato anche» (scheda e carrello)', 'pl' => 'Blok „kupili również” (karta produktu i koszyk)'],
+        'list_promotions' => ['fr' => 'Lister les promotions', 'en' => 'List promotions', 'es' => 'Listar las promociones', 'it' => 'Elenca le promozioni', 'pl' => 'Lista promocji'],
+        'create_promotion' => ['fr' => 'Créer une promotion', 'en' => 'Create a promotion', 'es' => 'Crear una promoción', 'it' => 'Crea una promozione', 'pl' => 'Utwórz promocję'],
+        'delete_promotion' => ['fr' => 'Supprimer une promotion', 'en' => 'Delete a promotion', 'es' => 'Eliminar una promoción', 'it' => 'Elimina una promozione', 'pl' => 'Usuń promocję'],
+        'catalog_audit' => ['fr' => 'Audit du catalogue', 'en' => 'Catalogue audit', 'es' => 'Auditoría del catálogo', 'it' => 'Audit del catalogo', 'pl' => 'Audyt katalogu'],
+        'search_customers' => ['fr' => 'Rechercher des clients', 'en' => 'Search customers', 'es' => 'Buscar clientes', 'it' => 'Cerca clienti', 'pl' => 'Wyszukaj klientów'],
+        'get_customer' => ['fr' => 'Lire un client', 'en' => 'Read a customer', 'es' => 'Ver un cliente', 'it' => 'Leggi un cliente', 'pl' => 'Wyświetl klienta'],
+        'sales_summary' => ['fr' => 'Synthèse des ventes', 'en' => 'Sales summary', 'es' => 'Resumen de ventas', 'it' => 'Riepilogo vendite', 'pl' => 'Podsumowanie sprzedaży'],
+        'low_stock' => ['fr' => 'Stocks bas', 'en' => 'Low stock', 'es' => 'Stock bajo', 'it' => 'Scorte basse', 'pl' => 'Niskie stany magazynowe'],
+        'list_customer_messages' => ['fr' => 'Messages clients', 'en' => 'Customer messages', 'es' => 'Mensajes de clientes', 'it' => 'Messaggi dei clienti', 'pl' => 'Wiadomości od klientów'],
+        'get_customer_messages' => ['fr' => 'Lire une conversation', 'en' => 'Read a conversation', 'es' => 'Ver una conversación', 'it' => 'Leggi una conversazione', 'pl' => 'Wyświetl rozmowę'],
+        'reply_to_customer' => ['fr' => 'Répondre à un client', 'en' => 'Reply to a customer', 'es' => 'Responder a un cliente', 'it' => 'Rispondi a un cliente', 'pl' => 'Odpowiedz klientowi'],
+        'create_voucher' => ['fr' => 'Créer un bon de réduction', 'en' => 'Create a voucher', 'es' => 'Crear un cupón de descuento', 'it' => 'Crea un buono sconto', 'pl' => 'Utwórz kod rabatowy'],
+        'list_themes' => ['fr' => 'Lister les thèmes', 'en' => 'List themes', 'es' => 'Listar los temas', 'it' => 'Elenca i temi', 'pl' => 'Lista motywów'],
+        'create_child_theme' => ['fr' => 'Créer un thème enfant brouillon', 'en' => 'Create a draft child theme', 'es' => 'Crear un tema hijo en borrador', 'it' => 'Crea un tema figlio in bozza', 'pl' => 'Utwórz szkic motywu potomnego'],
+        'list_theme_files' => ['fr' => 'Lister les fichiers du thème', 'en' => 'List theme files', 'es' => 'Listar los archivos del tema', 'it' => 'Elenca i file del tema', 'pl' => 'Lista plików motywu'],
+        'read_theme_file' => ['fr' => 'Lire un fichier du thème', 'en' => 'Read a theme file', 'es' => 'Ver un archivo del tema', 'it' => 'Leggi un file del tema', 'pl' => 'Odczytaj plik motywu'],
+        'search_theme_files' => ['fr' => 'Chercher dans le thème', 'en' => 'Search the theme', 'es' => 'Buscar en el tema', 'it' => 'Cerca nel tema', 'pl' => 'Szukaj w motywie'],
+        'write_theme_file' => ['fr' => 'Modifier un fichier (brouillon)', 'en' => 'Write a file (draft)', 'es' => 'Modificar un archivo (borrador)', 'it' => 'Modifica un file (bozza)', 'pl' => 'Edytuj plik (szkic)'],
+        'remove_theme_file' => ['fr' => 'Retirer une surcharge (brouillon)', 'en' => 'Remove an override (draft)', 'es' => 'Quitar una sobrecarga (borrador)', 'it' => 'Rimuovi un override (bozza)', 'pl' => 'Usuń nadpisanie (szkic)'],
+        'list_theme_backups' => ['fr' => 'Lister les sauvegardes', 'en' => 'List backups', 'es' => 'Listar las copias de seguridad', 'it' => 'Elenca i backup', 'pl' => 'Lista kopii zapasowych'],
+        'restore_theme_file' => ['fr' => 'Restaurer une sauvegarde', 'en' => 'Restore a backup', 'es' => 'Restaurar una copia de seguridad', 'it' => 'Ripristina un backup', 'pl' => 'Przywróć kopię zapasową'],
+        'audit_page' => ['fr' => 'Audit Hn et fil d\'Ariane', 'en' => 'Headings and breadcrumb audit', 'es' => 'Auditoría de Hn y migas de pan', 'it' => 'Audit di Hn e breadcrumb', 'pl' => 'Audyt nagłówków Hn i ścieżki nawigacyjnej'],
+        'search_orders' => ['fr' => 'Rechercher des commandes', 'en' => 'Search orders', 'es' => 'Buscar pedidos', 'it' => 'Cerca ordini', 'pl' => 'Wyszukaj zamówienia'],
+        'get_order' => ['fr' => 'Lire une commande et son suivi', 'en' => 'Read an order and its tracking', 'es' => 'Ver un pedido y su seguimiento', 'it' => 'Leggi un ordine e il suo tracciamento', 'pl' => 'Wyświetl zamówienie i śledzenie przesyłki'],
+        'list_order_statuses' => ['fr' => 'Lister les statuts de commande', 'en' => 'List order statuses', 'es' => 'Listar los estados de pedido', 'it' => 'Elenca gli stati degli ordini', 'pl' => 'Lista statusów zamówień'],
+        'set_order_status' => ['fr' => 'Changer le statut d\'une commande', 'en' => 'Change an order status', 'es' => 'Cambiar el estado de un pedido', 'it' => 'Cambia lo stato di un ordine', 'pl' => 'Zmień status zamówienia'],
+        'set_tracking_number' => ['fr' => 'Renseigner un numéro de suivi', 'en' => 'Set a tracking number', 'es' => 'Indicar un número de seguimiento', 'it' => 'Inserisci un numero di tracciamento', 'pl' => 'Ustaw numer przesyłki'],
+        'list_cms_pages' => ['fr' => 'Lister les pages CMS', 'en' => 'List CMS pages', 'es' => 'Listar las páginas CMS', 'it' => 'Elenca le pagine CMS', 'pl' => 'Lista stron CMS'],
+        'get_cms_page' => ['fr' => 'Lire une page CMS', 'en' => 'Read a CMS page', 'es' => 'Ver una página CMS', 'it' => 'Leggi una pagina CMS', 'pl' => 'Wyświetl stronę CMS'],
+        'update_cms_page' => ['fr' => 'Modifier une page CMS', 'en' => 'Update a CMS page', 'es' => 'Modificar una página CMS', 'it' => 'Modifica una pagina CMS', 'pl' => 'Edytuj stronę CMS'],
+        'bulk_update_products' => ['fr' => 'Modifier des produits en masse', 'en' => 'Bulk update products', 'es' => 'Modificar productos en bloque', 'it' => 'Modifica prodotti in blocco', 'pl' => 'Masowa edycja produktów'],
     ];
 
     private const SCOPES = [
-        'catalog.read' => ['Lire le catalogue : produits, déclinaisons, catégories, images, stocks', 'Read the catalogue: products, combinations, categories, images, stock'],
-        'orders.read' => ['Lire les commandes et leur suivi', 'Read orders and their tracking'],
-        'orders.write' => ['Changer le statut et le suivi des commandes (peut envoyer des e-mails)', 'Change order status and tracking (may send emails)'],
-        'catalog.write' => ['Modifier le catalogue : produits, prix, stocks, déclinaisons, images, catégories, promotions', 'Change the catalogue: products, prices, stock, combinations, images, categories, promotions'],
-        'customers.read' => ['Lire les fiches clients', 'Read customer records'],
-        'sales.read' => ['Lire les chiffres de vente', 'Read sales figures'],
-        'service.read' => ['Lire les messages du service client', 'Read customer service messages'],
-        'service.write' => ['Répondre aux clients (envoie des e-mails)', 'Reply to customers (sends emails)'],
-        'marketing.write' => ['Créer des bons de réduction', 'Create vouchers'],
-        'theme.read' => ['Lire les thèmes et auditer les pages', 'Read themes and audit pages'],
-        'theme.write' => ['Modifier les thèmes enfants brouillons (jamais le thème en ligne)', 'Change draft child themes (never the live theme)'],
+        'catalog.read' => [
+            'fr' => 'Lire le catalogue : produits, déclinaisons, catégories, images, stocks',
+            'en' => 'Read the catalogue: products, combinations, categories, images, stock',
+            'es' => 'Ver el catálogo: productos, combinaciones, categorías, imágenes, stock',
+            'it' => 'Leggere il catalogo: prodotti, combinazioni, categorie, immagini, giacenze',
+            'pl' => 'Odczyt katalogu: produkty, kombinacje, kategorie, zdjęcia, stany magazynowe',
+        ],
+        'orders.read' => [
+            'fr' => 'Lire les commandes et leur suivi',
+            'en' => 'Read orders and their tracking',
+            'es' => 'Ver los pedidos y su seguimiento',
+            'it' => 'Leggere gli ordini e il loro tracciamento',
+            'pl' => 'Odczyt zamówień i śledzenia przesyłek',
+        ],
+        'orders.write' => [
+            'fr' => 'Changer le statut et le suivi des commandes (peut envoyer des e-mails)',
+            'en' => 'Change order status and tracking (may send emails)',
+            'es' => 'Cambiar el estado y el seguimiento de los pedidos (puede enviar correos electrónicos)',
+            'it' => 'Modificare lo stato e il tracciamento degli ordini (può inviare e-mail)',
+            'pl' => 'Zmiana statusu zamówień i numerów przesyłek (może wysyłać e-maile)',
+        ],
+        'catalog.write' => [
+            'fr' => 'Modifier le catalogue : produits, prix, stocks, déclinaisons, images, catégories, promotions',
+            'en' => 'Change the catalogue: products, prices, stock, combinations, images, categories, promotions',
+            'es' => 'Modificar el catálogo: productos, precios, stock, combinaciones, imágenes, categorías, promociones',
+            'it' => 'Modificare il catalogo: prodotti, prezzi, giacenze, combinazioni, immagini, categorie, promozioni',
+            'pl' => 'Zmiany w katalogu: produkty, ceny, stany magazynowe, kombinacje, zdjęcia, kategorie, promocje',
+        ],
+        'customers.read' => [
+            'fr' => 'Lire les fiches clients',
+            'en' => 'Read customer records',
+            'es' => 'Ver las fichas de clientes',
+            'it' => 'Leggere le schede dei clienti',
+            'pl' => 'Odczyt danych klientów',
+        ],
+        'sales.read' => [
+            'fr' => 'Lire les chiffres de vente',
+            'en' => 'Read sales figures',
+            'es' => 'Ver las cifras de ventas',
+            'it' => 'Leggere i dati di vendita',
+            'pl' => 'Odczyt danych sprzedażowych',
+        ],
+        'service.read' => [
+            'fr' => 'Lire les messages du service client',
+            'en' => 'Read customer service messages',
+            'es' => 'Ver los mensajes de atención al cliente',
+            'it' => 'Leggere i messaggi del servizio clienti',
+            'pl' => 'Odczyt wiadomości obsługi klienta',
+        ],
+        'service.write' => [
+            'fr' => 'Répondre aux clients (envoie des e-mails)',
+            'en' => 'Reply to customers (sends emails)',
+            'es' => 'Responder a los clientes (envía correos electrónicos)',
+            'it' => 'Rispondere ai clienti (invia e-mail)',
+            'pl' => 'Odpowiadanie klientom (wysyła e-maile)',
+        ],
+        'marketing.write' => [
+            'fr' => 'Créer des bons de réduction',
+            'en' => 'Create vouchers',
+            'es' => 'Crear cupones de descuento',
+            'it' => 'Creare buoni sconto',
+            'pl' => 'Tworzenie kodów rabatowych',
+        ],
+        'theme.read' => [
+            'fr' => 'Lire les thèmes et auditer les pages',
+            'en' => 'Read themes and audit pages',
+            'es' => 'Ver los temas y auditar las páginas',
+            'it' => 'Leggere i temi e analizzare le pagine',
+            'pl' => 'Odczyt motywów i audyt stron',
+        ],
+        'theme.write' => [
+            'fr' => 'Modifier les thèmes enfants brouillons (jamais le thème en ligne)',
+            'en' => 'Change draft child themes (never the live theme)',
+            'es' => 'Modificar los temas hijo en borrador (nunca el tema publicado)',
+            'it' => 'Modificare i temi figlio in bozza (mai il tema online)',
+            'pl' => 'Zmiany w szkicach motywów potomnych (nigdy w opublikowanym motywie)',
+        ],
     ];
 
     private const GROUPS = [
-        'shop' => ['Boutique', 'Shop'],
-        'catalog' => ['Produits et catégories', 'Products and categories'],
-        'variants' => ['Déclinaisons', 'Combinations'],
-        'images' => ['Images', 'Images'],
-        'enrichment' => ['Enrichissement et optimisation', 'Enrichment and optimisation'],
-        'crossselling' => ['Vente croisée et panier', 'Cross-selling and cart'],
-        'customers' => ['Clients', 'Customers'],
-        'orders' => ['Commandes et suivi', 'Orders and tracking'],
-        'cms' => ['Pages CMS', 'CMS pages'],
-        'daily' => ['Gestion quotidienne', 'Daily management'],
-        'theme' => ['Thème enfant', 'Child theme'],
+        'shop' => ['fr' => 'Boutique', 'en' => 'Shop', 'es' => 'Tienda', 'it' => 'Negozio', 'pl' => 'Sklep'],
+        'catalog' => ['fr' => 'Produits et catégories', 'en' => 'Products and categories', 'es' => 'Productos y categorías', 'it' => 'Prodotti e categorie', 'pl' => 'Produkty i kategorie'],
+        'variants' => ['fr' => 'Déclinaisons', 'en' => 'Combinations', 'es' => 'Combinaciones', 'it' => 'Combinazioni', 'pl' => 'Kombinacje'],
+        'images' => ['fr' => 'Images', 'en' => 'Images', 'es' => 'Imágenes', 'it' => 'Immagini', 'pl' => 'Zdjęcia'],
+        'enrichment' => ['fr' => 'Enrichissement et optimisation', 'en' => 'Enrichment and optimisation', 'es' => 'Enriquecimiento y optimización', 'it' => 'Arricchimento e ottimizzazione', 'pl' => 'Wzbogacanie i optymalizacja'],
+        'crossselling' => ['fr' => 'Vente croisée et panier', 'en' => 'Cross-selling and cart', 'es' => 'Venta cruzada y carrito', 'it' => 'Vendita incrociata e carrello', 'pl' => 'Sprzedaż krzyżowa i koszyk'],
+        'redirects' => ['fr' => 'Redirections 301 (Pro)', 'en' => '301 redirects (Pro)', 'es' => 'Redirecciones 301 (Pro)', 'it' => 'Redirect 301 (Pro)', 'pl' => 'Przekierowania 301 (Pro)'],
+        'customers' => ['fr' => 'Clients', 'en' => 'Customers', 'es' => 'Clientes', 'it' => 'Clienti', 'pl' => 'Klienci'],
+        'orders' => ['fr' => 'Commandes et suivi', 'en' => 'Orders and tracking', 'es' => 'Pedidos y seguimiento', 'it' => 'Ordini e tracciamento', 'pl' => 'Zamówienia i śledzenie'],
+        'cms' => ['fr' => 'Pages CMS', 'en' => 'CMS pages', 'es' => 'Páginas CMS', 'it' => 'Pagine CMS', 'pl' => 'Strony CMS'],
+        'daily' => ['fr' => 'Gestion quotidienne', 'en' => 'Daily management', 'es' => 'Gestión diaria', 'it' => 'Gestione quotidiana', 'pl' => 'Codzienne zarządzanie'],
+        'theme' => ['fr' => 'Thème enfant', 'en' => 'Child theme', 'es' => 'Tema hijo', 'it' => 'Tema figlio', 'pl' => 'Motyw potomny'],
+        // Default group of the tools brought by add-ons (see PiskeeConnectorTools::extensions()).
+        'pro' => ['fr' => 'Piskee Pro', 'en' => 'Piskee Pro', 'es' => 'Piskee Pro', 'it' => 'Piskee Pro', 'pl' => 'Piskee Pro'],
     ];
 
+    /** Module name and description shown in the PrestaShop module list. */
+    private const MODULE = [
+        'display_name' => [
+            'fr' => 'Piskee, l\'assistant IA de votre boutique (compatible Claude)',
+            'en' => 'Piskee, the AI assistant for your shop (works with Claude)',
+            'es' => 'Piskee, el asistente de IA de tu tienda (compatible con Claude)',
+            'it' => 'Piskee, l\'assistente IA del tuo negozio (compatibile con Claude)',
+            'pl' => 'Piskee, asystent AI Twojego sklepu (współpracuje z Claude)',
+        ],
+        'description' => [
+            'fr' => 'Pilotez votre boutique avec Claude : catalogue, déclinaisons, images, stocks, vente croisée, service client et thème enfant. Redirections 301 avec Piskee Pro. Module indépendant, non officiel.',
+            'en' => 'Run your shop with Claude: catalogue, combinations, images, stock, cross-selling, customer service and child theme. 301 redirects with Piskee Pro. Independent, unofficial module.',
+            'es' => 'Gestiona tu tienda con Claude: catálogo, combinaciones, imágenes, stock, venta cruzada, atención al cliente y tema hijo. Redirecciones 301 con Piskee Pro. Módulo independiente, no oficial.',
+            'it' => 'Gestisci il tuo negozio con Claude: catalogo, combinazioni, immagini, giacenze, vendita incrociata, assistenza clienti e tema figlio. Redirect 301 con Piskee Pro. Modulo indipendente, non ufficiale.',
+            'pl' => 'Zarządzaj sklepem z Claude: katalog, kombinacje, zdjęcia, stany magazynowe, sprzedaż krzyżowa, obsługa klienta i motyw potomny. Przekierowania 301 w Piskee Pro. Niezależny, nieoficjalny moduł.',
+        ],
+        'confirm_uninstall' => [
+            'fr' => 'Tous les assistants connectés seront déconnectés. Continuer ?',
+            'en' => 'Every connected assistant will be disconnected. Continue?',
+            'es' => 'Todos los asistentes conectados se desconectarán. ¿Continuar?',
+            'it' => 'Tutti gli assistenti collegati verranno scollegati. Continuare?',
+            'pl' => 'Wszyscy połączeni asystenci zostaną odłączeni. Kontynuować?',
+        ],
+    ];
+
+    /** Prices of the Pro plan and of the onboarding, for fr and en see PiskeeConnectorLicense. */
+    private const PRICES = [
+        'pro' => [
+            'es' => '29 € + IVA / mes',
+            'it' => '29 € + IVA / mese',
+            'pl' => '29 € netto / mies.',
+        ],
+        'onboarding' => [
+            'es' => '300 € + IVA',
+            'it' => '300 € + IVA',
+            'pl' => '300 € netto',
+        ],
+    ];
+
+    /** Titles and descriptions of the ready-made MCP prompts (PiskeeConnectorMcp::prompts()). */
+    private const PROMPTS = [
+        'daily-brief' => [
+            'title' => [
+                'fr' => 'Point du jour',
+                'en' => 'Daily brief',
+                'es' => 'Resumen del día',
+                'it' => 'Riepilogo del giorno',
+                'pl' => 'Podsumowanie dnia',
+            ],
+            'description' => [
+                'fr' => 'Ventes, stocks bas et messages clients en attente, en un seul point.',
+                'en' => 'Sales, low stock and pending customer messages in one brief.',
+                'es' => 'Ventas, stock bajo y mensajes de clientes pendientes, en un solo resumen.',
+                'it' => 'Vendite, scorte basse e messaggi dei clienti in attesa, in un unico riepilogo.',
+                'pl' => 'Sprzedaż, niskie stany i oczekujące wiadomości od klientów w jednym podsumowaniu.',
+            ],
+        ],
+        'catalog-optimisation' => [
+            'title' => [
+                'fr' => 'Optimiser le catalogue',
+                'en' => 'Optimise the catalogue',
+                'es' => 'Optimizar el catálogo',
+                'it' => 'Ottimizza il catalogo',
+                'pl' => 'Optymalizuj katalog',
+            ],
+            'description' => [
+                'fr' => 'Audit du catalogue puis corrections SEO et GEO priorisées, produit par produit.',
+                'en' => 'Catalogue audit, then prioritised SEO and GEO fixes, product by product.',
+                'es' => 'Auditoría del catálogo y, después, correcciones SEO y GEO priorizadas, producto por producto.',
+                'it' => 'Audit del catalogo, poi correzioni SEO e GEO in ordine di priorità, prodotto per prodotto.',
+                'pl' => 'Audyt katalogu, a następnie poprawki SEO i GEO według priorytetu, produkt po produkcie.',
+            ],
+            'arg.focus' => [
+                'fr' => 'Ce qui compte le plus (ex. : une catégorie)',
+                'en' => 'What matters most (e.g. one category)',
+                'es' => 'Lo que más importa (p. ej.: una categoría)',
+                'it' => 'Ciò che conta di più (ad es. una categoria)',
+                'pl' => 'Co jest najważniejsze (np. jedna kategoria)',
+            ],
+        ],
+        'theme-headings-breadcrumb' => [
+            'title' => [
+                'fr' => 'Nettoyer les Hn et poser un fil d\'Ariane',
+                'en' => 'Clean headings and add a breadcrumb',
+                'es' => 'Limpiar las Hn y añadir migas de pan',
+                'it' => 'Sistemare gli Hn e aggiungere un breadcrumb',
+                'pl' => 'Uporządkuj nagłówki Hn i dodaj ścieżkę nawigacyjną',
+            ],
+            'description' => [
+                'fr' => 'Audit des balises Hn et du fil d\'Ariane, corrections dans un thème enfant brouillon.',
+                'en' => 'Audit of headings and breadcrumb, fixes in a draft child theme.',
+                'es' => 'Auditoría de las etiquetas Hn y de las migas de pan, con correcciones en un tema hijo en borrador.',
+                'it' => 'Audit dei tag Hn e del breadcrumb, con correzioni in un tema figlio in bozza.',
+                'pl' => 'Audyt nagłówków Hn i ścieżki nawigacyjnej, poprawki w szkicu motywu potomnego.',
+            ],
+        ],
+    ];
+
+    /**
+     * Interface language for a PrestaShop iso code ("fr", "es", "mx"...) or a
+     * locale ("es-AR", "it_IT"). Anything unknown gives English.
+     */
     public static function lang(?string $iso): string
     {
-        return Tools::strtolower((string) $iso) === 'fr' ? 'fr' : 'en';
+        $iso = Tools::strtolower(trim((string) $iso));
+        if (isset(self::ISO_MAP[$iso])) {
+            return self::ISO_MAP[$iso];
+        }
+        $prefix = (string) preg_replace('/[-_].*$/', '', $iso);
+        if ($prefix !== $iso && in_array($prefix, self::LANGS, true)) {
+            return $prefix;
+        }
+
+        return 'en';
+    }
+
+    /**
+     * Whether a code is one of the interface languages (for ?pklang= and the
+     * language cookie).
+     */
+    public static function isSupported(string $code): bool
+    {
+        return in_array($code, self::LANGS, true);
+    }
+
+    /**
+     * Interface languages with their own name, for a language menu.
+     *
+     * @return array<string, string>
+     */
+    public static function languages(): array
+    {
+        return self::LANGUAGE_NAMES;
+    }
+
+    /**
+     * The language the single switch link points to: English, or French
+     * when the page is already in English.
+     */
+    public static function switchTarget(string $lang): string
+    {
+        return $lang === 'en' ? 'fr' : 'en';
+    }
+
+    /**
+     * Documentation files, relative to the module folder, by language.
+     *
+     * @return array<string, string>
+     */
+    public static function docFiles(): array
+    {
+        $out = [];
+        foreach (self::LANGS as $code) {
+            $out[$code] = 'docs/README.' . $code . '.md';
+        }
+
+        return $out;
+    }
+
+    /**
+     * Picks the text of a language from a {"fr": ..., "en": ...} array,
+     * falling back to English, then French, then $fallback. Used for core
+     * texts and for the titles given by add-on tools.
+     *
+     * @param array<string, mixed> $texts
+     */
+    public static function pick(array $texts, string $lang, string $fallback = ''): string
+    {
+        foreach ([$lang, self::FALLBACK, 'fr'] as $code) {
+            if (isset($texts[$code]) && is_scalar($texts[$code]) && (string) $texts[$code] !== '') {
+                return (string) $texts[$code];
+            }
+        }
+
+        return $fallback;
     }
 
     public static function toolTitle(string $tool, string $lang): string
     {
-        return self::TOOL_TITLES[$tool][$lang === 'fr' ? 0 : 1] ?? $tool;
+        return isset(self::TOOL_TITLES[$tool]) ? self::pick(self::TOOL_TITLES[$tool], $lang, $tool) : $tool;
     }
 
     public static function scopeLabel(string $scope, string $lang): string
     {
-        return self::SCOPES[$scope][$lang === 'fr' ? 0 : 1] ?? $scope;
+        return isset(self::SCOPES[$scope]) ? self::pick(self::SCOPES[$scope], $lang, $scope) : $scope;
     }
 
     public static function groupLabel(string $group, string $lang): string
     {
-        return self::GROUPS[$group][$lang === 'fr' ? 0 : 1] ?? $group;
+        return isset(self::GROUPS[$group]) ? self::pick(self::GROUPS[$group], $lang, $group) : $group;
     }
 
     /**
-     * Texts of the module page.
+     * Module name, description and uninstall confirmation.
+     *
+     * @return array{display_name:string, description:string, confirm_uninstall:string}
+     */
+    public static function module(string $lang): array
+    {
+        return [
+            'display_name' => self::pick(self::MODULE['display_name'], $lang),
+            'description' => self::pick(self::MODULE['description'], $lang),
+            'confirm_uninstall' => self::pick(self::MODULE['confirm_uninstall'], $lang),
+        ];
+    }
+
+    /** Monthly price of Piskee Pro, written the local way. */
+    public static function price(string $lang): string
+    {
+        if ($lang === 'fr') {
+            return PiskeeConnectorLicense::PRO_PRICE;
+        }
+
+        return self::PRICES['pro'][$lang] ?? PiskeeConnectorLicense::PRO_PRICE_EN;
+    }
+
+    /** Price of the onboarding session, written the local way. */
+    public static function onboardingPrice(string $lang): string
+    {
+        if ($lang === 'fr') {
+            return PiskeeConnectorLicense::ONBOARDING_PRICE;
+        }
+
+        return self::PRICES['onboarding'][$lang] ?? PiskeeConnectorLicense::ONBOARDING_PRICE_EN;
+    }
+
+    /**
+     * A text of a ready-made prompt: "title", "description" or "arg.<name>".
+     */
+    public static function promptText(string $prompt, string $key, string $lang): string
+    {
+        return isset(self::PROMPTS[$prompt][$key]) ? self::pick(self::PROMPTS[$prompt][$key], $lang) : '';
+    }
+
+    /**
+     * Texts of the module page. Keys missing in a language come from English.
      *
      * @return array<string, string>
      */
     public static function ui(string $lang): array
     {
-        $fr = [
+        $en = self::uiEn();
+        switch ($lang) {
+            case 'fr':
+                return array_merge($en, self::uiFr());
+            case 'es':
+                return array_merge($en, self::uiEs());
+            case 'it':
+                return array_merge($en, self::uiIt());
+            case 'pl':
+                return array_merge($en, self::uiPl());
+            default:
+                return $en;
+        }
+    }
+
+    /**
+     * Texts of the consent screen. Keys missing in a language come from English.
+     *
+     * @return array<string, string>
+     */
+    public static function consent(string $lang): array
+    {
+        $all = [
+            'fr' => [
+                'title' => 'Connecter un assistant',
+                'lead' => 'demande à agir sur votre boutique en votre nom.',
+                'application' => 'Application',
+                'returns_to' => 'Réponse envoyée à',
+                'as_employee' => 'Connecté en tant que',
+                'shop' => 'Boutique',
+                'rights' => 'Ce que l\'assistant pourra faire',
+                'limits' => 'L\'assistant n\'aura jamais plus de droits que votre profil d\'employé, et vous demandera confirmation avant chaque modification. Vous pourrez le déconnecter à tout moment depuis le module Piskee.',
+                'allow' => 'Autoriser',
+                'deny' => 'Refuser',
+                'expired_title' => 'Demande expirée',
+                'expired_text' => 'Cette demande de connexion n\'est plus valide. Relancez la connexion depuis votre assistant.',
+                'help' => 'Une question sur cette connexion ?',
+            ],
+            'en' => [
+                'title' => 'Connect an assistant',
+                'lead' => 'asks to act on your shop on your behalf.',
+                'application' => 'Application',
+                'returns_to' => 'Answer sent to',
+                'as_employee' => 'Signed in as',
+                'shop' => 'Shop',
+                'rights' => 'What the assistant will be able to do',
+                'limits' => 'The assistant will never get more rights than your employee profile, and will ask for your confirmation before each change. You can disconnect it at any time from the Piskee module.',
+                'allow' => 'Authorise',
+                'deny' => 'Refuse',
+                'expired_title' => 'Request expired',
+                'expired_text' => 'This connection request is no longer valid. Start the connection again from your assistant.',
+                'help' => 'A question about this connection?',
+            ],
+            'es' => [
+                'title' => 'Conectar un asistente',
+                'lead' => 'solicita actuar en tu tienda en tu nombre.',
+                'application' => 'Aplicación',
+                'returns_to' => 'Respuesta enviada a',
+                'as_employee' => 'Conectado como',
+                'shop' => 'Tienda',
+                'rights' => 'Lo que podrá hacer el asistente',
+                'limits' => 'El asistente nunca tendrá más permisos que tu perfil de empleado y te pedirá confirmación antes de cada modificación. Podrás desconectarlo en cualquier momento desde el módulo Piskee.',
+                'allow' => 'Autorizar',
+                'deny' => 'Rechazar',
+                'expired_title' => 'Solicitud caducada',
+                'expired_text' => 'Esta solicitud de conexión ya no es válida. Vuelve a iniciar la conexión desde tu asistente.',
+                'help' => '¿Tienes alguna pregunta sobre esta conexión?',
+            ],
+            'it' => [
+                'title' => 'Collega un assistente',
+                'lead' => 'chiede di agire sul tuo negozio per tuo conto.',
+                'application' => 'Applicazione',
+                'returns_to' => 'Risposta inviata a',
+                'as_employee' => 'Connesso come',
+                'shop' => 'Negozio',
+                'rights' => 'Cosa potrà fare l\'assistente',
+                'limits' => 'L\'assistente non avrà mai più permessi del tuo profilo dipendente e ti chiederà conferma prima di ogni modifica. Potrai scollegarlo in qualsiasi momento dal modulo Piskee.',
+                'allow' => 'Autorizza',
+                'deny' => 'Rifiuta',
+                'expired_title' => 'Richiesta scaduta',
+                'expired_text' => 'Questa richiesta di connessione non è più valida. Riavvia la connessione dal tuo assistente.',
+                'help' => 'Hai una domanda su questa connessione?',
+            ],
+            'pl' => [
+                'title' => 'Połącz asystenta',
+                'lead' => 'prosi o możliwość działania w Twoim sklepie w Twoim imieniu.',
+                'application' => 'Aplikacja',
+                'returns_to' => 'Odpowiedź wysłana do',
+                'as_employee' => 'Zalogowano jako',
+                'shop' => 'Sklep',
+                'rights' => 'Co asystent będzie mógł robić',
+                'limits' => 'Asystent nigdy nie otrzyma większych uprawnień niż Twój profil pracownika i poprosi o potwierdzenie przed każdą zmianą. Możesz go odłączyć w dowolnym momencie w module Piskee.',
+                'allow' => 'Zezwól',
+                'deny' => 'Odmów',
+                'expired_title' => 'Prośba wygasła',
+                'expired_text' => 'Ta prośba o połączenie jest już nieważna. Rozpocznij łączenie ponownie w swoim asystencie.',
+                'help' => 'Masz pytanie dotyczące tego połączenia?',
+            ],
+        ];
+
+        return $lang === 'en' || !isset($all[$lang]) ? $all['en'] : array_merge($all['en'], $all[$lang]);
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private static function uiFr(): array
+    {
+        return [
             'title' => 'Piskee',
             'by' => 'L\'assistant IA de votre boutique PrestaShop · compatible Claude',
             'tagline' => 'Pilotez votre boutique PrestaShop en conversation avec Claude : catalogue, déclinaisons, images, stocks, service client et thème enfant.',
@@ -199,7 +623,7 @@ class PiskeeConnectorI18n
             'help_cta' => 'Nous contacter',
             'help_whatsapp' => 'WhatsApp',
             'audit_cta' => 'Audit SEO & GEO gratuit en 48 h',
-            'docs_intro' => 'Toute la documentation, en français et en anglais.',
+            'docs_intro' => 'Toute la documentation, en français, anglais, espagnol, italien et polonais.',
             'pro_title' => 'Gratuit ou Pro',
             'pro_intro' => 'La version gratuite est complète pour démarrer. Le Pro lève la limite et ajoute les fonctions avancées.',
             'plan_free' => 'Gratuit',
@@ -246,6 +670,7 @@ class PiskeeConnectorI18n
             'version' => 'Version',
             'footer' => 'Piskee est un module indépendant, non affilié à Anthropic. Claude est une marque d\'Anthropic.',
             'lang_switch' => 'English',
+            'lang_label' => 'Langue',
             'check_server' => 'Serveur MCP du module activé',
             'check_admin' => 'Back-office repéré pour l\'écran d\'autorisation',
             'check_test' => 'Adresses publiques joignables (test réel)',
@@ -288,8 +713,14 @@ class PiskeeConnectorI18n
             'story_text' => 'Piskee a été imaginé et développé en France, à Chantilly, dans l\'Oise, par l\'équipe de Piskee. Nous accompagnons chaque jour des boutiques PrestaShop sur leur référencement et leur croissance, et nous voyions les mêmes tâches revenir sans cesse : fiches produits à réécrire, déclinaisons à créer, images à reprendre, balises Hn à nettoyer. Nous avons construit l\'outil que nous voulions pour nos clients : un assistant qui travaille directement dans votre boutique, avec des garde-fous solides, et une équipe humaine joignable quand vous en avez besoin.',
             'email' => 'E-mail',
         ];
+    }
 
-        $en = [
+    /**
+     * @return array<string, string>
+     */
+    private static function uiEn(): array
+    {
+        return [
             'title' => 'Piskee',
             'by' => 'The AI assistant for your PrestaShop store · works with Claude',
             'tagline' => 'Run your PrestaShop store by talking to Claude: catalogue, combinations, images, stock, customer service and child theme.',
@@ -352,7 +783,7 @@ class PiskeeConnectorI18n
             'help_cta' => 'Contact us',
             'help_whatsapp' => 'WhatsApp',
             'audit_cta' => 'Free SEO & GEO audit in 48 h',
-            'docs_intro' => 'The full documentation, in French and English.',
+            'docs_intro' => 'The full documentation, in French, English, Spanish, Italian and Polish.',
             'pro_title' => 'Free or Pro',
             'pro_intro' => 'The free version is complete to get started. Pro lifts the limit and adds advanced features.',
             'plan_free' => 'Free',
@@ -399,6 +830,7 @@ class PiskeeConnectorI18n
             'version' => 'Version',
             'footer' => 'Piskee is an independent module, not affiliated with Anthropic. Claude is a trademark of Anthropic.',
             'lang_switch' => 'Français',
+            'lang_label' => 'Language',
             'check_server' => 'Module MCP server switched on',
             'check_admin' => 'Back office located for the authorisation screen',
             'check_test' => 'Public addresses reachable (live test)',
@@ -441,49 +873,485 @@ class PiskeeConnectorI18n
             'story_text' => 'Piskee was imagined and built in France, in Chantilly (Oise), by the Piskee team. Every day we help PrestaShop stores with their search visibility and growth, and we kept seeing the same tasks come back: product pages to rewrite, combinations to create, images to rework, headings to clean. So we built the tool we wanted for our clients: an assistant that works right inside your shop, with solid safeguards, and a human team you can reach when you need it.',
             'email' => 'Email',
         ];
-
-        return $lang === 'fr' ? $fr : $en;
     }
 
     /**
-     * Texts of the consent screen.
-     *
      * @return array<string, string>
      */
-    public static function consent(string $lang): array
+    private static function uiEs(): array
     {
-        if ($lang === 'fr') {
-            return [
-                'title' => 'Connecter un assistant',
-                'lead' => 'demande à agir sur votre boutique en votre nom.',
-                'application' => 'Application',
-                'returns_to' => 'Réponse envoyée à',
-                'as_employee' => 'Connecté en tant que',
-                'shop' => 'Boutique',
-                'rights' => 'Ce que l\'assistant pourra faire',
-                'limits' => 'L\'assistant n\'aura jamais plus de droits que votre profil d\'employé, et vous demandera confirmation avant chaque modification. Vous pourrez le déconnecter à tout moment depuis le module Piskee.',
-                'allow' => 'Autoriser',
-                'deny' => 'Refuser',
-                'expired_title' => 'Demande expirée',
-                'expired_text' => 'Cette demande de connexion n\'est plus valide. Relancez la connexion depuis votre assistant.',
-                'help' => 'Une question sur cette connexion ?',
-            ];
-        }
-
         return [
-            'title' => 'Connect an assistant',
-            'lead' => 'asks to act on your shop on your behalf.',
-            'application' => 'Application',
-            'returns_to' => 'Answer sent to',
-            'as_employee' => 'Signed in as',
-            'shop' => 'Shop',
-            'rights' => 'What the assistant will be able to do',
-            'limits' => 'The assistant will never get more rights than your employee profile, and will ask for your confirmation before each change. You can disconnect it at any time from the Piskee module.',
-            'allow' => 'Authorise',
-            'deny' => 'Refuse',
-            'expired_title' => 'Request expired',
-            'expired_text' => 'This connection request is no longer valid. Start the connection again from your assistant.',
-            'help' => 'A question about this connection?',
+            'title' => 'Piskee',
+            'by' => 'El asistente de IA de tu tienda PrestaShop · compatible con Claude',
+            'tagline' => 'Gestiona tu tienda PrestaShop conversando con Claude: catálogo, combinaciones, imágenes, stock, atención al cliente y tema hijo.',
+            'tab_connect' => 'Conexión',
+            'tab_tools' => 'Qué hace el módulo',
+            'tab_theme' => 'Tema hijo',
+            'tab_docs' => 'Documentación',
+            'tab_pro' => 'Gratis / Pro',
+            'tab_about' => 'Acerca de',
+            'status' => 'Estado de la conexión',
+            'status_ok' => 'Todo listo',
+            'status_todo' => 'Acción necesaria',
+            'check_https' => 'HTTPS activo',
+            'check_rewrite' => 'URL amigables activadas',
+            'address' => 'Dirección que debes dar a Claude',
+            'copy' => 'Copiar',
+            'copied' => 'Copiado',
+            'steps' => 'Conecta Claude en 5 pasos',
+            'step1' => 'Abre claude.ai (o la aplicación de Claude) y ve a Configuración y, después, a Conectores.',
+            'step2' => 'Haz clic en Añadir y, después, en Añadir conector personalizado.',
+            'step3' => 'Llámalo «Piskee» y pega la dirección de arriba.',
+            'step4' => 'Mantén los ajustes que detecta Claude (iniciar sesión ahora, registro automático), haz clic en Añadir y, después, en Conectar.',
+            'step5' => 'Se abre tu back office: revisa los permisos solicitados y haz clic en Autorizar. Ya está.',
+            'claude_code' => 'Con Claude Code',
+            'try' => 'Para probarlo, pide a Claude',
+            'try1' => '«Dame la información de mi tienda»',
+            'try2' => '«Haz una auditoría SEO de mi catálogo y propón las 10 correcciones prioritarias»',
+            'try3' => '«¿Qué productos están a punto de agotarse?»',
+            'does' => 'Qué hace el módulo',
+            'does_not' => 'Qué no hace el módulo',
+            'not1' => 'Nunca reembolsa a un cliente ni toca ningún pago.',
+            'not2' => 'Nunca modifica el tema publicado ni un tema padre: solo temas hijo en borrador.',
+            'not3' => 'Nunca publica un tema: eres tú quien hace clic, aquí, en tu back office.',
+            'not4' => 'No elimina productos, clientes ni pedidos.',
+            'not5' => 'Nunca da a Claude más permisos que los del empleado que lo conectó.',
+            'not6' => 'No envía ningún dato a Piskee: todo circula entre tu tienda y Claude.',
+            'safety' => 'Las salvaguardas',
+            'safety1' => 'Cada acción que modifica la tienda se marca ante Claude como sensible: Claude te pide confirmación antes de ejecutarla.',
+            'safety2' => 'Cada modificación del tema se guarda en una copia de seguridad y puede restaurarse.',
+            'safety3' => 'Puedes desactivar el servidor en cualquier momento y desconectar cada asistente, aquí, en la pestaña Conexión.',
+            'reads' => 'lectura',
+            'writes' => 'modificación',
+            'theme_title' => 'Temas hijo y publicación',
+            'theme_intro' => 'Claude solo trabaja en temas hijo en borrador. Cuando el resultado te convenza, eres tú quien lo publica aquí. Comprueba cómo se ve en otro navegador justo después.',
+            'theme_name' => 'Tema',
+            'theme_parent' => 'Padre',
+            'theme_state' => 'Estado',
+            'theme_live' => 'Publicado',
+            'theme_draft' => 'Borrador',
+            'theme_parent_theme' => 'Tema padre',
+            'theme_activate' => 'Publicar',
+            'theme_confirm' => '¿Publicar este tema en la tienda? Los visitantes verán el nuevo diseño de inmediato.',
+            'theme_rollback' => 'Volver al tema anterior',
+            'theme_none' => 'Todavía no hay ningún tema hijo. Pide a Claude: «Crea un tema hijo en borrador de mi tema actual».',
+            'theme_done' => 'El tema está publicado.',
+            'rollback_done' => 'El tema anterior vuelve a estar publicado.',
+            'fix_done' => 'Configuración recomendada aplicada.',
+            'help_title' => '¿Un problema o una pregunta?',
+            'help_text' => 'Una conexión que no funciona, una herramienta que falta, acompañamiento SEO o un desarrollo a medida: el equipo de Piskee te responde.',
+            'help_cta' => 'Contáctanos',
+            'help_whatsapp' => 'WhatsApp',
+            'audit_cta' => 'Auditoría SEO y GEO gratuita en 48 h',
+            'docs_intro' => 'Toda la documentación, en francés, inglés, español, italiano y polaco.',
+            'pro_title' => 'Gratis o Pro',
+            'pro_intro' => 'La versión gratuita es completa para empezar. Pro elimina el límite y añade las funciones avanzadas.',
+            'plan_free' => 'Gratis',
+            'plan_pro' => 'Pro',
+            'plan_current' => 'Tu plan',
+            'plan_usage' => 'modificaciones utilizadas este mes',
+            'plan_reads' => 'La lectura (búsquedas, auditorías, informes) sigue siendo ilimitada. El contador se reinicia el día 1 de cada mes.',
+            'plan_valid' => 'Licencia Pro válida hasta el',
+            'plan_for' => 'para',
+            'compare_feature' => 'Función',
+            'row_tools' => 'Todas las herramientas de catálogo, combinaciones, imágenes, atención al cliente y tema hijo',
+            'row_writes' => 'Modificaciones al mes',
+            'row_writes_free' => '100',
+            'row_writes_pro' => 'Ilimitadas',
+            'row_bulk' => 'Redacción SEO y GEO por lotes, auditoría programada con informe mensual',
+            'row_redirects' => 'Redirecciones 301 (productos y categorías eliminados o renombrados)',
+            'row_refunds' => 'Facturas por abono, devoluciones de productos y reembolsos',
+            'row_multistore' => 'Multitienda y registro de auditoría detallado por empleado',
+            'row_support' => 'Soporte prioritario',
+            'within_quota' => 'dentro de las 100',
+            'per_month' => '/ mes',
+            'pro_cta' => 'Pasar a Pro',
+            'pro_note' => 'Precio de lanzamiento garantizado de por vida para los 100 primeros clientes. Sin permanencia. Pago seguro con Stripe; recibirás la clave de licencia por correo electrónico.',
+            'onboarding_title' => 'Puesta en marcha con la agencia',
+            'onboarding_text' => 'Una sesión con un experto de Piskee: conexión de Claude, ajuste de permisos, primeras auditorías de tu catálogo y tu tema, y las peticiones adecuadas que hacer a Claude para tu tienda.',
+            'onboarding_cta' => 'Reservar la puesta en marcha',
+            'license_title' => 'Clave de licencia Pro',
+            'license_placeholder' => 'Pega aquí la clave recibida por correo electrónico (PKC1...)',
+            'license_save' => 'Guardar',
+            'license_ok' => 'Licencia Pro activada. ¡Gracias por tu confianza!',
+            'license_removed' => 'Licencia retirada: la tienda vuelve al plan gratuito.',
+            'license_error_malformed' => 'Esta clave no es válida. Cópiala completa desde el correo electrónico.',
+            'license_error_signature' => 'Esta clave no ha sido emitida por Piskee.',
+            'license_error_domain' => 'Esta clave se emitió para otro dominio. Contáctanos para transferirla.',
+            'license_error_expired' => 'Esta clave ha caducado. Renueva tu suscripción para seguir en Pro.',
+            'license_error_plan' => 'Esta clave no corresponde al plan Pro.',
+            'license_error_sodium' => 'Falta la extensión PHP sodium en este servidor: no se puede verificar la clave.',
+            'about_title' => 'Acerca de Piskee',
+            'about_text' => 'Piskee es una agencia web, SEO y GEO con sede en Chantilly (Francia), especializada en e-commerce: PrestaShop, Shopify, WordPress, Magento y Webflow. Trabajamos tu visibilidad en Google y en asistentes de IA como ChatGPT, Claude y Perplexity, con un objetivo: la facturación, no solo las posiciones.',
+            'about_services' => 'Auditoría SEO técnica y semántica · Contenidos SEO y GEO · Linkbuilding · Google Ads y Merchant Center · Tracking · Emailing · Creación y rediseño de sitios web',
+            'about_open' => 'Este módulo es de código abierto (licencia AFL-3.0). Integra su propio servidor MCP y su servidor de autorización OAuth 2.1: un solo módulo, sin dependencias.',
+            'about_repo' => 'Código fuente en GitHub',
+            'website' => 'Web de la agencia',
+            'version' => 'Versión',
+            'footer' => 'Piskee es un módulo independiente, no afiliado a Anthropic. Claude es una marca de Anthropic.',
+            'lang_switch' => 'English',
+            'lang_label' => 'Idioma',
+            'check_server' => 'Servidor MCP del módulo activado',
+            'check_admin' => 'Back office localizado para la pantalla de autorización',
+            'check_test' => 'Direcciones públicas accesibles (prueba real)',
+            'run_test' => 'Probar la conexión',
+            'test_ok' => 'Prueba superada: las direcciones MCP y OAuth responden correctamente.',
+            'test_ko' => 'Prueba fallida',
+            'server_toggle_on' => 'Desactivar el servidor',
+            'server_toggle_off' => 'Activar el servidor',
+            'server_off_done' => 'Servidor desactivado: ningún asistente puede actuar ya en la tienda.',
+            'server_on_done' => 'Servidor activado.',
+            'connections' => 'Asistentes conectados',
+            'connections_none' => 'Todavía no hay ningún asistente conectado.',
+            'conn_app' => 'Aplicación',
+            'conn_employee' => 'Empleado',
+            'conn_last' => 'Último uso',
+            'conn_revoke' => 'Desconectar',
+            'revoked' => 'Asistente desconectado.',
+            'welcome_title' => '¡Te damos la bienvenida! Esto es lo que puedes pedir a Claude',
+            'w1' => 'Reescribir los títulos, descripciones y metaetiquetas de tus fichas de producto y categorías, en todos tus idiomas.',
+            'w2' => 'Crear productos y sus combinaciones (tallas, colores) con precios, referencias y stock.',
+            'w3' => 'Añadir imágenes, redactar los textos alternativos, redimensionar y cuadrar tus imágenes.',
+            'w4' => 'Hacer una auditoría SEO y GEO del catálogo y corregir los puntos prioritarios.',
+            'w5' => 'Seguir tus ventas, detectar las roturas de stock y responder a los mensajes de los clientes.',
+            'w6' => 'Crear promociones y cupones de descuento.',
+            'w7' => 'Limpiar las etiquetas Hn, añadir migas de pan y personalizar tu tema, en un tema hijo en borrador.',
+            'w8' => 'Gestionar la venta cruzada: productos relacionados, sugerencias «comprados juntos con frecuencia» basadas en tus pedidos y un bloque de compras adicionales en el carrito.',
+            'w9' => 'Con Piskee Pro: gestión de redirecciones 301 y redirección automática cuando cambia la URL de un producto o de una categoría.',
+            'reco_title' => '¿Qué versión de Claude elegir?',
+            'reco1' => 'Todos los planes de Claude (Free, Pro, Max, Team, Enterprise) aceptan este conector. El plan gratuito está limitado a un solo conector personalizado.',
+            'reco2' => 'Recomendamos Claude Pro para el uso diario y Claude Max para los grandes proyectos (catálogo completo, revisión SEO, tema), que consumen muchos intercambios.',
+            'reco3' => 'En cuanto al modelo: Sonnet para las tareas habituales, rápido y preciso; Opus para las auditorías, la redacción en volumen y las modificaciones del tema.',
+            'reco4' => 'Usa claude.ai o la aplicación de Claude (ordenador o móvil). Los desarrolladores también pueden usar Claude Code.',
+            'legal_title' => 'Aviso legal y responsabilidades',
+            'legal1' => 'Piskee es un módulo independiente editado por Piskee. No es un producto oficial de PrestaShop SA ni de Anthropic, que no lo han desarrollado, revisado ni aprobado, y que no asumen ninguna responsabilidad sobre él.',
+            'legal2' => 'PrestaShop es una marca de PrestaShop SA. Claude es una marca de Anthropic, PBC. Estos nombres se citan únicamente para indicar la compatibilidad.',
+            'legal3' => 'El módulo se proporciona «tal cual», sin garantía, dentro de los límites previstos por la ley y por la licencia AFL-3.0. Las acciones decididas y validadas por el comerciante son responsabilidad suya: haz copias de seguridad periódicas y revisa los cambios propuestos antes de aceptarlos.',
+            'legal4' => 'Las conversaciones con Claude están sujetas a las condiciones de uso de Anthropic. El módulo no transmite ningún dato a Piskee.',
+            'made_in' => 'Diseñado en Chantilly (Francia)',
+            'story_title' => 'Nacido en Chantilly, pensado para los comerciantes',
+            'story_text' => 'Piskee fue ideado y desarrollado en Francia, en Chantilly (Oise), por el equipo de Piskee. Cada día acompañamos a tiendas PrestaShop en su posicionamiento y su crecimiento, y veíamos repetirse una y otra vez las mismas tareas: fichas de producto que reescribir, combinaciones que crear, imágenes que retocar, etiquetas Hn que limpiar. Así que construimos la herramienta que queríamos para nuestros clientes: un asistente que trabaja directamente en tu tienda, con salvaguardas sólidas, y un equipo humano disponible cuando lo necesites.',
+            'email' => 'Correo electrónico',
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private static function uiIt(): array
+    {
+        return [
+            'title' => 'Piskee',
+            'by' => 'L\'assistente IA del tuo negozio PrestaShop · compatibile con Claude',
+            'tagline' => 'Gestisci il tuo negozio PrestaShop conversando con Claude: catalogo, combinazioni, immagini, giacenze, assistenza clienti e tema figlio.',
+            'tab_connect' => 'Connessione',
+            'tab_tools' => 'Cosa fa il modulo',
+            'tab_theme' => 'Tema figlio',
+            'tab_docs' => 'Documentazione',
+            'tab_pro' => 'Gratis / Pro',
+            'tab_about' => 'Chi siamo',
+            'status' => 'Stato della connessione',
+            'status_ok' => 'Tutto pronto',
+            'status_todo' => 'Azione richiesta',
+            'check_https' => 'HTTPS attivo',
+            'check_rewrite' => 'URL semplificati attivati',
+            'address' => 'Indirizzo da fornire a Claude',
+            'copy' => 'Copia',
+            'copied' => 'Copiato',
+            'steps' => 'Collega Claude in 5 passaggi',
+            'step1' => 'Apri claude.ai (o l\'app Claude) e vai in Impostazioni, poi Connettori.',
+            'step2' => 'Clicca su Aggiungi, poi su Aggiungi connettore personalizzato.',
+            'step3' => 'Chiamalo «Piskee» e incolla l\'indirizzo qui sopra.',
+            'step4' => 'Mantieni le impostazioni rilevate da Claude (accesso immediato, registrazione automatica), clicca su Aggiungi e poi su Connetti.',
+            'step5' => 'Si apre il tuo back office: controlla i permessi richiesti e clicca su Autorizza. Fatto.',
+            'claude_code' => 'Con Claude Code',
+            'try' => 'Per provarlo, chiedi a Claude',
+            'try1' => '«Dammi le informazioni del mio negozio»',
+            'try2' => '«Fai un audit SEO del mio catalogo e proponi le 10 correzioni prioritarie»',
+            'try3' => '«Quali prodotti stanno per esaurirsi?»',
+            'does' => 'Cosa fa il modulo',
+            'does_not' => 'Cosa non fa il modulo',
+            'not1' => 'Non rimborsa mai un cliente e non tocca alcun pagamento.',
+            'not2' => 'Non modifica mai il tema online né un tema padre: solo temi figlio in bozza.',
+            'not3' => 'Non mette mai online un tema: sei tu a cliccare, qui, nel tuo back office.',
+            'not4' => 'Non elimina prodotti, clienti né ordini.',
+            'not5' => 'Non dà mai a Claude più permessi del dipendente che lo ha collegato.',
+            'not6' => 'Non invia alcun dato a Piskee: tutto passa tra il tuo negozio e Claude.',
+            'safety' => 'Le protezioni',
+            'safety1' => 'Ogni azione che modifica il negozio viene segnalata a Claude come sensibile: Claude ti chiede conferma prima di eseguirla.',
+            'safety2' => 'Ogni modifica al tema viene salvata e può essere ripristinata.',
+            'safety3' => 'Puoi disattivare il server in qualsiasi momento e scollegare ogni assistente, qui, nella scheda Connessione.',
+            'reads' => 'lettura',
+            'writes' => 'modifica',
+            'theme_title' => 'Temi figlio e messa online',
+            'theme_intro' => 'Claude lavora solo su temi figlio in bozza. Quando il risultato ti convince, sei tu a metterlo online da qui. Subito dopo, controlla la resa su un altro browser.',
+            'theme_name' => 'Tema',
+            'theme_parent' => 'Padre',
+            'theme_state' => 'Stato',
+            'theme_live' => 'Online',
+            'theme_draft' => 'Bozza',
+            'theme_parent_theme' => 'Tema padre',
+            'theme_activate' => 'Metti online',
+            'theme_confirm' => 'Mettere online questo tema sul negozio? I visitatori vedranno subito il nuovo design.',
+            'theme_rollback' => 'Torna al tema precedente',
+            'theme_none' => 'Ancora nessun tema figlio. Chiedi a Claude: «Crea un tema figlio in bozza del mio tema attuale».',
+            'theme_done' => 'Il tema è online.',
+            'rollback_done' => 'Il tema precedente è di nuovo online.',
+            'fix_done' => 'Configurazione consigliata applicata.',
+            'help_title' => 'Un problema, una domanda?',
+            'help_text' => 'Connessione che non funziona, uno strumento che manca, supporto SEO o uno sviluppo su misura: il team Piskee ti risponde.',
+            'help_cta' => 'Contattaci',
+            'help_whatsapp' => 'WhatsApp',
+            'audit_cta' => 'Audit SEO e GEO gratuito in 48 h',
+            'docs_intro' => 'Tutta la documentazione, in francese, inglese, spagnolo, italiano e polacco.',
+            'pro_title' => 'Gratis o Pro',
+            'pro_intro' => 'La versione gratuita è completa per iniziare. Pro elimina il limite e aggiunge le funzioni avanzate.',
+            'plan_free' => 'Gratis',
+            'plan_pro' => 'Pro',
+            'plan_current' => 'Il tuo piano',
+            'plan_usage' => 'modifiche utilizzate questo mese',
+            'plan_reads' => 'La lettura (ricerche, audit, report) resta illimitata. Il contatore si azzera il 1° di ogni mese.',
+            'plan_valid' => 'Licenza Pro valida fino al',
+            'plan_for' => 'per',
+            'compare_feature' => 'Funzione',
+            'row_tools' => 'Tutti gli strumenti per catalogo, combinazioni, immagini, assistenza clienti e tema figlio',
+            'row_writes' => 'Modifiche al mese',
+            'row_writes_free' => '100',
+            'row_writes_pro' => 'Illimitate',
+            'row_bulk' => 'Redazione SEO e GEO in blocco, audit programmato con report mensile',
+            'row_redirects' => 'Redirect 301 (prodotti e categorie eliminati o rinominati)',
+            'row_refunds' => 'Note di credito, resi e rimborsi',
+            'row_multistore' => 'Multinegozio e registro di audit dettagliato per dipendente',
+            'row_support' => 'Supporto prioritario',
+            'within_quota' => 'entro le 100',
+            'per_month' => '/ mese',
+            'pro_cta' => 'Passa a Pro',
+            'pro_note' => 'Prezzo di lancio garantito a vita per i primi 100 clienti. Senza vincoli. Pagamento sicuro con Stripe, la chiave di licenza ti arriva via e-mail.',
+            'onboarding_title' => 'Avvio con l\'agenzia',
+            'onboarding_text' => 'Una sessione con un esperto Piskee: collegamento di Claude, impostazione dei permessi, primi audit del catalogo e del tema, e le richieste giuste da fare a Claude per il tuo negozio.',
+            'onboarding_cta' => 'Prenota l\'avvio',
+            'license_title' => 'Chiave di licenza Pro',
+            'license_placeholder' => 'Incolla qui la chiave ricevuta via e-mail (PKC1...)',
+            'license_save' => 'Salva',
+            'license_ok' => 'Licenza Pro attivata. Grazie per la fiducia!',
+            'license_removed' => 'Licenza rimossa: il negozio torna al piano gratuito.',
+            'license_error_malformed' => 'Questa chiave non è valida. Copiala per intero dall\'e-mail.',
+            'license_error_signature' => 'Questa chiave non è stata emessa da Piskee.',
+            'license_error_domain' => 'Questa chiave è stata emessa per un altro dominio. Contattaci per trasferirla.',
+            'license_error_expired' => 'Questa chiave è scaduta. Rinnova l\'abbonamento per restare in Pro.',
+            'license_error_plan' => 'Questa chiave non corrisponde al piano Pro.',
+            'license_error_sodium' => 'Su questo server manca l\'estensione PHP sodium: la chiave non può essere verificata.',
+            'about_title' => 'Chi è Piskee',
+            'about_text' => 'Piskee è un\'agenzia web, SEO e GEO con sede a Chantilly (Francia), specializzata in e-commerce: PrestaShop, Shopify, WordPress, Magento e Webflow. Lavoriamo sulla tua visibilità su Google e negli assistenti IA come ChatGPT, Claude e Perplexity, con un obiettivo: il fatturato, non solo i posizionamenti.',
+            'about_services' => 'Audit SEO tecnico e semantico · Contenuti SEO e GEO · Link building · Google Ads e Merchant Center · Tracking · Email marketing · Creazione e restyling di siti',
+            'about_open' => 'Questo modulo è open source (licenza AFL-3.0). Integra il proprio server MCP e il proprio server di autorizzazione OAuth 2.1: un solo modulo, nessuna dipendenza.',
+            'about_repo' => 'Codice sorgente su GitHub',
+            'website' => 'Sito dell\'agenzia',
+            'version' => 'Versione',
+            'footer' => 'Piskee è un modulo indipendente, non affiliato ad Anthropic. Claude è un marchio di Anthropic.',
+            'lang_switch' => 'English',
+            'lang_label' => 'Lingua',
+            'check_server' => 'Server MCP del modulo attivato',
+            'check_admin' => 'Back office individuato per la schermata di autorizzazione',
+            'check_test' => 'Indirizzi pubblici raggiungibili (test reale)',
+            'run_test' => 'Testa la connessione',
+            'test_ok' => 'Test riuscito: gli indirizzi MCP e OAuth rispondono correttamente.',
+            'test_ko' => 'Test non riuscito',
+            'server_toggle_on' => 'Disattiva il server',
+            'server_toggle_off' => 'Attiva il server',
+            'server_off_done' => 'Server disattivato: nessun assistente può più agire sul negozio.',
+            'server_on_done' => 'Server attivato.',
+            'connections' => 'Assistenti collegati',
+            'connections_none' => 'Ancora nessun assistente collegato.',
+            'conn_app' => 'Applicazione',
+            'conn_employee' => 'Dipendente',
+            'conn_last' => 'Ultimo utilizzo',
+            'conn_revoke' => 'Scollega',
+            'revoked' => 'Assistente scollegato.',
+            'welcome_title' => 'Benvenuto! Ecco cosa puoi chiedere a Claude',
+            'w1' => 'Riscrivere titoli, descrizioni e meta tag delle schede prodotto e delle categorie, in tutte le tue lingue.',
+            'w2' => 'Creare prodotti e relative combinazioni (taglie, colori) con prezzi, riferimenti e giacenze.',
+            'w3' => 'Aggiungere immagini, scrivere i testi alternativi, ridimensionare e rendere quadrate le tue foto.',
+            'w4' => 'Fare un audit SEO e GEO del catalogo e correggere i punti prioritari.',
+            'w5' => 'Seguire le vendite, individuare i prodotti esauriti e rispondere ai messaggi dei clienti.',
+            'w6' => 'Creare promozioni e buoni sconto.',
+            'w7' => 'Sistemare i tag Hn, aggiungere un breadcrumb e personalizzare il tema, in un tema figlio in bozza.',
+            'w8' => 'Gestire la vendita incrociata: prodotti correlati, suggerimenti «spesso acquistati insieme» ricavati dai tuoi ordini e un blocco di acquisti aggiuntivi nel carrello.',
+            'w9' => 'Con Piskee Pro: gestione dei redirect 301 e redirect automatico quando cambia l\'URL di un prodotto o di una categoria.',
+            'reco_title' => 'Quale versione di Claude scegliere?',
+            'reco1' => 'Tutti i piani Claude (Free, Pro, Max, Team, Enterprise) accettano questo connettore. Il piano gratuito è limitato a un solo connettore personalizzato.',
+            'reco2' => 'Consigliamo Claude Pro per l\'uso quotidiano e Claude Max per i grandi progetti (catalogo completo, revisione SEO, tema), che richiedono molti scambi.',
+            'reco3' => 'Quanto al modello: Sonnet per le attività di tutti i giorni, veloce e preciso; Opus per gli audit, la redazione in volume e le modifiche al tema.',
+            'reco4' => 'Usa claude.ai o l\'app Claude (desktop o mobile). Gli sviluppatori possono usare anche Claude Code.',
+            'legal_title' => 'Note legali e responsabilità',
+            'legal1' => 'Piskee è un modulo indipendente pubblicato da Piskee. Non è un prodotto ufficiale di PrestaShop SA né di Anthropic, che non lo hanno sviluppato, verificato né approvato, e che non se ne assumono alcuna responsabilità.',
+            'legal2' => 'PrestaShop è un marchio di PrestaShop SA. Claude è un marchio di Anthropic, PBC. Questi nomi sono citati solo per indicare la compatibilità.',
+            'legal3' => 'Il modulo è fornito «così com\'è», senza garanzia, nei limiti previsti dalla legge e dalla licenza AFL-3.0. Le azioni decise e approvate dall\'esercente restano sotto la sua responsabilità: esegui backup regolari e controlla le modifiche proposte prima di accettarle.',
+            'legal4' => 'Le conversazioni con Claude sono soggette alle condizioni d\'uso di Anthropic. Il modulo non trasmette alcun dato a Piskee.',
+            'made_in' => 'Progettato a Chantilly (Francia)',
+            'story_title' => 'Nato a Chantilly, pensato per gli esercenti',
+            'story_text' => 'Piskee è stato ideato e sviluppato in Francia, a Chantilly (Oise), dal team di Piskee. Ogni giorno affianchiamo negozi PrestaShop nella loro visibilità sui motori di ricerca e nella loro crescita, e vedevamo tornare sempre le stesse attività: schede prodotto da riscrivere, combinazioni da creare, immagini da sistemare, tag Hn da ripulire. Abbiamo quindi costruito lo strumento che volevamo per i nostri clienti: un assistente che lavora direttamente nel tuo negozio, con protezioni solide, e un team di persone in carne e ossa raggiungibile quando ne hai bisogno.',
+            'email' => 'E-mail',
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private static function uiPl(): array
+    {
+        return [
+            'title' => 'Piskee',
+            'by' => 'Asystent AI Twojego sklepu PrestaShop · współpracuje z Claude',
+            'tagline' => 'Zarządzaj sklepem PrestaShop, rozmawiając z Claude: katalog, kombinacje, zdjęcia, stany magazynowe, obsługa klienta i motyw potomny.',
+            'tab_connect' => 'Połączenie',
+            'tab_tools' => 'Co robi moduł',
+            'tab_theme' => 'Motyw potomny',
+            'tab_docs' => 'Dokumentacja',
+            'tab_pro' => 'Darmowy / Pro',
+            'tab_about' => 'O nas',
+            'status' => 'Stan połączenia',
+            'status_ok' => 'Wszystko gotowe',
+            'status_todo' => 'Wymagane działanie',
+            'check_https' => 'HTTPS włączony',
+            'check_rewrite' => 'Przyjazne adresy URL włączone',
+            'address' => 'Adres do podania w Claude',
+            'copy' => 'Kopiuj',
+            'copied' => 'Skopiowano',
+            'steps' => 'Połącz Claude w 5 krokach',
+            'step1' => 'Otwórz claude.ai (lub aplikację Claude) i przejdź do Ustawień, a następnie do Łączników.',
+            'step2' => 'Kliknij Dodaj, a następnie Dodaj własny łącznik.',
+            'step3' => 'Nazwij go „Piskee” i wklej powyższy adres.',
+            'step4' => 'Zostaw ustawienia wykryte przez Claude (logowanie teraz, automatyczna rejestracja), kliknij Dodaj, a potem Połącz.',
+            'step5' => 'Otworzy się panel administracyjny sklepu: sprawdź wymagane uprawnienia i kliknij Zezwól. Gotowe.',
+            'claude_code' => 'Z Claude Code',
+            'try' => 'Na początek poproś Claude',
+            'try1' => '„Podaj mi informacje o moim sklepie”',
+            'try2' => '„Zrób audyt SEO mojego katalogu i zaproponuj 10 najważniejszych poprawek”',
+            'try3' => '„Których produktów zaraz zabraknie?”',
+            'does' => 'Co robi moduł',
+            'does_not' => 'Czego moduł nie robi',
+            'not1' => 'Nigdy nie zwraca pieniędzy klientom i nie dotyka żadnych płatności.',
+            'not2' => 'Nigdy nie zmienia opublikowanego motywu ani motywu nadrzędnego: tylko szkice motywów potomnych.',
+            'not3' => 'Nigdy nie publikuje motywu: to Ty klikasz, tutaj, w panelu administracyjnym.',
+            'not4' => 'Nie usuwa produktów, klientów ani zamówień.',
+            'not5' => 'Nigdy nie daje Claude większych uprawnień niż pracownik, który go połączył.',
+            'not6' => 'Nie wysyła żadnych danych do Piskee: wszystko odbywa się między Twoim sklepem a Claude.',
+            'safety' => 'Zabezpieczenia',
+            'safety1' => 'Każda czynność zmieniająca sklep jest oznaczana dla Claude jako wrażliwa: Claude prosi Cię o potwierdzenie przed jej wykonaniem.',
+            'safety2' => 'Każda zmiana motywu jest zapisywana w kopii zapasowej i można ją przywrócić.',
+            'safety3' => 'W każdej chwili możesz wyłączyć serwer i odłączyć każdego asystenta, tutaj, w zakładce Połączenie.',
+            'reads' => 'odczyt',
+            'writes' => 'zmiana',
+            'theme_title' => 'Motywy potomne i publikacja',
+            'theme_intro' => 'Claude pracuje wyłącznie na szkicach motywów potomnych. Gdy wynik Ci odpowiada, sam publikujesz go tutaj. Zaraz potem sprawdź wygląd sklepu w innej przeglądarce.',
+            'theme_name' => 'Motyw',
+            'theme_parent' => 'Nadrzędny',
+            'theme_state' => 'Stan',
+            'theme_live' => 'Opublikowany',
+            'theme_draft' => 'Szkic',
+            'theme_parent_theme' => 'Motyw nadrzędny',
+            'theme_activate' => 'Opublikuj',
+            'theme_confirm' => 'Opublikować ten motyw w sklepie? Odwiedzający od razu zobaczą nowy wygląd.',
+            'theme_rollback' => 'Wróć do poprzedniego motywu',
+            'theme_none' => 'Nie ma jeszcze żadnego motywu potomnego. Poproś Claude: „Utwórz szkic motywu potomnego mojego obecnego motywu”.',
+            'theme_done' => 'Motyw jest opublikowany.',
+            'rollback_done' => 'Poprzedni motyw jest ponownie opublikowany.',
+            'fix_done' => 'Zastosowano zalecaną konfigurację.',
+            'help_title' => 'Problem lub pytanie?',
+            'help_text' => 'Połączenie nie działa, brakuje narzędzia, potrzebujesz wsparcia SEO albo rozwiązania na zamówienie: zespół Piskee chętnie odpowie.',
+            'help_cta' => 'Skontaktuj się z nami',
+            'help_whatsapp' => 'WhatsApp',
+            'audit_cta' => 'Bezpłatny audyt SEO i GEO w 48 h',
+            'docs_intro' => 'Pełna dokumentacja po francusku, angielsku, hiszpańsku, włosku i polsku.',
+            'pro_title' => 'Darmowy czy Pro',
+            'pro_intro' => 'Wersja darmowa w pełni wystarcza na start. Pro znosi limit i dodaje funkcje zaawansowane.',
+            'plan_free' => 'Darmowy',
+            'plan_pro' => 'Pro',
+            'plan_current' => 'Twój plan',
+            'plan_usage' => 'zmian wykorzystanych w tym miesiącu',
+            'plan_reads' => 'Odczyt (wyszukiwanie, audyty, raporty) pozostaje bez limitu. Licznik zeruje się 1. dnia każdego miesiąca.',
+            'plan_valid' => 'Licencja Pro ważna do',
+            'plan_for' => 'dla',
+            'compare_feature' => 'Funkcja',
+            'row_tools' => 'Wszystkie narzędzia do katalogu, kombinacji, zdjęć, obsługi klienta i motywu potomnego',
+            'row_writes' => 'Zmiany w miesiącu',
+            'row_writes_free' => '100',
+            'row_writes_pro' => 'Bez limitu',
+            'row_bulk' => 'Partiowe tworzenie treści SEO i GEO, zaplanowany audyt z miesięcznym raportem',
+            'row_redirects' => 'Przekierowania 301 (usunięte lub przemianowane produkty i kategorie)',
+            'row_refunds' => 'Faktury korygujące, zwroty produktów i zwroty pieniędzy',
+            'row_multistore' => 'Multistore i szczegółowy dziennik audytu dla każdego pracownika',
+            'row_support' => 'Wsparcie priorytetowe',
+            'within_quota' => 'w ramach 100',
+            'per_month' => '/ mies.',
+            'pro_cta' => 'Przejdź na Pro',
+            'pro_note' => 'Cena startowa gwarantowana dożywotnio dla pierwszych 100 klientów. Bez zobowiązań. Bezpieczna płatność przez Stripe, klucz licencyjny otrzymasz e-mailem.',
+            'onboarding_title' => 'Wdrożenie z agencją',
+            'onboarding_text' => 'Sesja z ekspertem Piskee: połączenie Claude, ustawienie uprawnień, pierwsze audyty katalogu i motywu oraz właściwe polecenia dla Claude dopasowane do Twojego sklepu.',
+            'onboarding_cta' => 'Zarezerwuj wdrożenie',
+            'license_title' => 'Klucz licencji Pro',
+            'license_placeholder' => 'Wklej tutaj klucz otrzymany e-mailem (PKC1...)',
+            'license_save' => 'Zapisz',
+            'license_ok' => 'Licencja Pro aktywowana. Dziękujemy za zaufanie!',
+            'license_removed' => 'Licencja usunięta: sklep wraca do planu darmowego.',
+            'license_error_malformed' => 'Ten klucz jest nieprawidłowy. Skopiuj go w całości z e-maila.',
+            'license_error_signature' => 'Ten klucz nie został wydany przez Piskee.',
+            'license_error_domain' => 'Ten klucz został wydany dla innej domeny. Skontaktuj się z nami, aby go przenieść.',
+            'license_error_expired' => 'Ten klucz wygasł. Odnów subskrypcję, aby dalej korzystać z Pro.',
+            'license_error_plan' => 'Ten klucz nie dotyczy planu Pro.',
+            'license_error_sodium' => 'Na tym serwerze brakuje rozszerzenia PHP sodium: nie można zweryfikować klucza.',
+            'about_title' => 'O Piskee',
+            'about_text' => 'Piskee to agencja web, SEO i GEO z siedzibą w Chantilly (Francja), specjalizująca się w e-commerce: PrestaShop, Shopify, WordPress, Magento i Webflow. Budujemy Twoją widoczność w Google i w asystentach AI, takich jak ChatGPT, Claude i Perplexity, z jednym celem: sprzedaż, nie tylko pozycje.',
+            'about_services' => 'Techniczny i semantyczny audyt SEO · Treści SEO i GEO · Link building · Google Ads i Merchant Center · Tracking · E-mail marketing · Tworzenie i przebudowa stron',
+            'about_open' => 'Ten moduł jest open source (licencja AFL-3.0). Zawiera własny serwer MCP i własny serwer autoryzacji OAuth 2.1: jeden moduł, żadnych zależności.',
+            'about_repo' => 'Kod źródłowy na GitHubie',
+            'website' => 'Strona agencji',
+            'version' => 'Wersja',
+            'footer' => 'Piskee to niezależny moduł, niepowiązany z Anthropic. Claude jest znakiem towarowym Anthropic.',
+            'lang_switch' => 'English',
+            'lang_label' => 'Język',
+            'check_server' => 'Serwer MCP modułu włączony',
+            'check_admin' => 'Panel administracyjny zlokalizowany dla ekranu autoryzacji',
+            'check_test' => 'Publiczne adresy osiągalne (test na żywo)',
+            'run_test' => 'Przetestuj połączenie',
+            'test_ok' => 'Test zakończony powodzeniem: adresy MCP i OAuth odpowiadają prawidłowo.',
+            'test_ko' => 'Test nieudany',
+            'server_toggle_on' => 'Wyłącz serwer',
+            'server_toggle_off' => 'Włącz serwer',
+            'server_off_done' => 'Serwer wyłączony: żaden asystent nie może już działać w sklepie.',
+            'server_on_done' => 'Serwer włączony.',
+            'connections' => 'Połączeni asystenci',
+            'connections_none' => 'Nie połączono jeszcze żadnego asystenta.',
+            'conn_app' => 'Aplikacja',
+            'conn_employee' => 'Pracownik',
+            'conn_last' => 'Ostatnie użycie',
+            'conn_revoke' => 'Odłącz',
+            'revoked' => 'Asystent odłączony.',
+            'welcome_title' => 'Witaj! Oto o co możesz poprosić Claude',
+            'w1' => 'Przepisanie tytułów, opisów i meta tagów kart produktów i kategorii, we wszystkich Twoich językach.',
+            'w2' => 'Tworzenie produktów i ich kombinacji (rozmiary, kolory) z cenami, indeksami i stanami magazynowymi.',
+            'w3' => 'Dodawanie zdjęć, pisanie tekstów alternatywnych, zmiana rozmiaru i kadrowanie zdjęć do kwadratu.',
+            'w4' => 'Audyt SEO i GEO katalogu oraz poprawa najważniejszych elementów.',
+            'w5' => 'Śledzenie sprzedaży, wykrywanie braków w magazynie i odpowiadanie na wiadomości klientów.',
+            'w6' => 'Tworzenie promocji i kodów rabatowych.',
+            'w7' => 'Porządkowanie nagłówków Hn, dodanie ścieżki nawigacyjnej i personalizacja motywu, w szkicu motywu potomnego.',
+            'w8' => 'Zarządzanie sprzedażą krzyżową: produkty powiązane, sugestie „często kupowane razem” oparte na Twoich zamówieniach i blok dodatkowych zakupów w koszyku.',
+            'w9' => 'W Piskee Pro: zarządzanie przekierowaniami 301 i automatyczne przekierowanie, gdy zmienia się adres URL produktu lub kategorii.',
+            'reco_title' => 'Którą wersję Claude wybrać?',
+            'reco1' => 'Wszystkie plany Claude (Free, Pro, Max, Team, Enterprise) obsługują ten łącznik. Plan darmowy jest ograniczony do jednego własnego łącznika.',
+            'reco2' => 'Polecamy Claude Pro do codziennej pracy, a Claude Max do dużych projektów (cały katalog, przebudowa SEO, motyw), które wymagają wielu wymian.',
+            'reco3' => 'Model: Sonnet do codziennych zadań, szybki i precyzyjny; Opus do audytów, masowego tworzenia treści i zmian w motywie.',
+            'reco4' => 'Korzystaj z claude.ai lub aplikacji Claude (komputer lub telefon). Programiści mogą też używać Claude Code.',
+            'legal_title' => 'Informacje prawne i odpowiedzialność',
+            'legal1' => 'Piskee to niezależny moduł wydawany przez Piskee. Nie jest oficjalnym produktem PrestaShop SA ani Anthropic, które go nie opracowały, nie zweryfikowały ani nie zatwierdziły i nie ponoszą za niego żadnej odpowiedzialności.',
+            'legal2' => 'PrestaShop jest znakiem towarowym PrestaShop SA. Claude jest znakiem towarowym Anthropic, PBC. Nazwy te są używane wyłącznie w celu wskazania kompatybilności.',
+            'legal3' => 'Moduł jest dostarczany „w stanie, w jakim jest”, bez gwarancji, w granicach przewidzianych przez prawo i licencję AFL-3.0. Za działania podjęte i zatwierdzone przez sprzedawcę odpowiada sprzedawca: regularnie twórz kopie zapasowe i sprawdzaj proponowane zmiany przed ich zaakceptowaniem.',
+            'legal4' => 'Rozmowy z Claude podlegają warunkom korzystania z usług Anthropic. Moduł nie przekazuje żadnych danych do Piskee.',
+            'made_in' => 'Zaprojektowano w Chantilly (Francja)',
+            'story_title' => 'Narodzony w Chantilly, stworzony dla sprzedawców',
+            'story_text' => 'Piskee został wymyślony i zbudowany we Francji, w Chantilly (Oise), przez zespół Piskee. Na co dzień wspieramy sklepy PrestaShop w pozycjonowaniu i rozwoju i ciągle widzieliśmy te same powtarzalne zadania: karty produktów do przepisania, kombinacje do utworzenia, zdjęcia do poprawienia, nagłówki Hn do uporządkowania. Zbudowaliśmy więc narzędzie, jakiego chcieliśmy dla naszych klientów: asystenta, który pracuje bezpośrednio w Twoim sklepie, z solidnymi zabezpieczeniami, i zespół ludzi, z którym skontaktujesz się, gdy tylko zajdzie potrzeba.',
+            'email' => 'E-mail',
         ];
     }
 }

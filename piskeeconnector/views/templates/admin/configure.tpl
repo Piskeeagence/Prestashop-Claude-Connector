@@ -23,7 +23,7 @@
         <span class="pkc-status__dot"></span>{if $pk.ready}{$t.status_ok|escape:'html':'UTF-8'}{else}{$t.status_todo|escape:'html':'UTF-8'}{/if}
       </span>
       <a class="pkc-btn pkc-btn--cream" href="{$pk.brand.contact|escape:'html':'UTF-8'}" target="_blank" rel="noopener">{$t.help_cta|escape:'html':'UTF-8'}</a>
-      <a class="pkc-link-light" href="{$pk.switch_url|escape:'html':'UTF-8'}">{$t.lang_switch|escape:'html':'UTF-8'}</a>
+      <span class="pkc-langs">{foreach $pk.lang_urls as $code => $url}<a class="pkc-link-light{if $pk.lang == $code} is-active{/if}" href="{$url|escape:'html':'UTF-8'}" hreflang="{$code|escape:'html':'UTF-8'}" title="{$pk.lang_names[$code]|escape:'html':'UTF-8'}">{$code|upper|escape:'html':'UTF-8'}</a>{/foreach}</span>
     </div>
   </header>
 
@@ -253,18 +253,16 @@
         <div class="pkc-card pkc-doc">
           <p class="pkc-muted">{$t.docs_intro|escape:'html':'UTF-8'}</p>
           <div class="pkc-doc__switch">
-            <button type="button" class="pkc-chip {if $pk.lang == 'fr'}is-active{/if}" data-doc="fr">Français</button>
-            <button type="button" class="pkc-chip {if $pk.lang != 'fr'}is-active{/if}" data-doc="en">English</button>
+            {foreach $pk.lang_names as $code => $name}<button type="button" class="pkc-chip {if $pk.lang == $code}is-active{/if}" data-doc="{$code|escape:'html':'UTF-8'}">{$name|escape:'html':'UTF-8'}</button>{/foreach}
           </div>
-          <article class="pkc-doc__body {if $pk.lang == 'fr'}is-active{/if}" data-doc-body="fr">{$pk.docs.fr nofilter}</article>
-          <article class="pkc-doc__body {if $pk.lang != 'fr'}is-active{/if}" data-doc-body="en">{$pk.docs.en nofilter}</article>
+          {foreach $pk.docs as $code => $html}<article class="pkc-doc__body {if $pk.lang == $code}is-active{/if}" data-doc-body="{$code|escape:'html':'UTF-8'}">{$html nofilter}</article>{/foreach}
         </div>
       </section>
 
       {* ---------- Free / Pro ---------- *}
       <section class="pkc-panel" data-panel="pro">
         <div class="pkc-card">
-          <h2>{$t.plan_current|escape:'html':'UTF-8'} : {if $pk.plan.license.valid}{$t.plan_pro|escape:'html':'UTF-8'}{else}{$t.plan_free|escape:'html':'UTF-8'}{/if}</h2>
+          <h2>{$t.plan_current|escape:'html':'UTF-8'}{if $pk.lang == 'fr'}&nbsp;:{else}:{/if} {if $pk.plan.license.valid}{$t.plan_pro|escape:'html':'UTF-8'}{else}{$t.plan_free|escape:'html':'UTF-8'}{/if}</h2>
           {if $pk.plan.license.valid}
             <p>{$t.plan_valid|escape:'html':'UTF-8'} <strong>{$pk.plan.license.expires|escape:'html':'UTF-8'}</strong> {$t.plan_for|escape:'html':'UTF-8'} <strong>{$pk.plan.license.domain|escape:'html':'UTF-8'}</strong>.</p>
           {else}
@@ -350,7 +348,7 @@
 
     <aside class="pkc-aside">
       <div class="pkc-card pkc-plan-card">
-        <h2>{$t.plan_current|escape:'html':'UTF-8'} : {if $pk.plan.license.valid}{$t.plan_pro|escape:'html':'UTF-8'}{else}{$t.plan_free|escape:'html':'UTF-8'}{/if}</h2>
+        <h2>{$t.plan_current|escape:'html':'UTF-8'}{if $pk.lang == 'fr'}&nbsp;:{else}:{/if} {if $pk.plan.license.valid}{$t.plan_pro|escape:'html':'UTF-8'}{else}{$t.plan_free|escape:'html':'UTF-8'}{/if}</h2>
         {if $pk.plan.license.valid}
           <p class="pkc-muted">{$t.plan_valid|escape:'html':'UTF-8'} <strong>{$pk.plan.license.expires|escape:'html':'UTF-8'}</strong>.</p>
         {else}

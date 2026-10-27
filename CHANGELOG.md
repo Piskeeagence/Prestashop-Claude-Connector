@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.3.0
+- Extension point for Piskee add-ons: modules can publish extra tools to Claude through the hook `actionPiskeeConnectorTools` (name, title, description, scope, permission, handler). Add-on tools are offered only to shops with a valid Pro licence, are checked like core tools (OAuth scope and the employee's own rights), and cannot replace a core tool.
+- Piskee Pro 301 redirects (separate Pro add-on): redirects managed by Claude or from the back office, automatic redirects when the URL of a product, category or CMS page changes or when it is deleted, and 404 pages from the native "Pages not found" module.
+- Pro launch price: €29 excl. VAT per month, locked in for life for the first 100 customers.
+- Spanish, Italian and Polish: module page, consent screen, tool titles, prompts and full documentation (FR, EN, ES, IT, PL), with a language menu on the module page.
+- PrestaShop 1.7: the module page now loads its stylesheet and script (1.7 refused asset paths with a version query string).
+- Add-on tools are accepted only from Piskee's own add-ons, and only when their scope and permission agree (no write tool shown as read-only).
+
 ## 2.2.0
 - Cross-selling and cart: four new tools.
   - `get_cross_selling`: related products, products bought together in real orders, and the cross-selling modules installed with where they appear.

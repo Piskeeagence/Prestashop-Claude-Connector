@@ -21,6 +21,12 @@ if (!defined('_PS_VERSION_')) {
  */
 class PiskeeConnectorTools
 {
+    /** Modules allowed to add tools through actionPiskeeConnectorTools. */
+    private const ADDONS = ['piskeeconnectorpro'];
+
+    /** @var array<int, array<string, array<string, mixed>>> */
+    private static $extensions = [];
+
     private const LOST_ANSWER = ' If the answer is lost, read the object again before calling this tool a second time.';
 
     /**
@@ -38,18 +44,22 @@ class PiskeeConnectorTools
         $cms = new PiskeeConnectorCms();
         $cross = new PiskeeConnectorCrossSelling();
 
+        $instances = ['catalog' => $catalog, 'variants' => $variants, 'merch' => $merch, 'images' => $images, 'ops' => $ops, 'themes' => $themes, 'orders' => $orders, 'cms' => $cms, 'cross' => $cross];
         $tools = [];
-        foreach (self::definitions() as $name => $def) {
-            [$object, $method] = $def['handler'];
-            $instance = ['catalog' => $catalog, 'variants' => $variants, 'merch' => $merch, 'images' => $images, 'ops' => $ops, 'themes' => $themes, 'orders' => $orders, 'cms' => $cms, 'cross' => $cross][$object];
-            $handler = [$instance, $method];
+        foreach (self::all() as $name => $def) {
+            if (is_array($def['handler']) && is_string($def['handler'][0] ?? null) && isset($instances[$def['handler'][0]])) {
+                [$object, $method] = $def['handler'];
+                $handler = [$instances[$object], $method];
+            } else {
+                $handler = $def['handler'];
+            }
             if ($def['permission'][0] !== 'view' && empty($def['self_metered'])) {
                 // Changes go through the free plan allowance; reads never do.
                 $handler = PiskeeConnectorLicense::metered($handler);
             }
             $tools[] = [
                 'name' => $name,
-                'title' => PiskeeConnectorI18n::toolTitle($name, $lang),
+                'title' => isset($def['title']) && is_array($def['title']) ? PiskeeConnectorI18n::pick($def['title'], $lang, $name) : PiskeeConnectorI18n::toolTitle($name, $lang),
                 'description' => $def['description'],
                 'input' => self::schema($def['input'] ?? []),
                 'scopes' => [$def['scope']],
@@ -82,11 +92,79 @@ class PiskeeConnectorTools
     public static function summary(): array
     {
         $out = [];
-        foreach (self::definitions() as $name => $def) {
-            $out[$name] = ['group' => $def['group'], 'scope' => $def['scope'], 'writes' => $def['permission'][0] !== 'view'];
+        foreach (self::all() as $name => $def) {
+            $out[$name] = ['group' => $def['group'], 'scope' => $def['scope'], 'writes' => $def['permission'][0] !== 'view', 'title' => $def['title'] ?? null];
         }
 
         return $out;
+    }
+
+    /**
+     * Core tools, plus the tools of Piskee add-ons when the shop is on Pro.
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    private static function all(): array
+    {
+        return self::definitions() + self::extensions();
+    }
+
+    /**
+     * Tools brought by add-on modules (such as Piskee Pro) through the hook
+     * actionPiskeeConnectorTools. Each one must give a name, a title keyed by
+     * language (fr, en, es, it, pl; falls back to en), a description, a known scope, a permission and a callable
+     * handler. Anything malformed is ignored; core tool names cannot be
+     * replaced. Add-on tools are offered only to shops with a valid Pro key.
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    public static function extensions(): array
+    {
+        $shop = Context::getContext()->shop;
+        $idShop = isset($shop->id) ? (int) $shop->id : (int) Configuration::get('PS_SHOP_DEFAULT');
+        if (isset(self::$extensions[$idShop])) {
+            return self::$extensions[$idShop];
+        }
+        self::$extensions[$idShop] = [];
+        if ($idShop <= 0 || !PiskeeConnectorLicense::isPro($idShop)) {
+            return [];
+        }
+        try {
+            $answers = Hook::exec('actionPiskeeConnectorTools', [], null, true);
+        } catch (Throwable $e) {
+            return [];
+        }
+        if (!is_array($answers)) {
+            return [];
+        }
+        $core = self::definitions();
+        $scopes = self::scopeNames();
+        $out = [];
+        foreach ($answers as $module => $tools) {
+            // Only Piskee's own add-ons may publish tools to the assistant.
+            if (!in_array((string) $module, self::ADDONS, true) || !is_array($tools)) {
+                continue;
+            }
+            foreach ($tools as $name => $def) {
+                if (!is_string($name) || !preg_match('/^[a-z][a-z0-9_]{2,63}$/', $name) || isset($core[$name]) || isset($out[$name])
+                    || !is_array($def) || !is_callable($def['handler'] ?? null) || !is_string($def['description'] ?? null)
+                    || !in_array($def['scope'] ?? '', $scopes, true)
+                    || !is_array($def['permission'] ?? null) || !in_array($def['permission'][0] ?? '', ['view', 'add', 'edit', 'delete'], true)
+                    || !is_string($def['permission'][1] ?? null)
+                    || !is_array($def['title'] ?? null) || !is_string($def['title']['en'] ?? null)) {
+                    continue;
+                }
+                // A read scope goes with a view right, a write scope with a change right: no write tool shown as read-only.
+                $reads = (bool) preg_match('/\.read$/', (string) $def['scope']);
+                if ($reads !== ($def['permission'][0] === 'view')) {
+                    continue;
+                }
+                $def['group'] = is_string($def['group'] ?? null) ? $def['group'] : 'pro';
+                $out[$name] = $def;
+            }
+        }
+
+        return self::$extensions[$idShop] = $out;
     }
 
     /**

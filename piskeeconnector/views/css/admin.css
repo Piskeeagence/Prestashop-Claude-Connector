@@ -214,3 +214,6 @@
 .pkc .pkc-plan-card .pkc-muted { font-size: 12px; margin-bottom: 12px; }
 
 .pkc .pkc-badge-pro { display: inline-block; padding: 1px 8px; border-radius: 999px; background: var(--pkc-olive); color: var(--pkc-white); font-size: 11px; font-weight: 700; letter-spacing: .02em; margin-right: 4px; }
+.pkc-langs{display:inline-flex;gap:10px;align-items:center}
+.pkc-langs .pkc-link-light{opacity:.7;font-weight:600}
+.pkc-langs .pkc-link-light.is-active{opacity:1;text-decoration:underline}
