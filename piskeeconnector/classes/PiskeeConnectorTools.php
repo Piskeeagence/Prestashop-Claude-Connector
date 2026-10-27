@@ -36,11 +36,12 @@ class PiskeeConnectorTools
         $themes = new PiskeeConnectorThemes();
         $orders = new PiskeeConnectorOrders();
         $cms = new PiskeeConnectorCms();
+        $cross = new PiskeeConnectorCrossSelling();
 
         $tools = [];
         foreach (self::definitions() as $name => $def) {
             [$object, $method] = $def['handler'];
-            $instance = ['catalog' => $catalog, 'variants' => $variants, 'merch' => $merch, 'images' => $images, 'ops' => $ops, 'themes' => $themes, 'orders' => $orders, 'cms' => $cms][$object];
+            $instance = ['catalog' => $catalog, 'variants' => $variants, 'merch' => $merch, 'images' => $images, 'ops' => $ops, 'themes' => $themes, 'orders' => $orders, 'cms' => $cms, 'cross' => $cross][$object];
             $handler = [$instance, $method];
             if ($def['permission'][0] !== 'view' && empty($def['self_metered'])) {
                 // Changes go through the free plan allowance; reads never do.
@@ -417,14 +418,59 @@ class PiskeeConnectorTools
                 'handler' => ['merch', 'listBrands'],
                 'description' => 'Lists brands (manufacturers) with id and product count, to set id_manufacturer with update_product.',
             ],
+            'get_cross_selling' => [
+                'group' => 'crossselling', 'scope' => 'catalog.read', 'permission' => ['view', 'AdminProducts'],
+                'handler' => ['cross', 'getCrossSelling'],
+                'description' => 'Cross-selling of one product: its related products (accessories shown on the product page), the products customers actually bought with it in valid orders, and the cross-selling or cart upsell modules installed on the shop with where they appear (product page, cart). Read it before changing related products.',
+                'input' => ['properties' => [
+                    'id_product' => $productId,
+                    'period_days' => ['type' => 'integer', 'minimum' => 7, 'maximum' => 1095, 'description' => 'Orders taken into account, default 365 days.'],
+                ], 'required' => ['id_product']],
+            ],
+            'suggest_related_products' => [
+                'group' => 'crossselling', 'scope' => 'catalog.read', 'permission' => ['view', 'AdminProducts'],
+                'handler' => ['cross', 'suggestRelatedProducts'],
+                'description' => 'Suggests related products from real orders ("bought together"), for one product or for the best sellers, leaving out inactive, out of stock and already related products. Nothing is changed: show the suggestions to the merchant, then apply the approved ones.',
+                'input' => ['properties' => [
+                    'id_product' => self::id('One product. Leave out to get suggestions for the best sellers.'),
+                    'limit' => ['type' => 'integer', 'minimum' => 1, 'maximum' => 30, 'description' => 'Best sellers to cover, default 15.'],
+                    'per_product' => ['type' => 'integer', 'minimum' => 1, 'maximum' => 10, 'description' => 'Suggestions per product, default 4.'],
+                    'min_orders' => ['type' => 'integer', 'minimum' => 1, 'description' => 'Orders where both were bought, default 2.'],
+                    'period_days' => ['type' => 'integer', 'minimum' => 7, 'maximum' => 1095],
+                ]],
+            ],
             'set_related_products' => [
-                'group' => 'enrichment', 'scope' => 'catalog.write', 'permission' => ['edit', 'AdminProducts'],
-                'handler' => ['merch', 'setRelatedProducts'],
-                'description' => 'Replaces the related products (accessories) shown on a product page with the given list. An empty list removes them all.',
+                'group' => 'crossselling', 'scope' => 'catalog.write', 'permission' => ['edit', 'AdminProducts'],
+                'handler' => ['cross', 'setRelatedProducts'],
+                'description' => 'Changes the related products (accessories) shown on a product page: replace the whole list, add products to it, or remove some. With replace, an empty list removes them all.',
                 'input' => ['properties' => [
                     'id_product' => $productId,
                     'related_ids' => ['type' => 'array', 'items' => ['type' => 'integer']],
+                    'mode' => ['type' => 'string', 'enum' => ['replace', 'add', 'remove'], 'description' => 'Default replace.'],
                 ], 'required' => ['id_product', 'related_ids']],
+            ],
+            'bulk_set_related_products' => [
+                'group' => 'crossselling', 'scope' => 'catalog.write', 'permission' => ['edit', 'AdminProducts'], 'self_metered' => true,
+                'handler' => ['cross', 'bulkSetRelatedProducts'],
+                'description' => 'Applies related products to up to 50 products in one call (default mode add), typically the suggestions approved by the merchant. On the free plan each changed product counts as one change.',
+                'input' => ['properties' => [
+                    'products' => ['type' => 'array', 'minItems' => 1, 'maxItems' => 50, 'items' => ['type' => 'object', 'additionalProperties' => false, 'properties' => [
+                        'id_product' => ['type' => 'integer', 'minimum' => 1],
+                        'related_ids' => ['type' => 'array', 'items' => ['type' => 'integer']],
+                        'mode' => ['type' => 'string', 'enum' => ['replace', 'add', 'remove']],
+                    ], 'required' => ['id_product', 'related_ids']]],
+                ], 'required' => ['products']],
+            ],
+            'configure_cross_selling_block' => [
+                'group' => 'crossselling', 'scope' => 'marketing.write', 'permission' => ['edit', 'AdminModulesSf'],
+                'handler' => ['cross', 'configureCrossSellingBlock'],
+                'description' => 'Sets the native PrestaShop block "customers who bought this product also bought" (module ps_crossselling): number of products, prices shown, and whether it appears on the product page and in the cart, as additional purchases. Third-party modules are not configured here. Only the fields given change.',
+                'input' => ['properties' => [
+                    'products_count' => ['type' => 'integer', 'minimum' => 1, 'maximum' => 20],
+                    'show_price' => ['type' => 'boolean'],
+                    'show_on_product_page' => ['type' => 'boolean'],
+                    'show_in_cart' => ['type' => 'boolean', 'description' => 'Show the block on the cart page.'],
+                ]],
             ],
             'list_promotions' => [
                 'group' => 'enrichment', 'scope' => 'catalog.read', 'permission' => ['view', 'AdminProducts'],

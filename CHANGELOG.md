@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.2.0
+- Cross-selling and cart: four new tools.
+  - `get_cross_selling`: related products, products bought together in real orders, and the cross-selling modules installed with where they appear.
+  - `suggest_related_products`: "frequently bought together" suggestions for one product or the best sellers, leaving out inactive, out of stock and already related products.
+  - `bulk_set_related_products`: related products for up to 50 products at once.
+  - `configure_cross_selling_block`: the native "customers who also bought" block (ps_crossselling), on the product page and in the cart.
+- `set_related_products` can now add, remove or replace.
+- The module description and welcome list mention cross-selling and the 301 redirects of Piskee Pro.
+
 ## 2.1.0
 - PrestaShop 1.7 support: a single module now runs on PrestaShop 1.7.6 to 9.x, PHP 7.2 to 8.3.
   - On 1.7 the consent screen uses the legacy back office controller; on 8 and 9 it uses the Symfony route.

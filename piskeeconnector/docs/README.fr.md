@@ -41,6 +41,8 @@ Puis tapez `/mcp` dans Claude Code pour vous connecter.
 
 **Enrichissement** : caractéristiques, marques, produits associés, promotions (pourcentage ou montant, avec dates), et un audit complet du catalogue qui liste ce qui freine vos ventes et votre référencement.
 
+**Vente croisée et panier** : produits associés (ajout, retrait, remplacement, jusqu'à 50 produits d'un coup), suggestions « souvent achetés ensemble » calculées à partir de vos vraies commandes, et bloc natif « les clients ont aussi acheté » sur la fiche produit et dans le panier, en achats additionnels. Les autres modules de vente additionnelle sont détectés et listés, jamais modifiés.
+
 **Commandes et suivi** : rechercher une commande (référence, client, numéro de suivi), la lire avec son historique et son lien de suivi transporteur, changer son statut, renseigner un numéro de suivi.
 
 **Pages CMS et traductions** : lire et modifier les pages CMS, modifier jusqu'à 50 produits d'un coup (prix, statuts, textes ou traductions).

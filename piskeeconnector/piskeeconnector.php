@@ -30,6 +30,7 @@ require_once __DIR__ . '/classes/PiskeeConnectorImages.php';
 require_once __DIR__ . '/classes/PiskeeConnectorOperations.php';
 require_once __DIR__ . '/classes/PiskeeConnectorOrders.php';
 require_once __DIR__ . '/classes/PiskeeConnectorCms.php';
+require_once __DIR__ . '/classes/PiskeeConnectorCrossSelling.php';
 require_once __DIR__ . '/classes/PiskeeConnectorThemes.php';
 require_once __DIR__ . '/classes/PiskeeConnectorTools.php';
 require_once __DIR__ . '/classes/PiskeeConnectorOAuth.php';
@@ -45,7 +46,7 @@ class Piskeeconnector extends Module
     {
         $this->name = 'piskeeconnector';
         $this->tab = 'administration';
-        $this->version = '2.1.0';
+        $this->version = '2.2.0';
         $this->author = 'Piskee';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -56,8 +57,8 @@ class Piskeeconnector extends Module
         $fr = isset($this->context->language) && Tools::strtolower((string) $this->context->language->iso_code) === 'fr';
         $this->displayName = $fr ? 'Piskee, l\'assistant IA de votre boutique (compatible Claude)' : 'Piskee, the AI assistant for your shop (works with Claude)';
         $this->description = $fr
-            ? 'Pilotez votre boutique avec Claude : catalogue, déclinaisons, images, stocks, service client et thème enfant. Module indépendant, non officiel.'
-            : 'Run your shop with Claude: catalogue, combinations, images, stock, customer service and child theme. Independent, unofficial module.';
+            ? 'Pilotez votre boutique avec Claude : catalogue, déclinaisons, images, stocks, vente croisée, service client et thème enfant. Redirections 301 avec Piskee Pro. Module indépendant, non officiel.'
+            : 'Run your shop with Claude: catalogue, combinations, images, stock, cross-selling, customer service and child theme. 301 redirects with Piskee Pro. Independent, unofficial module.';
         $this->confirmUninstall = $fr
             ? 'Tous les assistants connectés seront déconnectés. Continuer ?'
             : 'Every connected assistant will be disconnected. Continue?';

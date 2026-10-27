@@ -41,6 +41,8 @@ Then type `/mcp` in Claude Code to log in.
 
 **Enrichment**: features, brands, related products, promotions (percentage or amount, with dates), and a full catalogue audit listing what holds back your sales and search visibility.
 
+**Cross-selling and cart**: related products (add, remove, replace, up to 50 products at once), "frequently bought together" suggestions computed from your real orders, and the native "customers who also bought" block on the product page and in the cart as additional purchases. Other upsell modules are detected and listed, never changed.
+
 **Orders and tracking**: find an order (reference, customer, tracking number), read it with its history and carrier tracking link, change its status, set a tracking number.
 
 **CMS pages and translations**: read and update CMS pages, update up to 50 products at once (prices, statuses, texts or translations).

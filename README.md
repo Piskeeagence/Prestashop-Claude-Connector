@@ -20,6 +20,7 @@ The module ships its own MCP server and its own OAuth 2.1 authorisation server. 
 | **Combinations** | Create attribute groups and values. Generate up to 100 combinations at once, with price impact, reference, EAN and stock. |
 | **Images** | Add an image from a URL. Write alt texts and choose the cover. Downsize heavy originals or put them on a square canvas (originals are kept). Rebuild every thumbnail. |
 | **Enrichment** | Features, brands, related products, promotions. A full catalogue audit: missing texts, duplicate titles, out-of-stock but active products, and more. |
+| **Cross-selling & cart** | Related products (add, remove, replace, in bulk). "Frequently bought together" suggestions computed from your real orders. The native "customers who also bought" block, on the product page and as additional purchases in the cart. Third-party upsell modules are detected and reported. |
 | **Orders** | Find and read orders, change status, set tracking numbers. |
 | **Customer service** | Read customer messages and reply by email after your approval. Create vouchers. |
 | **CMS & translations** | Read and update CMS pages. Translate products, categories and pages in batches. |
@@ -78,7 +79,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 The free module allows **100 changes per month** per shop. Reading, searching and audits are unlimited.
 
 **Piskee Pro** costs €30 excl. VAT per month, with no commitment. It removes the limit and adds:
-- 301 redirects, with automatic redirects when a URL changes.
+- **301 redirect management**, with an automatic redirect when the URL of a product or category changes.
 - Credit slips and returns.
 - Multistore with an audit log.
 - GEO content fields, `llms.txt` and an AI product feed.
