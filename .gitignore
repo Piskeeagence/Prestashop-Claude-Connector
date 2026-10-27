@@ -1,0 +1,5 @@
+piskeeconnector/pro/
+*.key
+*.zip
+.DS_Store
+/build/

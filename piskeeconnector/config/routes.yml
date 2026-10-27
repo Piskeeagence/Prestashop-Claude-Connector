@@ -1,0 +1,9 @@
+# The "api_" prefix keeps PrestaShop from requiring an admin "_token" in the
+# URL: this page is reached from an assistant's redirect, never from a back
+# office link. The firewall still requires a logged-in employee, and the
+# decision is protected by a single-use request id and a per-employee nonce.
+api_piskeeconnector_consent:
+  path: /piskeeconnector/consent
+  methods: [GET, POST]
+  defaults:
+    _controller: 'Piskee\Connector\Controller\ConsentController::index'
