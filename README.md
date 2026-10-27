@@ -113,7 +113,7 @@ Then type `/mcp` to sign in.
 | GEO content fields, `llms.txt`, AI product feed | — | Coming soon |
 | Credit slips and returns, multistore with an audit log | — | Coming soon |
 | Priority support | — | ✓ |
-| Price | **€0** | **€30 excl. VAT / month**, cancel anytime |
+| Price | **€0** | **€29 excl. VAT / month**, locked in for life for the first 100 customers. Cancel anytime |
 
 Start free. When your catalogue work outgrows 100 changes a month, the module tells you, and going Pro takes a minute from the *Free / Pro* tab.
 
@@ -192,7 +192,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
   - tout est sauvegardé ;
   - aucune donnée ne passe par Piskee.
 - **Installation en 5 minutes :** aucun module ni compte PrestaShop supplémentaire. Compatible **PrestaShop 1.7.6 à 9**, PHP 7.2 et plus.
-- **Gratuit** jusqu'à 100 modifications par mois. **Pro illimité** à 30 € HT par mois, sans engagement.
+- **Gratuit** jusqu'à 100 modifications par mois. **Pro illimité** à 29 € HT par mois, prix garanti à vie pour les 100 premiers clients, sans engagement.
 
 [⬇ Télécharger le module](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Documentation en français](piskeeconnector/docs/README.fr.md)
 
