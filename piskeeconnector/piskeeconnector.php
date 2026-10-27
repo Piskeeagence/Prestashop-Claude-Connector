@@ -45,11 +45,11 @@ class Piskeeconnector extends Module
     {
         $this->name = 'piskeeconnector';
         $this->tab = 'administration';
-        $this->version = '2.0.3';
+        $this->version = '2.1.0';
         $this->author = 'Piskee';
         $this->need_instance = 0;
         $this->bootstrap = true;
-        $this->ps_versions_compliancy = ['min' => '8.0.0', 'max' => '9.99.99'];
+        $this->ps_versions_compliancy = ['min' => '1.7.6.0', 'max' => '9.99.99'];
 
         parent::__construct();
 
@@ -65,6 +65,11 @@ class Piskeeconnector extends Module
 
     public function install(): bool
     {
+        if (PHP_VERSION_ID < 70200) {
+            $this->_errors[] = 'Piskee needs PHP 7.2 or later.';
+
+            return false;
+        }
         $ok = parent::install()
             && $this->installDatabase()
             && $this->installTab()
@@ -353,7 +358,9 @@ class Piskeeconnector extends Module
         [$s, , $auth] = $probe(PiskeeConnectorOAuth::resource(), 'POST');
         $out[] = ['label' => 'MCP endpoint asks for authentication', 'ok' => $s === 401 && stripos($auth, 'resource_metadata') !== false, 'detail' => 'HTTP ' . $s . ($s === 401 && $auth === '' ? ' (WWW-Authenticate header missing)' : '')];
         // Without a back office session the consent page sends to the login page.
-        [$s] = $probe($base . '/' . $this->adminDir() . '/index.php/modules/piskeeconnector/consent');
+        [$s] = $probe($base . '/' . $this->adminDir() . (version_compare(_PS_VERSION_, '8.0.0', '>=')
+            ? '/index.php/modules/piskeeconnector/consent'
+            : '/index.php?controller=AdminPiskeeConnectorConsent'));
         $out[] = ['label' => 'Consent page of the back office', 'ok' => in_array($s, [200, 301, 302, 303], true), 'detail' => 'HTTP ' . $s . ($s === 404 ? ' (clear the cache in Advanced parameters > Performance)' : '')];
 
         return $out;
@@ -434,6 +441,8 @@ class Piskeeconnector extends Module
         foreach (Language::getLanguages(false) as $language) {
             $tab->name[(int) $language['id_lang']] = 'Piskee';
         }
+        // A shop whose language list is empty still has a default language.
+        $tab->name[(int) Configuration::get('PS_LANG_DEFAULT')] = 'Piskee';
 
         return (bool) $tab->add();
     }

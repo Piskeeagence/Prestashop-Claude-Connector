@@ -626,8 +626,8 @@ class PiskeeConnectorThemes
         if ($previous === $name) {
             return 'This theme is already live.';
         }
-        if (self::family($name) !== self::family($previous)) {
-            return 'This draft is based on "' . self::family($name) . '", but the live theme is based on "' . self::family($previous)
+        if (self::themeFamily($name) !== self::themeFamily($previous)) {
+            return 'This draft is based on "' . self::themeFamily($name) . '", but the live theme is based on "' . self::themeFamily($previous)
                 . '". Changing theme family reconfigures modules, hooks and image sizes: do it from Design > Theme & Logo in PrestaShop, after a backup.';
         }
         $error = self::switchTheme($shop, $name);
@@ -651,7 +651,7 @@ class PiskeeConnectorThemes
             return 'No previous theme is known.';
         }
         $shop = new Shop($idShop);
-        if (self::family($previous) !== self::family((string) $shop->theme_name)) {
+        if (self::themeFamily($previous) !== self::themeFamily((string) $shop->theme_name)) {
             return 'The live theme was changed outside Piskee since then: go back from Design > Theme & Logo in PrestaShop.';
         }
         $error = self::switchTheme($shop, $previous);
@@ -665,7 +665,7 @@ class PiskeeConnectorThemes
     /**
      * The parent theme a theme belongs to (itself for a parent theme).
      */
-    private static function family(string $name): string
+    private static function themeFamily(string $name): string
     {
         $config = self::config($name);
         $parent = (string) ($config['parent'] ?? '');
@@ -966,10 +966,14 @@ class PiskeeConnectorThemes
         }
         $scheme = Tools::strtolower((string) ($parts['scheme'] ?? ''));
         $port = (int) ($parts['port'] ?? ($scheme === 'https' ? 443 : 80));
-        if (!in_array($scheme, ['http', 'https'], true) || !in_array($port, [80, 443], true) || isset($parts['user']) || isset($parts['pass'])) {
+        // The shop domain may carry its own port (shop.example:8080): that one is allowed too.
+        $shopHost = Tools::strtolower((string) (parse_url('http://' . $host, PHP_URL_HOST) ?: $host));
+        $shopPort = (int) (parse_url('http://' . $host, PHP_URL_PORT) ?: 0);
+        $ports = $shopPort > 0 ? [80, 443, $shopPort] : [80, 443];
+        if (!in_array($scheme, ['http', 'https'], true) || !in_array($port, $ports, true) || isset($parts['user']) || isset($parts['pass'])) {
             return 'Only http(s) pages of this shop, on the standard ports, can be audited.';
         }
-        if (Tools::strtolower((string) ($parts['host'] ?? '')) !== Tools::strtolower($host)) {
+        if (Tools::strtolower((string) ($parts['host'] ?? '')) !== $shopHost) {
             return 'Only pages of this shop (' . $host . ') can be audited.';
         }
 

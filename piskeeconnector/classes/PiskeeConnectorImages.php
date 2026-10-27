@@ -317,7 +317,10 @@ class PiskeeConnectorImages
     {
         $relative = method_exists($image, 'getExistingImgPath') ? (string) $image->getExistingImgPath() : (string) $image->getImgPath();
 
-        return _PS_PRODUCT_IMG_DIR_ . $relative . '.' . ($image->image_format ?: 'jpg');
+        // _PS_PRODUCT_IMG_DIR_ on PrestaShop 8 and 9, _PS_PROD_IMG_DIR_ on 1.7.
+        $dir = defined('_PS_PRODUCT_IMG_DIR_') ? constant('_PS_PRODUCT_IMG_DIR_') : constant('_PS_PROD_IMG_DIR_');
+
+        return $dir . $relative . '.' . ($image->image_format ?: 'jpg');
     }
 
     /**

@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.1.0
+- PrestaShop 1.7 support: a single module now runs on PrestaShop 1.7.6 to 9.x, PHP 7.2 to 8.3.
+  - On 1.7 the consent screen uses the legacy back office controller; on 8 and 9 it uses the Symfony route.
+  - The product image folder is resolved for both 1.7 (`_PS_PROD_IMG_DIR_`) and 8/9 (`_PS_PRODUCT_IMG_DIR_`).
+  - Code checked with PHPCompatibility (PHP 7.2+), linted with PHP 7.2, and tested end to end on PrestaShop 1.7.8.11 (PHP 7.4): OAuth, consent, the 56 tools, theme activation and rollback.
+- Page audits accept the port the shop domain declares (for example shop.example:8080).
+- The consent tab installs even when the shop's language list is empty.
+- The plan card (usage of the free plan) is shown on every tab of the module page.
+
 ## 2.0.3
 - Putting a draft live no longer goes through PrestaShop's full theme switch, which reset the theme's modules (menu, slider…), rebuilt image types and reordered hooks. Within one theme family only the active theme changes, and the merchant's page layouts are kept. A switch to another family is refused and sent to Design > Theme & Logo.
 - Drafts no longer carry the parent's "modules to reset/disable" instructions.

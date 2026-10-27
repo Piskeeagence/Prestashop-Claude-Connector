@@ -6,7 +6,7 @@ Designed and built in Chantilly, France, by Piskee, e-commerce SEO & GEO agency.
 
 ## Before you start
 
-- PrestaShop 8.0 or later, PHP 8.1 or later.
+- PrestaShop 1.7.6 or later (1.7, 8 and 9), PHP 7.2 or later.
 - The shop on HTTPS, at the root of its domain, with friendly URLs enabled.
 - Nothing else: the module ships its own MCP server and OAuth 2.1 authorisation server.
 - A Claude account (claude.ai, the Claude app or Claude Code).

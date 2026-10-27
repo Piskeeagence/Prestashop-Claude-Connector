@@ -4,7 +4,7 @@
 
 <h1 align="center">Piskee for PrestaShop</h1>
 <p align="center"><strong>The AI sidekick of your PrestaShop store. Works with Claude.</strong><br>
-Free module · PrestaShop 8.0 to 9.x · PHP 8.1+ · Made in Chantilly, France</p>
+Free module · PrestaShop 1.7.6 to 9.x · PHP 7.2+ · Made in Chantilly, France</p>
 
 ---
 
@@ -100,7 +100,7 @@ An onboarding session with the agency is available for €300 excl. VAT. [Contac
 
 Piskee relie votre boutique PrestaShop à Claude. Vous dites ce que vous voulez faire, par exemple « réécris les meta descriptions de la catégorie Robes », « crée les tailles S à XL », « quelles commandes attendent un numéro de suivi ? ». Claude agit dans votre back-office, avec vos droits et sous votre contrôle.
 
-- **Compatibilité :** PrestaShop 8.0 à 9.x, PHP 8.1 et plus.
+- **Compatibilité :** PrestaShop 1.7.6 à 9.x, PHP 7.2 et plus.
 - **Gratuit** jusqu'à 100 modifications par mois. Version Pro illimitée à 30 € HT par mois.
 - **Thème :** Claude ne touche jamais au thème en ligne. Il travaille sur un thème enfant brouillon, et c'est vous qui le mettez en ligne en un clic.
 - **Installation :** Modules › Gestionnaire de modules › Installer un module, puis suivez l'onglet *Connexion* du module.

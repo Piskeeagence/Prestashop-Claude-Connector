@@ -58,7 +58,7 @@ class PiskeeconnectorMcpModuleFrontController extends ModuleFrontController
         if (!is_array($message)) {
             PiskeeConnectorHttp::json(PiskeeConnectorMcp::error(null, -32700, 'Parse error'), 400);
         }
-        if (array_is_list($message)) {
+        if ($message !== [] && array_keys($message) === range(0, count($message) - 1)) {
             PiskeeConnectorHttp::json(PiskeeConnectorMcp::error(null, -32600, 'Batches are not supported'), 400);
         }
 

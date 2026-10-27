@@ -74,9 +74,12 @@ class PiskeeconnectorAuthorizeModuleFrontController extends ModuleFrontControlle
             'samesite' => 'Lax',
         ]);
 
-        // A Symfony back office route: PrestaShop 8 and 9 serve it without
-        // the admin URL token that an assistant's redirect cannot carry.
-        $url = PiskeeConnectorOAuth::baseUrl() . '/' . $adminDir . '/index.php/modules/piskeeconnector/consent?request=' . rawurlencode($id);
+        // PrestaShop 8 and 9: a Symfony back office route, served without the
+        // admin URL token that an assistant's redirect cannot carry.
+        // PrestaShop 1.7: the legacy admin controller, which skips that token.
+        $url = version_compare(_PS_VERSION_, '8.0.0', '>=')
+            ? PiskeeConnectorOAuth::baseUrl() . '/' . $adminDir . '/index.php/modules/piskeeconnector/consent?request=' . rawurlencode($id)
+            : PiskeeConnectorOAuth::baseUrl() . '/' . $adminDir . '/index.php?controller=AdminPiskeeConnectorConsent&request=' . rawurlencode($id);
         Tools::redirect($url);
     }
 

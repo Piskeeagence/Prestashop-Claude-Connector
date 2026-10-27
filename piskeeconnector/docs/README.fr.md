@@ -6,7 +6,7 @@ Conçu et développé à Chantilly (Oise) par Piskee, agence SEO & GEO e-commerc
 
 ## Ce qu'il faut avant de commencer
 
-- PrestaShop 8.0 ou plus récent, PHP 8.1 ou plus récent.
+- PrestaShop 1.7.6 ou plus récent (1.7, 8 et 9), PHP 7.2 ou plus récent.
 - La boutique en HTTPS, à la racine de son domaine, avec les URL simplifiées activées.
 - Rien d'autre : le module intègre son propre serveur MCP et son serveur d'autorisation OAuth 2.1.
 - Un compte Claude (claude.ai, l'application Claude ou Claude Code).
