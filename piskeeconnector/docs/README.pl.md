@@ -81,7 +81,7 @@ Zmienia się tylko motyw: moduły, ich ustawienia, pozycje hooków, rozmiary zdj
 
 Wersja darmowa pozwala na 100 zmian miesięcznie na sklep; odczyt, wyszukiwanie i audyty są bez limitu. Licznik zeruje się 1. dnia miesiąca.
 
-Piskee Pro (29 € netto miesięcznie, cena startowa gwarantowana dożywotnio dla pierwszych 100 klientów, bez zobowiązań) znosi limit i dodaje przekierowania 301, faktury korygujące i zwroty, multistore z dziennikiem audytu oraz wsparcie priorytetowe. Sesja wdrożeniowa z agencją kosztuje 150 € netto.
+Piskee Pro (29 € netto miesięcznie lub 290 € netto rocznie z 2 miesiącami gratis, cena startowa gwarantowana dożywotnio dla pierwszych 100 klientów, bez zobowiązań) znosi limit i dodaje przekierowania 301, faktury korygujące i zwroty, multistore z dziennikiem audytu oraz wsparcie priorytetowe. Sesja wdrożeniowa z agencją kosztuje 150 € netto.
 
 Klucz licencyjny otrzymany e-mailem należy wkleić w zakładce Darmowy / Pro.
 

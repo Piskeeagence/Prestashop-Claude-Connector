@@ -300,9 +300,24 @@
         </div>
 
         <div class="pkc-pricing">
-          <div class="pkc-card pkc-card--pro">
-            <p class="pkc-audit__kicker">{$t.plan_pro|escape:'html':'UTF-8'}</p>
-            <p class="pkc-plan"><span class="pkc-plan__price">{$pk.plan.price|escape:'html':'UTF-8'}</span></p>
+          <div class="pkc-card pkc-card--pro pkc-billing" data-billing="year">
+            <div class="pkc-billing__head">
+              <p class="pkc-audit__kicker">{$t.plan_pro|escape:'html':'UTF-8'}</p>
+              <div class="pkc-billing__switch" role="tablist">
+                <button type="button" class="pkc-billing__opt" data-billing-set="month" role="tab">{$t.bill_month|escape:'html':'UTF-8'}</button>
+                <button type="button" class="pkc-billing__opt is-active" data-billing-set="year" role="tab">{$t.bill_year|escape:'html':'UTF-8'} <span class="pkc-billing__save">-17&nbsp;%</span></button>
+              </div>
+            </div>
+            <div class="pkc-billing__panel" data-billing-panel="year">
+              <span class="pkc-billing__badge">{$t.save_badge|escape:'html':'UTF-8'}</span>
+              <p class="pkc-billing__price"><span class="pkc-billing__amount">{$t.py_amount|escape:'html':'UTF-8'}</span> <span class="pkc-billing__per">{$t.py_per|escape:'html':'UTF-8'}</span> <s class="pkc-billing__was">{$t.py_was|escape:'html':'UTF-8'}</s></p>
+              <p class="pkc-billing__equiv">{$t.py_equiv|escape:'html':'UTF-8'}</p>
+            </div>
+            <div class="pkc-billing__panel" data-billing-panel="month" hidden>
+              <p class="pkc-billing__price"><span class="pkc-billing__amount">{$t.pm_amount|escape:'html':'UTF-8'}</span> <span class="pkc-billing__per">{$t.pm_per|escape:'html':'UTF-8'}</span></p>
+              <p class="pkc-billing__equiv">{$t.pm_equiv|escape:'html':'UTF-8'}</p>
+            </div>
+            <p class="pkc-billing__launch">{$t.launch_note|escape:'html':'UTF-8'}</p>
             <p class="pkc-muted">{$t.pro_note|escape:'html':'UTF-8'}</p>
             <a class="pkc-btn pkc-btn--block" href="{$pk.brand.contact_pro|escape:'html':'UTF-8'}" target="_blank" rel="noopener">{$t.pro_cta|escape:'html':'UTF-8'}</a>
           </div>
@@ -359,6 +374,7 @@
           </div>
           <p class="pkc-muted">{$t.plan_reads|escape:'html':'UTF-8'}</p>
           <button type="button" class="pkc-btn pkc-btn--block" data-open-tab="pro">{$t.pro_cta|escape:'html':'UTF-8'}</button>
+          <p class="pkc-plan-card__hint">{$t.plan_year_hint|escape:'html':'UTF-8'}</p>
         {/if}
       </div>
       <div class="pkc-card pkc-onboard">

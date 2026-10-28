@@ -76,3 +76,25 @@
     });
   });
 }());
+
+/* Pro pricing: monthly / yearly switch */
+(function () {
+  'use strict';
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.pkc-billing').forEach(function (card) {
+      card.querySelectorAll('[data-billing-set]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          var mode = button.getAttribute('data-billing-set');
+          card.setAttribute('data-billing', mode);
+          card.querySelectorAll('[data-billing-set]').forEach(function (b) {
+            b.classList.toggle('is-active', b === button);
+            b.setAttribute('aria-selected', b === button ? 'true' : 'false');
+          });
+          card.querySelectorAll('[data-billing-panel]').forEach(function (panel) {
+            panel.hidden = panel.getAttribute('data-billing-panel') !== mode;
+          });
+        });
+      });
+    });
+  });
+}());

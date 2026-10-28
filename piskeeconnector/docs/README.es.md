@@ -81,7 +81,7 @@ Solo cambia el tema: sus módulos, sus ajustes, las posiciones de los hooks, los
 
 La versión gratuita permite 100 modificaciones al mes y por tienda; la lectura, las búsquedas y las auditorías son ilimitadas. El contador se reinicia el día 1 de cada mes.
 
-Piskee Pro (29 € + IVA al mes, precio de lanzamiento garantizado de por vida para los 100 primeros clientes, sin permanencia) elimina el límite y añade las redirecciones 301, las facturas por abono y las devoluciones, la multitienda con registro de auditoría y el soporte prioritario. Se ofrece una sesión de puesta en marcha con la agencia por 150 € + IVA.
+Piskee Pro (29 € + IVA al mes, o 290 € + IVA al año con 2 meses gratis, precio de lanzamiento garantizado de por vida para los 100 primeros clientes, sin permanencia) elimina el límite y añade las redirecciones 301, las facturas por abono y las devoluciones, la multitienda con registro de auditoría y el soporte prioritario. Se ofrece una sesión de puesta en marcha con la agencia por 150 € + IVA.
 
 Pegue la clave de licencia que reciba por correo electrónico en la pestaña Gratis / Pro.
 

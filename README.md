@@ -116,7 +116,7 @@ Then type `/mcp` to sign in.
 | GEO content fields, `llms.txt`, AI product feed | — | Coming soon |
 | Credit slips and returns, multistore with an audit log | — | Coming soon |
 | Priority support | — | ✓ |
-| Price | **€0** | **€29 excl. VAT / month**, locked in for life for the first 100 customers. Cancel anytime |
+| Price | **€0** | **€29 excl. VAT / month**, cancel anytime, or **€290 excl. VAT / year: 2 months free**. Launch price locked in for life for the first 100 customers |
 
 Start free. When your catalogue work outgrows 100 changes a month, the module tells you, and going Pro takes a minute from the *Free / Pro* tab.
 
@@ -198,7 +198,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
   - tout est sauvegardé ;
   - aucune donnée ne passe par Piskee.
 - **Installation en 5 minutes :** aucun module ni compte PrestaShop supplémentaire. Compatible **PrestaShop 1.7.6 à 9**, PHP 7.2 et plus.
-- **Gratuit** jusqu'à 100 modifications par mois. **Pro illimité** à 29 € HT par mois, prix garanti à vie pour les 100 premiers clients, sans engagement.
+- **Gratuit** jusqu'à 100 modifications par mois. **Pro illimité** à 29 € HT par mois sans engagement, ou **290 € HT par an : 2 mois offerts**. Prix garanti à vie pour les 100 premiers clients.
 
 [⬇ Télécharger le module](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Documentation en français](piskeeconnector/docs/README.fr.md)
 
@@ -221,7 +221,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
   - todo se guarda en copias de seguridad;
   - ningún dato pasa por Piskee.
 - **Instalación en 5 minutos:** sin módulos ni cuenta PrestaShop adicionales. Compatible con **PrestaShop 1.7.6 a 9**, PHP 7.2 o superior.
-- **Gratis** hasta 100 modificaciones al mes. **Pro ilimitado** por 29 € + IVA al mes, precio garantizado de por vida para los 100 primeros clientes, sin permanencia.
+- **Gratis** hasta 100 modificaciones al mes. **Pro ilimitado** por 29 € + IVA al mes sin permanencia, o **290 € + IVA al año: 2 meses gratis**. Precio garantizado de por vida para los 100 primeros clientes.
 
 [⬇ Descargar el módulo](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Documentación en español](piskeeconnector/docs/README.es.md)
 
@@ -244,7 +244,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
   - tutto viene salvato in un backup;
   - nessun dato passa da Piskee.
 - **Installazione in 5 minuti:** nessun modulo né account PrestaShop aggiuntivo. Compatibile con **PrestaShop dalla 1.7.6 alla 9**, PHP 7.2 o successivo.
-- **Gratis** fino a 100 modifiche al mese. **Pro illimitato** a 29 € + IVA al mese, prezzo garantito a vita per i primi 100 clienti, senza vincoli.
+- **Gratis** fino a 100 modifiche al mese. **Pro illimitato** a 29 € + IVA al mese senza vincoli, oppure **290 € + IVA all'anno: 2 mesi gratis**. Prezzo garantito a vita per i primi 100 clienti.
 
 [⬇ Scarichi il modulo](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Documentazione in italiano](piskeeconnector/docs/README.it.md)
 
@@ -267,7 +267,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
   - wszystko trafia do kopii zapasowej;
   - żadne dane nie przechodzą przez Piskee.
 - **Instalacja w 5 minut:** bez dodatkowych modułów i bez konta PrestaShop. Działa z **PrestaShop od 1.7.6 do 9**, PHP 7.2 lub nowszym.
-- **Za darmo** do 100 zmian miesięcznie. **Pro bez limitu** za 29 € netto miesięcznie, cena gwarantowana dożywotnio dla pierwszych 100 klientów, bez zobowiązań.
+- **Za darmo** do 100 zmian miesięcznie. **Pro bez limitu** za 29 € netto miesięcznie bez zobowiązań lub **290 € netto rocznie: 2 miesiące gratis**. Cena gwarantowana dożywotnio dla pierwszych 100 klientów.
 
 [⬇ Pobieranie modułu](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Dokumentacja po polsku](piskeeconnector/docs/README.pl.md)
 
