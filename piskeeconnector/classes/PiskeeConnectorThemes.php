@@ -17,8 +17,8 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * Theme work, under three rules enforced here and nowhere else:
  *
- * 1. Writes only ever go to a child theme that no shop is using. The live
- *    theme and every parent theme are read-only.
+ * 1. Writes only ever go to a theme that no shop is using. The live theme
+ *    and the parent of a live theme are read-only.
  * 2. Only templates, stylesheets and scripts can be written: never PHP,
  *    never the theme configuration.
  * 3. Every write and every removal keeps a backup that can be restored.
@@ -53,12 +53,29 @@ class PiskeeConnectorThemes
                 'parent' => $parent,
                 'is_child' => $parent !== '',
                 'live_on_shops' => $active[$name] ?? [],
-                'editable' => $parent !== '' && empty($active[$name]),
+                'editable' => empty($active[$name]) && !self::isParentOfLive($name, $active),
                 'created_by_connector' => !empty($config['piskee_connector']),
             ];
         }
 
         return $out;
+    }
+
+    /**
+     * True when a live theme inherits from this theme: changing it would change the live shop.
+     *
+     * @param array<string, array<int, string>> $active
+     */
+    private static function isParentOfLive(string $name, array $active): bool
+    {
+        foreach (array_keys($active) as $live) {
+            $config = self::config((string) $live);
+            if ((string) ($config['parent'] ?? '') === $name) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -115,7 +132,8 @@ class PiskeeConnectorThemes
 
         return PiskeeConnectorHelper::json([
             'themes' => self::themes(),
-            'rules' => 'Only child themes that are not live can be modified. To change the live design: create a child theme draft, edit it, then ask the merchant to put it live from the Piskee module page in the back office.',
+            'rules' => 'Every theme that is not live and is not the parent of a live theme can be modified (editable: true). The live theme is never changed: to change the live design, create a draft child theme, edit it, then ask the merchant to put it live from the Piskee module page in the back office. '
+                . 'A stock theme such as classic or hummingbird can be modified when it is not used, but a PrestaShop update may replace its files: a child theme is safer for lasting work.',
         ]);
     }
 
@@ -241,7 +259,7 @@ class PiskeeConnectorThemes
             'folder' => $folder,
             'files_in_this_theme' => array_slice($own, 0, 400),
             'files_inherited_from_parent' => array_slice($inherited, 0, 400),
-            'note' => $parent !== '' ? 'A file written in the child theme overrides the parent file with the same path.' : 'This theme is not a child theme: it is read-only.',
+            'note' => $parent !== '' ? 'A file written in the child theme overrides the parent file with the same path.' : 'This theme is not a child theme: when it is not live and not the parent of a live theme, its own files can be modified (a PrestaShop or theme update may replace them).',
         ]);
     }
 
@@ -376,7 +394,7 @@ class PiskeeConnectorThemes
             return PiskeeConnectorHelper::error('Cannot create the folder for this file.');
         }
         if (!self::insideTheme($theme, $path)) {
-            return PiskeeConnectorHelper::error('This path leaves the draft theme folder (symbolic link) and cannot be written.');
+            return PiskeeConnectorHelper::error('This path leaves the theme folder (symbolic link) and cannot be written.');
         }
         $existed = is_file($target);
         $backup = $existed ? $this->backup($theme, $path, 'write') : null;
@@ -392,7 +410,7 @@ class PiskeeConnectorThemes
             'created' => !$existed,
             'backup_id' => $backup,
             'live' => false,
-            'message' => 'Saved in the draft theme. Nothing changed on the live shop.',
+            'message' => 'Saved in the theme, which is not live. Nothing changed on the live shop.',
         ]);
     }
 
@@ -416,7 +434,7 @@ class PiskeeConnectorThemes
         }
         $target = _PS_ALL_THEMES_DIR_ . $theme . '/' . $path;
         if (!is_file($target) || !self::insideTheme($theme, $path)) {
-            return PiskeeConnectorHelper::error('This file does not exist in the draft theme.');
+            return PiskeeConnectorHelper::error('This file does not exist in this theme.');
         }
         $backup = $this->backup($theme, $path, 'remove');
         @unlink($target);
@@ -483,7 +501,7 @@ class PiskeeConnectorThemes
             @mkdir(dirname($target), 0755, true);
         }
         if (!self::insideTheme($theme, $entry['path'])) {
-            return PiskeeConnectorHelper::error('This path leaves the draft theme folder (symbolic link) and cannot be written.');
+            return PiskeeConnectorHelper::error('This path leaves the theme folder (symbolic link) and cannot be written.');
         }
         $current = is_file($target) ? $this->backup($theme, $entry['path'], 'before-restore') : null;
         if (file_put_contents($target, $content) === false) {
@@ -729,9 +747,6 @@ class PiskeeConnectorThemes
         $config = self::config($theme);
         if ($config === null) {
             return 'Theme "' . $theme . '" not found.';
-        }
-        if (empty($config['parent'])) {
-            return 'Theme "' . $theme . '" is not a child theme: it is read-only. Create a draft with create_child_theme.';
         }
         $active = self::activeThemes();
         if (!empty($active[$theme])) {

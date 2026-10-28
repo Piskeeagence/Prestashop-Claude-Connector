@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.5.1
+- Themes: Claude can now modify every theme that is not live and is not the parent of a live theme, including installed stock themes that are not used (classic, hummingbird...). The live theme and the parent of a live theme stay read-only; every write keeps a backup.
+
 ## 2.5.0
 - Update notice on the module page: when a new version of Piskee or Piskee Pro exists, a banner shows it with what changes and a download button. The module asks Piskee's server once a day at most, and sends nothing about the shop.
 - Piskee Pro updates with the licence key: the "Download the update" button fetches the newest Piskee Pro, made out to the shop's owner, as long as the subscription is active. No need to keep the link of the welcome e-mail.

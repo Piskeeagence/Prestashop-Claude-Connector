@@ -799,7 +799,7 @@ class PiskeeConnectorTools
             'list_themes' => [
                 'group' => 'theme', 'scope' => 'theme.read', 'permission' => ['view', 'AdminThemes'],
                 'handler' => ['themes', 'listThemes'],
-                'description' => 'Lists the installed themes: which one is live on which shop, which are child themes, and which can be edited (child themes that are not live). '
+                'description' => 'Lists the installed themes: which one is live on which shop, which are child themes, and which can be edited (every theme that is not live and not the parent of a live theme). '
                     . 'Call it before any theme work.',
             ],
             'create_child_theme' => [
@@ -837,7 +837,7 @@ class PiskeeConnectorTools
             'write_theme_file' => [
                 'group' => 'theme', 'scope' => 'theme.write', 'permission' => ['edit', 'AdminThemes'],
                 'handler' => ['themes', 'writeThemeFile'],
-                'description' => 'Writes a whole .tpl, .css or .js file in a DRAFT child theme (refused on a live theme or a parent theme), under templates/, modules/, assets/css/ or assets/js/. '
+                'description' => 'Writes a whole .tpl, .css or .js file in a theme that is not live (refused on the live theme and on the parent of a live theme), under templates/, modules/, assets/css/ or assets/js/. '
                     . 'Writing a path that exists in the parent overrides it. The previous version is backed up. Templates with unbalanced Smarty blocks and any PHP are refused. '
                     . 'Send the complete file, not a fragment. Prefer assets/css/custom.css for style changes. Nothing changes on the live shop.',
                 'input' => ['properties' => ['theme' => $themeName, 'path' => $themePath, 'content' => ['type' => 'string', 'description' => 'Complete new content of the file.']], 'required' => ['theme', 'path', 'content']],
@@ -845,7 +845,7 @@ class PiskeeConnectorTools
             'remove_theme_file' => [
                 'group' => 'theme', 'scope' => 'theme.write', 'permission' => ['delete', 'AdminThemes'],
                 'handler' => ['themes', 'removeThemeFile'],
-                'description' => 'Removes an override from a DRAFT child theme so the parent version is used again. The removed file is backed up and can be restored.',
+                'description' => 'Removes a file from a theme that is not live (for a child theme, the parent version is used again). The removed file is backed up and can be restored.',
                 'input' => ['properties' => ['theme' => $themeName, 'path' => $themePath], 'required' => ['theme', 'path']],
             ],
             'list_theme_backups' => [
@@ -857,7 +857,7 @@ class PiskeeConnectorTools
             'restore_theme_file' => [
                 'group' => 'theme', 'scope' => 'theme.write', 'permission' => ['edit', 'AdminThemes'],
                 'handler' => ['themes', 'restoreThemeFile'],
-                'description' => 'Restores a backed up version of a file in a DRAFT child theme. The version it replaces is itself backed up.',
+                'description' => 'Restores a backed up version of a file in a theme that is not live. The version it replaces is itself backed up.',
                 'input' => ['properties' => ['theme' => $themeName, 'backup_id' => ['type' => 'string', 'description' => 'From list_theme_backups.']], 'required' => ['theme', 'backup_id']],
             ],
             'audit_page' => [
