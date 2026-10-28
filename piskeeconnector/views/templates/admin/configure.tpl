@@ -31,6 +31,36 @@
     <div class="pkc-notice pkc-notice--{$pk.notice_type|escape:'html':'UTF-8'}">{$pk.notice|escape:'html':'UTF-8'}</div>
   {/if}
 
+  {if $pk.updates.free || $pk.updates.pro}
+    <div class="pkc-updates">
+      {if $pk.updates.free}
+        <div class="pkc-update">
+          <div class="pkc-update__text">
+            <strong>{$t.upd_free_title|escape:'html':'UTF-8'} {$pk.updates.free.version|escape:'html':'UTF-8'}</strong>
+            <span class="pkc-muted">{$t.upd_you_have|escape:'html':'UTF-8'} {$pk.updates.free.current|escape:'html':'UTF-8'}</span>
+            {if $pk.updates.free.notes}<p class="pkc-update__notes">{$pk.updates.free.notes|escape:'html':'UTF-8'|nl2br}</p>{/if}
+            <p class="pkc-update__how">{$t.upd_how|escape:'html':'UTF-8'}</p>
+          </div>
+          <a class="pkc-btn" href="{$pk.updates.free.download|escape:'html':'UTF-8'}" target="_blank" rel="noopener">{$t.upd_download|escape:'html':'UTF-8'}</a>
+        </div>
+      {/if}
+      {if $pk.updates.pro}
+        <div class="pkc-update pkc-update--pro">
+          <div class="pkc-update__text">
+            <strong>{$t.upd_pro_title|escape:'html':'UTF-8'} {$pk.updates.pro.version|escape:'html':'UTF-8'}</strong>
+            <span class="pkc-muted">{$t.upd_you_have|escape:'html':'UTF-8'} {$pk.updates.pro.current|escape:'html':'UTF-8'}</span>
+            <p class="pkc-update__how">{$t.upd_pro_how|escape:'html':'UTF-8'}</p>
+          </div>
+          <form method="post" action="{$pk.action_url|escape:'html':'UTF-8'}">
+            <input type="hidden" name="piskee_token" value="{$pk.token|escape:'html':'UTF-8'}">
+            <input type="hidden" name="piskee_action" value="download_pro">
+            <button type="submit" class="pkc-btn">{$t.upd_download|escape:'html':'UTF-8'}</button>
+          </form>
+        </div>
+      {/if}
+    </div>
+  {/if}
+
   <nav class="pkc-tabs" role="tablist">
     <button type="button" class="pkc-tab is-active" data-tab="connect">{$t.tab_connect|escape:'html':'UTF-8'}</button>
     <button type="button" class="pkc-tab" data-tab="tools">{$t.tab_tools|escape:'html':'UTF-8'} <span class="pkc-count">{$pk.tool_count|intval}</span></button>

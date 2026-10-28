@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.5.0
+- Update notice on the module page: when a new version of Piskee or Piskee Pro exists, a banner shows it with what changes and a download button. The module asks Piskee's server once a day at most, and sends nothing about the shop.
+- Piskee Pro updates with the licence key: the "Download the update" button fetches the newest Piskee Pro, made out to the shop's owner, as long as the subscription is active. No need to keep the link of the welcome e-mail.
+- How to update is explained on the banner: install the new zip over the old one, no need to uninstall (settings, licence, Claude connections, redirects and history are kept).
+
 ## 2.4.3
 - Module page: a gold "PRO" badge on the History tab shows that it is a Piskee Pro feature.
 

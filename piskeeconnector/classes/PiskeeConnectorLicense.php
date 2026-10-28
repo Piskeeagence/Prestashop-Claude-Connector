@@ -49,6 +49,14 @@ class PiskeeConnectorLicense
         return self::verify($key, self::shopDomain($idShop));
     }
 
+    /**
+     * The licence key saved for a shop ('' when none).
+     */
+    public static function key(int $idShop): string
+    {
+        return trim((string) Configuration::get(self::KEY_LICENSE, null, null, $idShop));
+    }
+
     public static function isPro(?int $idShop = null): bool
     {
         return self::status($idShop)['valid'];

@@ -24,6 +24,7 @@ require_once __DIR__ . '/classes/PiskeeConnectorI18n.php';
 require_once __DIR__ . '/classes/PiskeeConnectorHelper.php';
 require_once __DIR__ . '/classes/PiskeeConnectorCall.php';
 require_once __DIR__ . '/classes/PiskeeConnectorLicense.php';
+require_once __DIR__ . '/classes/PiskeeConnectorUpdate.php';
 require_once __DIR__ . '/classes/PiskeeConnectorCatalog.php';
 require_once __DIR__ . '/classes/PiskeeConnectorVariants.php';
 require_once __DIR__ . '/classes/PiskeeConnectorMerchandising.php';
@@ -48,7 +49,7 @@ class Piskeeconnector extends Module
     {
         $this->name = 'piskeeconnector';
         $this->tab = 'administration';
-        $this->version = '2.4.3';
+        $this->version = '2.5.0';
         $this->author = 'Piskee';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -226,6 +227,7 @@ class Piskeeconnector extends Module
                 ],
                 'docs' => $docs,
                 'history' => $this->historyData($idShop),
+                'updates' => PiskeeConnectorUpdate::available($this->version, $idShop),
                 'logo' => $this->_path . 'views/img/piskee-white.png',
                 'logo_olive' => $this->_path . 'views/img/piskee-olive.png',
                 'brand' => [
@@ -292,6 +294,10 @@ class Piskeeconnector extends Module
                 $error = PiskeeConnectorThemes::activate((string) Tools::getValue('theme'), $idShop);
 
                 return $error === '' ? [$t['theme_done'], 'success', null] : [$error, 'error', null];
+            case 'download_pro':
+                $error = PiskeeConnectorUpdate::downloadPro($idShop);
+
+                return [$t['upd_pro_error_' . $error] ?? $t['upd_pro_error_server'], 'error', null];
             case 'undo_change':
             case 'undo_session':
                 return $this->undoHistory($action, $idShop, $t);

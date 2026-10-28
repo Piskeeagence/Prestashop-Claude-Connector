@@ -33,6 +33,8 @@ class PiskeeConnectorBrand
     public const BUY_ONBOARDING = 'https://buy.stripe.com/3cI14nbO47qp7GkffT9EI03';
     // Licence server: next-period keys of online subscriptions.
     public const RENEW_URL = 'https://www.piskee.com/licences/renew.php';
+    // Latest versions of Piskee and Piskee Pro, and download of Piskee Pro with the licence key.
+    public const UPDATE_URL = 'https://www.piskee.com/licences/update.php';
 
     public const BUY_EXTRA_SHOP = 'https://buy.stripe.com/aFa6oH19qaCBgcQ2t79EI04';
 
