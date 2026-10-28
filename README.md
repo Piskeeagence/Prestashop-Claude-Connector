@@ -115,17 +115,20 @@ Then type `/mcp` to sign in.
 | 301 redirects: managed by Claude or in bulk, automatic when a product, category or page URL changes or is deleted, 404 follow-up | — | ✓ |
 | Scheduled rules (stock alerts, weekly report) | — | Coming soon |
 | GEO content fields, AI product feed | — | Coming soon |
-| Credit slips and returns, multistore with an audit log | — | Coming soon |
+| Multistore: changes on additional shops | Main shop only | **+€10 excl. VAT / month per additional shop** |
+| Credit slips and returns, audit log per employee | — | Coming soon |
 | Priority support | — | ✓ |
 | Price | **€0** | **€29 excl. VAT / month**, cancel anytime, or **€290 excl. VAT / year: 2 months free**. Launch price locked in for life for the first 100 customers |
 
 Start free. When your catalogue work outgrows 100 changes a month, the module tells you, and going Pro takes a minute from the *Free / Pro* tab.
 
+**Go Pro:** [€29 / month](https://buy.stripe.com/28EbJ1bO4121gcQ0kZ9EI00) · [€290 / year, 2 months free](https://buy.stripe.com/28EcN59FW5ihd0Ed7L9EI02) · [additional shop, €10 / month](https://buy.stripe.com/aFa6oH19qaCBgcQ2t79EI04). A Pro licence covers one shop; each additional shop of a multistore gets its own key.
+
 ## Want it done for you?
 
 Piskee is the e-commerce SEO & GEO agency behind this module, based in Chantilly, France.
 
-- **Onboarding session (€150 excl. VAT):** we set it up with you, connect Claude, and run your first catalogue optimisation together.
+- **[Onboarding session (€150 excl. VAT)](https://buy.stripe.com/3cI14nbO47qp7GkffT9EI03):** we set it up with you, connect Claude, and run your first catalogue optimisation together.
 - **Free SEO & GEO audit in 48 h** for your store.
 
 → [piskee.com/contact](https://www.piskee.com/contact/) · louisalexandre@piskee.com · WhatsApp +33 7 69 15 39 92
@@ -199,12 +202,14 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
   - tout est sauvegardé ;
   - aucune donnée ne passe par Piskee.
 - **Installation en 5 minutes :** aucun module ni compte PrestaShop supplémentaire. Compatible **PrestaShop 1.7.6 à 9**, PHP 7.2 et plus.
-- **Gratuit** jusqu'à 100 modifications par mois. **Pro illimité** à 29 € HT par mois sans engagement, ou **290 € HT par an : 2 mois offerts**. Prix garanti à vie pour les 100 premiers clients.
+- **Gratuit** jusqu'à 100 modifications par mois. **Pro illimité** à 29 € HT par mois sans engagement, ou **290 € HT par an : 2 mois offerts**. Prix garanti à vie pour les 100 premiers clients. Multiboutique : 10 € HT par mois par boutique supplémentaire.
+
+[S'abonner au mois](https://buy.stripe.com/28EbJ1bO4121gcQ0kZ9EI00) · [S'abonner à l'année](https://buy.stripe.com/28EcN59FW5ihd0Ed7L9EI02) · [Boutique supplémentaire](https://buy.stripe.com/aFa6oH19qaCBgcQ2t79EI04)
 
 [⬇ Télécharger le module](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Documentation en français](piskeeconnector/docs/README.fr.md)
 
 **Envie qu'on le fasse avec vous ?**
-- Session d'onboarding à 150 € HT.
+- [Session d'onboarding à 150 € HT](https://buy.stripe.com/3cI14nbO47qp7GkffT9EI03).
 - Audit SEO & GEO gratuit en 48 h.
 
 [piskee.com/contact](https://www.piskee.com/contact/) · louisalexandre@piskee.com · WhatsApp +33 7 69 15 39 92
@@ -222,12 +227,14 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
   - todo se guarda en copias de seguridad;
   - ningún dato pasa por Piskee.
 - **Instalación en 5 minutos:** sin módulos ni cuenta PrestaShop adicionales. Compatible con **PrestaShop 1.7.6 a 9**, PHP 7.2 o superior.
-- **Gratis** hasta 100 modificaciones al mes. **Pro ilimitado** por 29 € + IVA al mes sin permanencia, o **290 € + IVA al año: 2 meses gratis**. Precio garantizado de por vida para los 100 primeros clientes.
+- **Gratis** hasta 100 modificaciones al mes. **Pro ilimitado** por 29 € + IVA al mes sin permanencia, o **290 € + IVA al año: 2 meses gratis**. Precio garantizado de por vida para los 100 primeros clientes. Multitienda: 10 € + IVA al mes por tienda adicional.
+
+[Suscripción mensual](https://buy.stripe.com/28EbJ1bO4121gcQ0kZ9EI00) · [Suscripción anual](https://buy.stripe.com/28EcN59FW5ihd0Ed7L9EI02) · [Tienda adicional](https://buy.stripe.com/aFa6oH19qaCBgcQ2t79EI04)
 
 [⬇ Descargar el módulo](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Documentación en español](piskeeconnector/docs/README.es.md)
 
 **¿Prefiere que lo hagamos con usted?**
-- Sesión de puesta en marcha por 150 € + IVA.
+- [Sesión de puesta en marcha por 150 € + IVA](https://buy.stripe.com/3cI14nbO47qp7GkffT9EI03).
 - Auditoría SEO y GEO gratuita en 48 h.
 
 [piskee.com/contact](https://www.piskee.com/contact/) · louisalexandre@piskee.com · WhatsApp +33 7 69 15 39 92
@@ -245,12 +252,14 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
   - tutto viene salvato in un backup;
   - nessun dato passa da Piskee.
 - **Installazione in 5 minuti:** nessun modulo né account PrestaShop aggiuntivo. Compatibile con **PrestaShop dalla 1.7.6 alla 9**, PHP 7.2 o successivo.
-- **Gratis** fino a 100 modifiche al mese. **Pro illimitato** a 29 € + IVA al mese senza vincoli, oppure **290 € + IVA all'anno: 2 mesi gratis**. Prezzo garantito a vita per i primi 100 clienti.
+- **Gratis** fino a 100 modifiche al mese. **Pro illimitato** a 29 € + IVA al mese senza vincoli, oppure **290 € + IVA all'anno: 2 mesi gratis**. Prezzo garantito a vita per i primi 100 clienti. Multinegozio: 10 € + IVA al mese per negozio aggiuntivo.
+
+[Abbonamento mensile](https://buy.stripe.com/28EbJ1bO4121gcQ0kZ9EI00) · [Abbonamento annuale](https://buy.stripe.com/28EcN59FW5ihd0Ed7L9EI02) · [Negozio aggiuntivo](https://buy.stripe.com/aFa6oH19qaCBgcQ2t79EI04)
 
 [⬇ Scarichi il modulo](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Documentazione in italiano](piskeeconnector/docs/README.it.md)
 
 **Preferisce che lo facciamo insieme?**
-- Sessione di avvio a 150 € + IVA.
+- [Sessione di avvio a 150 € + IVA](https://buy.stripe.com/3cI14nbO47qp7GkffT9EI03).
 - Audit SEO e GEO gratuito in 48 h.
 
 [piskee.com/contact](https://www.piskee.com/contact/) · louisalexandre@piskee.com · WhatsApp +33 7 69 15 39 92
@@ -268,12 +277,14 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
   - wszystko trafia do kopii zapasowej;
   - żadne dane nie przechodzą przez Piskee.
 - **Instalacja w 5 minut:** bez dodatkowych modułów i bez konta PrestaShop. Działa z **PrestaShop od 1.7.6 do 9**, PHP 7.2 lub nowszym.
-- **Za darmo** do 100 zmian miesięcznie. **Pro bez limitu** za 29 € netto miesięcznie bez zobowiązań lub **290 € netto rocznie: 2 miesiące gratis**. Cena gwarantowana dożywotnio dla pierwszych 100 klientów.
+- **Za darmo** do 100 zmian miesięcznie. **Pro bez limitu** za 29 € netto miesięcznie bez zobowiązań lub **290 € netto rocznie: 2 miesiące gratis**. Cena gwarantowana dożywotnio dla pierwszych 100 klientów. Multistore: 10 € netto miesięcznie za każdy dodatkowy sklep.
+
+[Subskrypcja miesięczna](https://buy.stripe.com/28EbJ1bO4121gcQ0kZ9EI00) · [Subskrypcja roczna](https://buy.stripe.com/28EcN59FW5ihd0Ed7L9EI02) · [Dodatkowy sklep](https://buy.stripe.com/aFa6oH19qaCBgcQ2t79EI04)
 
 [⬇ Pobieranie modułu](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Dokumentacja po polsku](piskeeconnector/docs/README.pl.md)
 
 **Wolą Państwo, żebyśmy zrobili to razem?**
-- Sesja wdrożeniowa za 150 € netto.
+- [Sesja wdrożeniowa za 150 € netto](https://buy.stripe.com/3cI14nbO47qp7GkffT9EI03).
 - Bezpłatny audyt SEO i GEO w 48 h.
 
 [piskee.com/contact](https://www.piskee.com/contact/) · louisalexandre@piskee.com · WhatsApp +33 7 69 15 39 92

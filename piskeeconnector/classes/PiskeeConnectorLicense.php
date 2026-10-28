@@ -25,6 +25,7 @@ class PiskeeConnectorLicense
     public const FREE_MONTHLY_WRITES = 100;
     public const PRO_PRICE = '29 € HT / mois';
     public const PRO_PRICE_EN = '€29 excl. VAT / month';
+    public const EXTRA_SHOP_PRICE_EN = '€10 excl. VAT / month';
     public const ONBOARDING_PRICE = '150 € HT';
     public const ONBOARDING_PRICE_EN = '€150 excl. VAT';
 
@@ -163,7 +164,10 @@ class PiskeeConnectorLicense
         }
         if (Shop::isFeatureActive() && $idShop !== (int) Configuration::get('PS_SHOP_DEFAULT')) {
             return self::upgradeMessage(
-                'On the free plan, Piskee can change only the main shop of a multistore installation; changing the other shops is part of Piskee Pro.'
+                'This shop has no Piskee Pro licence of its own, so Piskee can read it but not change it. '
+                . 'Without a licence, only the main shop of a multistore installation can be changed. '
+                . 'A Pro licence covers one shop; each additional shop needs its own key, at ' . self::EXTRA_SHOP_PRICE_EN . ' per shop, on top of Piskee Pro: '
+                . PiskeeConnectorBrand::BUY_EXTRA_SHOP . '.'
             );
         }
         if (self::used($idShop) >= self::FREE_MONTHLY_WRITES) {
@@ -185,8 +189,8 @@ class PiskeeConnectorLicense
         return 'FREE PLAN LIMIT. Do not retry this call. Tell the merchant, warmly and in their language, in a few lines: '
             . $reason . ' '
             . 'With Piskee Pro (' . self::PRO_PRICE_EN . ', or €290 excl. VAT per year with 2 months free; launch price locked in for life for the first 100 customers), changes are unlimited, '
-            . 'and Pro also brings 301 redirects, credit slips and returns, multistore and priority support. '
-            . 'To go Pro: Modules > Piskee > Free / Pro tab, or ' . PiskeeConnectorBrand::link(PiskeeConnectorBrand::CONTACT_URL, 'quota') . '. '
+            . 'and Pro also brings 301 redirects and priority support. A Pro licence covers one shop; additional shops of a multistore cost ' . self::EXTRA_SHOP_PRICE_EN . ' each. '
+            . 'To go Pro: Modules > Piskee > Free / Pro tab, or ' . PiskeeConnectorBrand::BUY_PRO_MONTH . ' (monthly) / ' . PiskeeConnectorBrand::BUY_PRO_YEAR . ' (yearly). '
             . 'Offer to prepare the remaining changes as a list the merchant can apply later. '
             . 'Team behind the module: ' . PiskeeConnectorBrand::AGENCY . ', ' . PiskeeConnectorBrand::LOCATION . ', '
             . PiskeeConnectorBrand::EMAIL . ', WhatsApp ' . PiskeeConnectorBrand::PHONE . '.';

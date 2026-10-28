@@ -93,6 +93,9 @@
           card.querySelectorAll('[data-billing-panel]').forEach(function (panel) {
             panel.hidden = panel.getAttribute('data-billing-panel') !== mode;
           });
+          card.querySelectorAll('[data-href-' + mode + ']').forEach(function (link) {
+            link.setAttribute('href', link.getAttribute('data-href-' + mode));
+          });
         });
       });
     });

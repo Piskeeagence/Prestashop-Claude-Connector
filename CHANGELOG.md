@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.1
+- Buying Pro from the module page: the "Go Pro" button opens the Stripe checkout of the plan chosen in the monthly / yearly switch, and the onboarding buttons open the €150 excl. VAT onboarding checkout.
+- Multistore pricing: a Pro licence covers one shop. Each additional shop of a multistore installation needs its own key, at €10 excl. VAT per month, shown on the module page, in the limit message given to Claude, in the README and the documentation. Without its own key, an additional shop can be read but not changed.
+
 ## 2.3.0
 - llms.txt: two new tools, `preview_llms_txt` and `publish_llms_txt`. They build the shop's llms.txt (llmstxt.org) from its categories, best sellers, customer pages and contact, show it for approval, then write it at the root of the shop and keep the previous version.
 - Extension point for Piskee add-ons: modules can publish extra tools to Claude through the hook `actionPiskeeConnectorTools` (name, title, description, scope, permission, handler). Add-on tools are offered only to shops with a valid Pro licence, are checked like core tools (OAuth scope and the employee's own rights), and cannot replace a core tool.

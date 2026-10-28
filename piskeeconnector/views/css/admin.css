@@ -205,8 +205,12 @@
 .pkc-compare thead th:nth-child(3) { color: var(--pkc-olive-dark); }
 .pkc-license { display: flex; gap: 10px; margin-top: 8px; }
 .pkc-license input { flex: 1; border: 1px solid var(--pkc-line); border-radius: 10px; padding: 9px 12px; font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; }
+.pkc-extra { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 16px; }
+.pkc-extra > .pkc-btn { white-space: nowrap; flex-shrink: 0; }
+.pkc-extra__price { margin: 4px 0; font-size: 15px; }
+.pkc-extra__price strong { font-size: 20px; }
 .pkc-pricing { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-@media (max-width: 720px) { .pkc-story, .pkc-pricing { grid-template-columns: 1fr; } .pkc-license { flex-direction: column; } }
+@media (max-width: 720px) { .pkc-story, .pkc-pricing { grid-template-columns: 1fr; } .pkc-license, .pkc-extra { flex-direction: column; align-items: stretch; } }
 
 /* Plan card, shown on every tab */
 .pkc .pkc-plan-card h2 { font-size: 16px; margin-bottom: 10px; }

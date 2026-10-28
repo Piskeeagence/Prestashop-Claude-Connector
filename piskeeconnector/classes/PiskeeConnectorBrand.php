@@ -27,6 +27,12 @@ class PiskeeConnectorBrand
     public const LINKEDIN_URL = 'https://www.linkedin.com/company/piskee/';
     public const REPOSITORY_URL = 'https://github.com/Piskeeagence/Prestashop-Claude-Connector';
 
+    // Stripe payment links (prices excl. VAT, VAT added at checkout).
+    public const BUY_PRO_MONTH = 'https://buy.stripe.com/28EbJ1bO4121gcQ0kZ9EI00';
+    public const BUY_PRO_YEAR = 'https://buy.stripe.com/28EcN59FW5ihd0Ed7L9EI02';
+    public const BUY_ONBOARDING = 'https://buy.stripe.com/3cI14nbO47qp7GkffT9EI03';
+    public const BUY_EXTRA_SHOP = 'https://buy.stripe.com/aFa6oH19qaCBgcQ2t79EI04';
+
     /**
      * Link to the agency with campaign tags, so leads from the module can be
      * told apart in analytics.

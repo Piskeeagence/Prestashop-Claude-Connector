@@ -319,14 +319,22 @@
             </div>
             <p class="pkc-billing__launch">{$t.launch_note|escape:'html':'UTF-8'}</p>
             <p class="pkc-muted">{$t.pro_note|escape:'html':'UTF-8'}</p>
-            <a class="pkc-btn pkc-btn--block" href="{$pk.brand.contact_pro|escape:'html':'UTF-8'}" target="_blank" rel="noopener">{$t.pro_cta|escape:'html':'UTF-8'}</a>
+            <a class="pkc-btn pkc-btn--block" href="{$pk.brand.buy_year|escape:'html':'UTF-8'}" data-href-month="{$pk.brand.buy_month|escape:'html':'UTF-8'}" data-href-year="{$pk.brand.buy_year|escape:'html':'UTF-8'}" target="_blank" rel="noopener">{$t.pro_cta|escape:'html':'UTF-8'}</a>
           </div>
           <div class="pkc-card">
             <p class="pkc-audit__kicker">{$t.onboarding_title|escape:'html':'UTF-8'}</p>
             <p class="pkc-plan"><span class="pkc-plan__price">{$pk.plan.onboarding|escape:'html':'UTF-8'}</span></p>
             <p class="pkc-muted">{$t.onboarding_text|escape:'html':'UTF-8'}</p>
-            <a class="pkc-btn pkc-btn--ghost pkc-btn--block" href="{$pk.brand.contact_pro|escape:'html':'UTF-8'}" target="_blank" rel="noopener">{$t.onboarding_cta|escape:'html':'UTF-8'}</a>
+            <a class="pkc-btn pkc-btn--ghost pkc-btn--block" href="{$pk.brand.buy_onboarding|escape:'html':'UTF-8'}" target="_blank" rel="noopener">{$t.onboarding_cta|escape:'html':'UTF-8'}</a>
           </div>
+        </div>
+        <div class="pkc-card pkc-extra">
+          <div class="pkc-extra__text">
+            <p class="pkc-audit__kicker">{$t.extra_title|escape:'html':'UTF-8'}</p>
+            <p class="pkc-extra__price"><strong>{$t.extra_amount|escape:'html':'UTF-8'}</strong> {$t.extra_per|escape:'html':'UTF-8'}</p>
+            <p class="pkc-muted">{$t.extra_text|escape:'html':'UTF-8'}</p>
+          </div>
+          <a class="pkc-btn pkc-btn--ghost" href="{$pk.brand.buy_extra|escape:'html':'UTF-8'}" target="_blank" rel="noopener">{$t.extra_cta|escape:'html':'UTF-8'}</a>
         </div>
       </section>
 
@@ -391,7 +399,7 @@
           <span class="pkc-onboard__tax">{$t.ob_tax|escape:'html':'UTF-8'}</span>
         </div>
         <p class="pkc-onboard__unit">{$t.ob_unit|escape:'html':'UTF-8'}</p>
-        <a class="pkc-btn pkc-btn--cream pkc-btn--block" href="{$pk.brand.contact_pro|escape:'html':'UTF-8'}" target="_blank" rel="noopener">{$t.ob_cta|escape:'html':'UTF-8'}</a>
+        <a class="pkc-btn pkc-btn--cream pkc-btn--block" href="{$pk.brand.buy_onboarding|escape:'html':'UTF-8'}" target="_blank" rel="noopener">{$t.ob_cta|escape:'html':'UTF-8'}</a>
       </div>
       <div class="pkc-card pkc-help">
         <h2>{$t.help_title|escape:'html':'UTF-8'}</h2>

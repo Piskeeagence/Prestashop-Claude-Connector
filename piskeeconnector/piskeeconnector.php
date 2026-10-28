@@ -47,7 +47,7 @@ class Piskeeconnector extends Module
     {
         $this->name = 'piskeeconnector';
         $this->tab = 'administration';
-        $this->version = '2.3.0';
+        $this->version = '2.3.1';
         $this->author = 'Piskee';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -229,6 +229,10 @@ class Piskeeconnector extends Module
                     'website' => PiskeeConnectorBrand::link(PiskeeConnectorBrand::WEBSITE, 'about'),
                     'contact' => PiskeeConnectorBrand::link(PiskeeConnectorBrand::CONTACT_URL, 'help'),
                     'contact_pro' => PiskeeConnectorBrand::link(PiskeeConnectorBrand::CONTACT_URL, 'pro'),
+                    'buy_month' => PiskeeConnectorBrand::BUY_PRO_MONTH,
+                    'buy_year' => PiskeeConnectorBrand::BUY_PRO_YEAR,
+                    'buy_onboarding' => PiskeeConnectorBrand::BUY_ONBOARDING,
+                    'buy_extra' => PiskeeConnectorBrand::BUY_EXTRA_SHOP,
                     'whatsapp' => PiskeeConnectorBrand::WHATSAPP_URL,
                     'phone' => PiskeeConnectorBrand::PHONE,
                     'email' => PiskeeConnectorBrand::EMAIL,

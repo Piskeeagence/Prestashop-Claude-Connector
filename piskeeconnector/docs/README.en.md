@@ -81,7 +81,9 @@ Only the theme changes: your modules, their settings, hook positions, image size
 
 The free version allows 100 changes per month and per shop; reading, searches and audits are unlimited. The counter resets on the 1st of the month.
 
-Piskee Pro (€29 excl. VAT per month, or €290 excl. VAT per year with 2 months free, launch price locked in for life for the first 100 customers, no commitment) lifts the limit and adds 301 redirects, credit slips and returns, multistore with an audit log, and priority support. An onboarding session with the agency is offered at €150 excl. VAT.
+Piskee Pro (€29 excl. VAT per month, or €290 excl. VAT per year with 2 months free, launch price locked in for life for the first 100 customers, no commitment) lifts the limit and adds 301 redirects and priority support. A Pro licence covers one shop: in a multistore, each additional shop costs €10 excl. VAT per month. An onboarding session with the agency is offered at €150 excl. VAT.
+
+Subscribe: [monthly](https://buy.stripe.com/28EbJ1bO4121gcQ0kZ9EI00) · [yearly](https://buy.stripe.com/28EcN59FW5ihd0Ed7L9EI02) · [additional shop](https://buy.stripe.com/aFa6oH19qaCBgcQ2t79EI04) · [onboarding](https://buy.stripe.com/3cI14nbO47qp7GkffT9EI03).
 
 Paste the licence key you receive by email in the Free / Pro tab.
 
