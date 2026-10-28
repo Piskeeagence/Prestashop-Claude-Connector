@@ -57,7 +57,7 @@
             <li>{$t.w7|escape:'html':'UTF-8'}</li>
             <li>{$t.w8|escape:'html':'UTF-8'}</li>
             <li class="pkc-pro-item"><span class="pkc-badge-pro">Pro</span> {$t.w9|escape:'html':'UTF-8'}</li>
-            <li class="pkc-pro-item"><span class="pkc-badge-soon">{$t.soon|escape:'html':'UTF-8'}</span> {$t.w10|escape:'html':'UTF-8'}</li>
+            <li>{$t.w10|escape:'html':'UTF-8'}</li>
           </ul>
         </div>
 

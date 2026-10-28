@@ -55,7 +55,7 @@ With Piskee, you describe the result and Claude does the clicks, **in your own b
 | Cross-selling | Pick related products by hand | Suggestions computed from what your customers actually buy together |
 | A theme fix | Edit live files and hope | Work in a draft child theme, check it, put it live in one click, roll back in one click |
 
-## What's inside: 60 tools across your back office
+## What's inside: 62 tools across your back office
 
 | Area | What Claude can do |
 |---|---|
@@ -67,6 +67,7 @@ With Piskee, you describe the result and Claude does the clicks, **in your own b
 | **Orders** | Find orders, read their history, change status, add tracking numbers. |
 | **Customer service** | Read customer messages and reply by email, after you approve the text. Create vouchers. |
 | **CMS** | Read and update CMS pages, in every language. |
+| **Visibility in AI assistants (GEO)** | Generate and publish your shop's `llms.txt` file (llmstxt.org): a map of your categories, best sellers and customer pages that helps ChatGPT, Claude and Perplexity understand and cite your shop. Preview first, previous version kept. |
 | **Theme** | Audit headings, breadcrumb and structured data. Edit templates, CSS and JS **in a draft child theme only**. |
 
 ## Why you can trust it
@@ -108,12 +109,12 @@ Then type `/mcp` to sign in.
 
 | | **Free** | **Pro** |
 |---|---|---|
-| All 60 tools | ✓ | ✓ |
+| All 62 tools | ✓ | ✓ |
 | Reading, searches, audits | Unlimited | Unlimited |
 | Changes | 100 per month | **Unlimited** |
 | 301 redirects: managed by Claude or in bulk, automatic when a product, category or page URL changes or is deleted, 404 follow-up | — | ✓ |
 | Scheduled rules (stock alerts, weekly report) | — | Coming soon |
-| GEO content fields, `llms.txt`, AI product feed | — | Coming soon |
+| GEO content fields, AI product feed | — | Coming soon |
 | Credit slips and returns, multistore with an audit log | — | Coming soon |
 | Priority support | — | ✓ |
 | Price | **€0** | **€29 excl. VAT / month**, cancel anytime, or **€290 excl. VAT / year: 2 months free**. Launch price locked in for life for the first 100 customers |
@@ -191,7 +192,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 **Pilotez votre boutique PrestaShop en parlant à Claude.** Vous décrivez le résultat, par exemple « réécrivez les meta descriptions de la catégorie Robes », « créez les tailles S à XL » ou « quelles commandes attendent un numéro de suivi ? ». Claude fait les clics dans votre back-office, avec vos droits, après votre accord.
 
-- **60 outils :** catalogue, SEO, traductions, déclinaisons, stocks, images, vente croisée, commandes, service client, CMS et thème enfant.
+- **62 outils :** catalogue, SEO, fichier llms.txt pour les IA, traductions, déclinaisons, stocks, images, vente croisée, commandes, service client, CMS et thème enfant.
 - **Sans risque :**
   - vous validez chaque modification ;
   - le thème en ligne n'est jamais touché, Claude travaille sur un brouillon que vous mettez en ligne en un clic ;
@@ -214,7 +215,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 **Gestione su tienda PrestaShop hablando con Claude.** Usted describe el resultado, por ejemplo «reescriba las meta descriptions de la categoría Vestidos», «cree las tallas S a XL» o «¿qué pedidos están esperando un número de seguimiento?». Claude hace los clics en su back office, con sus permisos y después de su aprobación.
 
-- **60 herramientas:** catálogo, SEO, traducciones, combinaciones, stock, imágenes, venta cruzada, pedidos, atención al cliente, CMS y tema hijo.
+- **62 herramientas:** catálogo, SEO, archivo llms.txt para las IA, traducciones, combinaciones, stock, imágenes, venta cruzada, pedidos, atención al cliente, CMS y tema hijo.
 - **Sin riesgos:**
   - usted aprueba cada modificación;
   - el tema publicado nunca se toca: Claude trabaja en un borrador que usted publica con un clic;
@@ -237,7 +238,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 **Gestisca il Suo negozio PrestaShop parlando con Claude.** Lei descrive il risultato, per esempio «riscriva le meta description della categoria Abiti», «crei le taglie dalla S alla XL» o «quali ordini aspettano ancora un numero di tracciamento?». Claude fa i clic nel Suo back office, con i Suoi permessi, dopo la Sua approvazione.
 
-- **60 strumenti:** catalogo, SEO, traduzioni, combinazioni, giacenze, immagini, vendita incrociata, ordini, assistenza clienti, CMS e tema figlio.
+- **62 strumenti:** catalogo, SEO, file llms.txt per le IA, traduzioni, combinazioni, giacenze, immagini, vendita incrociata, ordini, assistenza clienti, CMS e tema figlio.
 - **Senza rischi:**
   - Lei approva ogni modifica;
   - il tema online non viene mai toccato: Claude lavora su una bozza che Lei mette online con un clic;
@@ -260,7 +261,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 **Zarządzanie sklepem PrestaShop w rozmowie z Claude.** Wystarczy opisać efekt, na przykład „Proszę przepisać meta opisy kategorii Sukienki”, „Proszę utworzyć rozmiary od S do XL” albo „Które zamówienia czekają na numer przesyłki?”. Claude wykonuje kliknięcia w Państwa panelu administracyjnym, z Państwa uprawnieniami, po Państwa akceptacji.
 
-- **60 narzędzi:** katalog, SEO, tłumaczenia, kombinacje, stany magazynowe, zdjęcia, sprzedaż krzyżowa, zamówienia, obsługa klienta, CMS i motyw potomny.
+- **62 narzędzia:** katalog, SEO, plik llms.txt dla AI, tłumaczenia, kombinacje, stany magazynowe, zdjęcia, sprzedaż krzyżowa, zamówienia, obsługa klienta, CMS i motyw potomny.
 - **Bez ryzyka:**
   - każdą zmianę akceptują Państwo;
   - opublikowany motyw nigdy nie jest zmieniany: Claude pracuje na szkicu, który Państwo publikują jednym kliknięciem;

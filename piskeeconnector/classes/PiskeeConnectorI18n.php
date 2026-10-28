@@ -110,6 +110,8 @@ class PiskeeConnectorI18n
         'set_tracking_number' => ['fr' => 'Renseigner un numéro de suivi', 'en' => 'Set a tracking number', 'es' => 'Indicar un número de seguimiento', 'it' => 'Inserimento di un numero di tracciamento', 'pl' => 'Ustawienie numeru przesyłki'],
         'list_cms_pages' => ['fr' => 'Lister les pages CMS', 'en' => 'List CMS pages', 'es' => 'Listar las páginas CMS', 'it' => 'Elenco delle pagine CMS', 'pl' => 'Lista stron CMS'],
         'get_cms_page' => ['fr' => 'Lire une page CMS', 'en' => 'Read a CMS page', 'es' => 'Ver una página CMS', 'it' => 'Lettura di una pagina CMS', 'pl' => 'Podgląd strony CMS'],
+        'preview_llms_txt' => ['fr' => 'Aperçu du fichier llms.txt', 'en' => 'Preview the llms.txt file', 'es' => 'Vista previa del archivo llms.txt', 'it' => 'Anteprima del file llms.txt', 'pl' => 'Podgląd pliku llms.txt'],
+        'publish_llms_txt' => ['fr' => 'Publier le fichier llms.txt', 'en' => 'Publish the llms.txt file', 'es' => 'Publicar el archivo llms.txt', 'it' => 'Pubblicazione del file llms.txt', 'pl' => 'Publikacja pliku llms.txt'],
         'update_cms_page' => ['fr' => 'Modifier une page CMS', 'en' => 'Update a CMS page', 'es' => 'Modificar una página CMS', 'it' => 'Modifica di una pagina CMS', 'pl' => 'Edycja strony CMS'],
         'bulk_update_products' => ['fr' => 'Modifier des produits en masse', 'en' => 'Bulk update products', 'es' => 'Modificar productos en bloque', 'it' => 'Modifica di prodotti in blocco', 'pl' => 'Masowa edycja produktów'],
     ];
@@ -204,6 +206,7 @@ class PiskeeConnectorI18n
         'redirects' => ['fr' => 'Redirections 301 (Pro)', 'en' => '301 redirects (Pro)', 'es' => 'Redirecciones 301 (Pro)', 'it' => 'Redirect 301 (Pro)', 'pl' => 'Przekierowania 301 (Pro)'],
         'customers' => ['fr' => 'Clients', 'en' => 'Customers', 'es' => 'Clientes', 'it' => 'Clienti', 'pl' => 'Klienci'],
         'orders' => ['fr' => 'Commandes et suivi', 'en' => 'Orders and tracking', 'es' => 'Pedidos y seguimiento', 'it' => 'Ordini e tracciamento', 'pl' => 'Zamówienia i śledzenie'],
+        'geo' => ['fr' => 'Visibilité dans les IA (GEO)', 'en' => 'Visibility in AI assistants (GEO)', 'es' => 'Visibilidad en las IA (GEO)', 'it' => 'Visibilità nelle IA (GEO)', 'pl' => 'Widoczność w AI (GEO)'],
         'cms' => ['fr' => 'Pages CMS', 'en' => 'CMS pages', 'es' => 'Páginas CMS', 'it' => 'Pagine CMS', 'pl' => 'Strony CMS'],
         'daily' => ['fr' => 'Gestion quotidienne', 'en' => 'Daily management', 'es' => 'Gestión diaria', 'it' => 'Gestione quotidiana', 'pl' => 'Codzienne zarządzanie'],
         'theme' => ['fr' => 'Thème enfant', 'en' => 'Child theme', 'es' => 'Tema hijo', 'it' => 'Tema figlio', 'pl' => 'Motyw potomny'],

@@ -30,6 +30,7 @@ require_once __DIR__ . '/classes/PiskeeConnectorImages.php';
 require_once __DIR__ . '/classes/PiskeeConnectorOperations.php';
 require_once __DIR__ . '/classes/PiskeeConnectorOrders.php';
 require_once __DIR__ . '/classes/PiskeeConnectorCms.php';
+require_once __DIR__ . '/classes/PiskeeConnectorLlms.php';
 require_once __DIR__ . '/classes/PiskeeConnectorCrossSelling.php';
 require_once __DIR__ . '/classes/PiskeeConnectorThemes.php';
 require_once __DIR__ . '/classes/PiskeeConnectorTools.php';

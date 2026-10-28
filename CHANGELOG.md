@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2.3.0
+- llms.txt: two new tools, `preview_llms_txt` and `publish_llms_txt`. They build the shop's llms.txt (llmstxt.org) from its categories, best sellers, customer pages and contact, show it for approval, then write it at the root of the shop and keep the previous version.
 - Extension point for Piskee add-ons: modules can publish extra tools to Claude through the hook `actionPiskeeConnectorTools` (name, title, description, scope, permission, handler). Add-on tools are offered only to shops with a valid Pro licence, are checked like core tools (OAuth scope and the employee's own rights), and cannot replace a core tool.
 - Piskee Pro 301 redirects (separate Pro add-on): redirects managed by Claude or from the back office, automatic redirects when the URL of a product, category or CMS page changes or when it is deleted, and 404 pages from the native "Pages not found" module.
 - Pro launch price: €29 excl. VAT per month, locked in for life for the first 100 customers. Yearly plan: €290 excl. VAT (2 months free). Onboarding session: €150 excl. VAT.

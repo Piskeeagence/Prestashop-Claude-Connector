@@ -43,8 +43,9 @@ class PiskeeConnectorTools
         $orders = new PiskeeConnectorOrders();
         $cms = new PiskeeConnectorCms();
         $cross = new PiskeeConnectorCrossSelling();
+        $llms = new PiskeeConnectorLlms();
 
-        $instances = ['catalog' => $catalog, 'variants' => $variants, 'merch' => $merch, 'images' => $images, 'ops' => $ops, 'themes' => $themes, 'orders' => $orders, 'cms' => $cms, 'cross' => $cross];
+        $instances = ['catalog' => $catalog, 'variants' => $variants, 'merch' => $merch, 'images' => $images, 'ops' => $ops, 'themes' => $themes, 'orders' => $orders, 'cms' => $cms, 'cross' => $cross, 'llms' => $llms];
         $tools = [];
         foreach (self::all() as $name => $def) {
             if (is_array($def['handler']) && is_string($def['handler'][0] ?? null) && isset($instances[$def['handler'][0]])) {
@@ -667,6 +668,29 @@ class PiskeeConnectorTools
                     'active' => ['type' => 'boolean'],
                     'translations' => self::translations(['meta_title', 'head_seo_title', 'meta_description', 'content', 'link_rewrite'], 'Translated texts.'),
                 ], 'required' => ['id_cms']],
+            ],
+            'preview_llms_txt' => [
+                'group' => 'geo', 'scope' => 'catalog.read', 'permission' => ['view', 'AdminMeta'],
+                'handler' => ['llms', 'preview'],
+                'description' => 'Builds the llms.txt file of the shop (the llmstxt.org standard: a Markdown map that helps AI assistants and answer engines understand and cite the shop) '
+                    . 'without publishing it: shop summary, main categories, best-selling products with prices, customer information pages and contact, with links. '
+                    . 'Show the result to the merchant before publish_llms_txt. Also says whether a file already exists and whether it can be written.',
+                'input' => ['properties' => [
+                    'summary' => ['type' => 'string', 'description' => 'One or two sentences on what the shop sells and for whom, approved by the merchant. Default: the home page meta description.'],
+                    'details' => ['type' => 'string', 'description' => 'Optional paragraph (plain text): specialities, guarantees, delivery promise. Never invent facts.'],
+                    'products_limit' => ['type' => 'integer', 'minimum' => 0, 'maximum' => 200, 'description' => 'How many products to list, best sellers first (default 30, 0 for none).'],
+                ]],
+            ],
+            'publish_llms_txt' => [
+                'group' => 'geo', 'scope' => 'catalog.write', 'permission' => ['edit', 'AdminMeta'],
+                'handler' => ['llms', 'publish'],
+                'description' => 'Writes llms.txt at the root of the shop (yourshop.com/llms.txt) with the same options as preview_llms_txt. Any previous file is kept as a backup. '
+                    . 'Call it only after the merchant approved the preview. Run it again after big catalogue changes to refresh the file.',
+                'input' => ['properties' => [
+                    'summary' => ['type' => 'string'],
+                    'details' => ['type' => 'string'],
+                    'products_limit' => ['type' => 'integer', 'minimum' => 0, 'maximum' => 200],
+                ]],
             ],
 
             // ----- Bulk -----
