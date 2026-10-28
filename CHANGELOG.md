@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.2
+- Piskee Pro 1.2.0: structured data for Google and AI assistants (Product, BreadcrumbList, Organization and WebSite, FAQPage, BlogPosting), never duplicating what the theme already publishes; FAQs of products and categories written by Claude and shown on the page; blog articles written by Claude as native CMS pages (drafts until the merchant approves), with links to the products they mention. New tools: `set_faq`, `get_faq`, `get_structured_data`, `set_structured_data`, `create_blog_article`, `list_blog_articles`.
+- Module page: new row in the Free / Pro comparison.
+
 ## 2.5.1
 - Themes: Claude can now modify every theme that is not live and is not the parent of a live theme, including installed stock themes that are not used (classic, hummingbird...). The live theme and the parent of a live theme stay read-only; every write keeps a backup.
 

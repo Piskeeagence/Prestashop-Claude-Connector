@@ -81,7 +81,7 @@ Seul le thème change : vos modules, leurs réglages, la position des modules, l
 
 La version gratuite permet 100 modifications par mois et par boutique ; la lecture, les recherches et les audits sont illimités. Le compteur repart à zéro le 1er du mois.
 
-Piskee Pro (29 € HT par mois, ou 290 € HT par an avec 2 mois offerts, prix de lancement garanti à vie pour les 100 premiers clients, sans engagement) lève la limite et ajoute l'historique de chaque modification avec retour en arrière, les redirections 301 et le support prioritaire. Une licence Pro couvre une boutique : en multiboutique, chaque boutique supplémentaire coûte 10 € HT par mois. Une prise en main avec l'agence est proposée à 150 € HT.
+Piskee Pro (29 € HT par mois, ou 290 € HT par an avec 2 mois offerts, prix de lancement garanti à vie pour les 100 premiers clients, sans engagement) lève la limite et ajoute l'historique de chaque modification avec retour en arrière, les données structurées (produit, FAQ, articles) et les articles de blog écrits par Claude, les redirections 301 et le support prioritaire. Une licence Pro couvre une boutique : en multiboutique, chaque boutique supplémentaire coûte 10 € HT par mois. Une prise en main avec l'agence est proposée à 150 € HT.
 
 S'abonner : [au mois](https://buy.stripe.com/28EbJ1bO4121gcQ0kZ9EI00) · [à l'année](https://buy.stripe.com/28EcN59FW5ihd0Ed7L9EI02) · [boutique supplémentaire](https://buy.stripe.com/aFa6oH19qaCBgcQ2t79EI04) · [prise en main](https://buy.stripe.com/3cI14nbO47qp7GkffT9EI03).
 
