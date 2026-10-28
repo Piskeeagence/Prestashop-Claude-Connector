@@ -98,7 +98,7 @@ class PiskeeConnectorConsent
         $smarty = Context::getContext()->smarty;
         $smarty->assign(['pkc' => $vars]);
         $body = $smarty->fetch(_PS_MODULE_DIR_ . 'piskeeconnector/views/templates/admin/consent.tpl');
-        $css = PiskeeConnectorOAuth::baseUrl() . '/modules/piskeeconnector/views/css/admin.css?v=' . '2.4.0';
+        $css = PiskeeConnectorOAuth::baseUrl() . '/modules/piskeeconnector/views/css/admin.css?v=' . '2.4.1';
         $title = htmlspecialchars((string) $vars['t']['title'], ENT_QUOTES, 'UTF-8');
 
         return '<!doctype html><html lang="' . htmlspecialchars(PiskeeConnectorI18n::lang($isoLang), ENT_QUOTES, 'UTF-8') . '"><head>'

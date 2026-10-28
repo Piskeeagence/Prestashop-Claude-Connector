@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.4.1
+- New "History" tab on the module page: every change Claude made, grouped by work session, with the value before and after. "Restore previous version" on each change brings the item back to its state before that change (Claude's later changes to the same item are undone with it); "Undo the whole session" on each session. Needs Piskee Pro; on the free plan the tab shows what the history does.
+
 ## 2.4.0
 - Piskee Pro 1.1.0, history and undo: every change Claude makes (products, categories, CMS pages, combinations, prices, stock, vouchers...) is recorded field by field and language by language. One change, a whole tool call or a whole work session can be undone from the Pro module page or by asking Claude (`list_changes`, `undo_changes`). A value changed again since by someone else is never overwritten without confirmation.
 - Add-ons can know which tool call is running (`PiskeeConnectorCall`): the history needs it to record only Claude's changes.

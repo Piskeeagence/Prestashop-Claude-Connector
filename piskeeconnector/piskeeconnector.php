@@ -48,7 +48,7 @@ class Piskeeconnector extends Module
     {
         $this->name = 'piskeeconnector';
         $this->tab = 'administration';
-        $this->version = '2.4.0';
+        $this->version = '2.4.1';
         $this->author = 'Piskee';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -225,6 +225,7 @@ class Piskeeconnector extends Module
                     'onboarding' => PiskeeConnectorI18n::onboardingPrice($lang),
                 ],
                 'docs' => $docs,
+                'history' => $this->historyData($idShop),
                 'logo' => $this->_path . 'views/img/piskee-white.png',
                 'logo_olive' => $this->_path . 'views/img/piskee-olive.png',
                 'brand' => [
@@ -291,6 +292,9 @@ class Piskeeconnector extends Module
                 $error = PiskeeConnectorThemes::activate((string) Tools::getValue('theme'), $idShop);
 
                 return $error === '' ? [$t['theme_done'], 'success', null] : [$error, 'error', null];
+            case 'undo_change':
+            case 'undo_session':
+                return $this->undoHistory($action, $idShop, $t);
             case 'rollback_theme':
                 $error = PiskeeConnectorThemes::rollback($idShop);
 
@@ -463,6 +467,107 @@ class Piskeeconnector extends Module
     /**
      * @return array<string, string>
      */
+    /**
+     * Piskee Pro's history of Claude's changes, for the History tab: loaded
+     * from the Pro add-on when it is installed and the shop is on Pro.
+     *
+     * @return array<string, mixed>
+     */
+    private function historyData(int $idShop): array
+    {
+        if (!PiskeeConnectorLicense::isPro($idShop)) {
+            return ['state' => 'locked', 'sessions' => [], 'total' => 0];
+        }
+        if (!$this->loadHistory()) {
+            return ['state' => 'no_module', 'sessions' => [], 'total' => 0];
+        }
+        $sessions = [];
+        $total = 0;
+        foreach (PiskeeProHistory::rows($idShop, ['include_undone' => true], 150) as $row) {
+            $entry = PiskeeProHistory::describe($row, 90);
+            $entry['object_key'] = Tools::strtolower($entry['object']);
+            $entry['time'] = Tools::substr($entry['date'], 11, 5);
+            $entry['more'] = max(0, count($entry['changes']) - 4);
+            $entry['changes'] = array_slice($entry['changes'], 0, 4);
+            $ref = $entry['session'];
+            if (!isset($sessions[$ref])) {
+                $sessions[$ref] = ['ref' => $ref, 'to' => Tools::substr($entry['date'], 11, 5), 'day' => Tools::substr($entry['date'], 0, 10), 'open' => 0, 'entries' => []];
+            }
+            $sessions[$ref]['from'] = Tools::substr($entry['date'], 11, 5);
+            $sessions[$ref]['day'] = Tools::substr($entry['date'], 0, 10);
+            $sessions[$ref]['open'] += $entry['can_undo'] ? 1 : 0;
+            $sessions[$ref]['entries'][] = $entry;
+            ++$total;
+        }
+        $employee = $this->context->employee;
+
+        return [
+            'state' => 'ok',
+            'sessions' => array_values($sessions),
+            'total' => $total,
+            'can_undo' => $employee && $employee->can('edit', 'AdminProducts'),
+            'pro_url' => $this->context->link->getAdminLink('AdminModules', true, [], ['configure' => 'piskeeconnectorpro']),
+        ];
+    }
+
+    /**
+     * @param array<string, string> $t
+     *
+     * @return array{0:string, 1:string, 2:null}
+     */
+    private function undoHistory(string $action, int $idShop, array $t): array
+    {
+        $employee = $this->context->employee;
+        if (!PiskeeConnectorLicense::isPro($idShop) || !$this->loadHistory()) {
+            return [$t['h_unavailable'], 'error', null];
+        }
+        if (!$employee || !$employee->can('edit', 'AdminProducts')) {
+            return [$t['h_no_right'], 'error', null];
+        }
+        if ($action === 'undo_change') {
+            // Restore the version from before this change: this change and the later
+            // changes of Claude on the same object are undone together.
+            $target = PiskeeProHistory::rows($idShop, ['ids' => [(int) Tools::getValue('history_id')]], 1);
+            $rows = [];
+            if ($target !== []) {
+                $same = PiskeeProHistory::rows($idShop, ['object_type' => $target[0]['object_class'], 'object_id' => (int) $target[0]['object_id']], 500);
+                foreach ($same as $row) {
+                    if ((int) $row['id_history'] >= (int) $target[0]['id_history']) {
+                        $rows[] = $row;
+                    }
+                }
+            }
+        } else {
+            $rows = PiskeeProHistory::rows($idShop, ['session' => (string) Tools::getValue('history_session')], 500);
+        }
+        if ($rows === []) {
+            return [$t['h_nothing'], 'error', null];
+        }
+        $result = PiskeeProHistory::undo($rows, $employee, (bool) Tools::getValue('history_force'));
+        $failed = array_filter($result['results'], static function ($line) {
+            return !$line['ok'];
+        });
+        $text = sprintf($t['h_undone'], $result['undone']);
+        if ($failed !== []) {
+            $text .= ' ' . $t['h_failed'] . ' ' . implode(' ', array_slice(array_column($failed, 'message'), 0, 5));
+        }
+
+        return [$text, $failed === [] ? 'success' : ($result['undone'] > 0 ? 'warning' : 'error'), null];
+    }
+
+    private function loadHistory(): bool
+    {
+        if (class_exists('PiskeeProHistory', false)) {
+            return true;
+        }
+        if (!Module::isInstalled('piskeeconnectorpro') || !Module::isEnabled('piskeeconnectorpro')) {
+            return false;
+        }
+        Module::getInstanceByName('piskeeconnectorpro');
+
+        return class_exists('PiskeeProHistory', false);
+    }
+
     private function langUrls(): array
     {
         $out = [];

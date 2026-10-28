@@ -36,6 +36,7 @@
     <button type="button" class="pkc-tab" data-tab="tools">{$t.tab_tools|escape:'html':'UTF-8'} <span class="pkc-count">{$pk.tool_count|intval}</span></button>
     <button type="button" class="pkc-tab" data-tab="theme">{$t.tab_theme|escape:'html':'UTF-8'}</button>
     <button type="button" class="pkc-tab" data-tab="docs">{$t.tab_docs|escape:'html':'UTF-8'}</button>
+    <button type="button" class="pkc-tab" data-tab="history">{$t.tab_history|escape:'html':'UTF-8'}{if $pk.history.state == 'ok' && $pk.history.total > 0} <span class="pkc-count">{$pk.history.total|intval}</span>{elseif $pk.history.state != 'ok'} <span class="pkc-pro-tag">Pro</span>{/if}</button>
     <button type="button" class="pkc-tab" data-tab="pro">{$t.tab_pro|escape:'html':'UTF-8'}</button>
     <button type="button" class="pkc-tab" data-tab="about">{$t.tab_about|escape:'html':'UTF-8'}</button>
   </nav>
@@ -260,7 +261,93 @@
         </div>
       </section>
 
-      {* ---------- Free / Pro ---------- *}
+            {* ---------- History (Pro) ---------- *}
+      <section class="pkc-panel" data-panel="history">
+        <div class="pkc-card pkc-hist-intro">
+          <div>
+            <h2>{$t.h_title|escape:'html':'UTF-8'}</h2>
+            <p class="pkc-muted">{$t.h_help|escape:'html':'UTF-8'}</p>
+          </div>
+          {if $pk.history.state == 'ok'}
+            <div class="pkc-hist-stat"><strong>{$pk.history.total|intval}</strong><span>{$t.h_stat|escape:'html':'UTF-8'}</span></div>
+          {/if}
+        </div>
+
+        {if $pk.history.state == 'locked'}
+          <div class="pkc-card pkc-card--pro pkc-hist-locked">
+            <p class="pkc-audit__kicker">Piskee Pro</p>
+            <h2>{$t.h_locked_title|escape:'html':'UTF-8'}</h2>
+            <ul class="pkc-hist-points">
+              <li>{$t.h_locked_1|escape:'html':'UTF-8'}</li>
+              <li>{$t.h_locked_2|escape:'html':'UTF-8'}</li>
+              <li>{$t.h_locked_3|escape:'html':'UTF-8'}</li>
+            </ul>
+            <div class="pkc-hist-demo" aria-hidden="true">
+              <div class="pkc-hist-row"><span class="pkc-hist-time">10:42</span><span><strong>{$t.h_demo_object|escape:'html':'UTF-8'}</strong><br><code>meta_title (fr)</code> <s>T-shirt</s> &rarr; T-shirt imprimé coton bio</span><span class="pkc-btn pkc-btn--small pkc-btn--ghost">&#8634; {$t.h_undo|escape:'html':'UTF-8'}</span></div>
+            </div>
+            <button type="button" class="pkc-btn" data-open-tab="pro">{$t.pro_cta|escape:'html':'UTF-8'}</button>
+          </div>
+        {elseif $pk.history.state == 'no_module'}
+          <div class="pkc-card pkc-card--warn">
+            <h2>{$t.h_install_title|escape:'html':'UTF-8'}</h2>
+            <p>{$t.h_install_text|escape:'html':'UTF-8'}</p>
+          </div>
+        {elseif $pk.history.sessions|count == 0}
+          <div class="pkc-card"><p class="pkc-muted">{$t.h_empty|escape:'html':'UTF-8'}</p></div>
+        {else}
+          {foreach $pk.history.sessions as $session}
+            <div class="pkc-card pkc-hist-session">
+              <div class="pkc-hist-head">
+                <div>
+                  <strong>{$t.h_session|escape:'html':'UTF-8'} {$session.day|escape:'html':'UTF-8'}</strong>
+                  <span class="pkc-muted">{$session.from|escape:'html':'UTF-8'} &rarr; {$session.to|escape:'html':'UTF-8'} · {$session.entries|count} {$t.h_changes|escape:'html':'UTF-8'}</span>
+                </div>
+                {if $pk.history.can_undo && $session.open > 0}
+                  <form method="post" action="{$pk.action_url|escape:'html':'UTF-8'}" class="pkc-inline-form" onsubmit="return confirm(this.getAttribute('data-confirm'));" data-confirm="{$t.h_confirm|escape:'html':'UTF-8'}">
+                    <input type="hidden" name="piskee_token" value="{$pk.token|escape:'html':'UTF-8'}">
+                    <input type="hidden" name="piskee_action" value="undo_session">
+                    <input type="hidden" name="history_session" value="{$session.ref|escape:'html':'UTF-8'}">
+                    <button type="submit" class="pkc-btn pkc-btn--small pkc-btn--ghost">&#8634; {$t.h_undo_session|escape:'html':'UTF-8'}</button>
+                  </form>
+                {/if}
+              </div>
+              <div class="pkc-hist-list">
+                {foreach $session.entries as $e}
+                  <div class="pkc-hist-row{if $e.undone} is-undone{/if}">
+                    <span class="pkc-hist-time">{$e.time|escape:'html':'UTF-8'}<small>{$e.tool|escape:'html':'UTF-8'}</small></span>
+                    <span class="pkc-hist-what">
+                      <strong>{if isset($t["hobj_`$e.object_key`"])}{$t["hobj_`$e.object_key`"]|escape:'html':'UTF-8'}{else}{$e.object|escape:'html':'UTF-8'}{/if} #{$e.object_id|intval}</strong>{if $e.label} · {$e.label|truncate:70:'…'|escape:'html':'UTF-8'}{/if}
+                      {if $e.action == 'update'}
+                        {foreach $e.changes as $c}
+                          <span class="pkc-hist-change"><code>{$c.field|escape:'html':'UTF-8'}</code> <s>{if $c.before === ''}&empty;{else}{$c.before|escape:'html':'UTF-8'}{/if}</s> &rarr; {if $c.after === ''}&empty;{else}{$c.after|escape:'html':'UTF-8'}{/if}</span>
+                        {/foreach}
+                        {if $e.more > 0}<span class="pkc-muted pkc-hist-change">+ {$e.more|intval} {$t.h_more|escape:'html':'UTF-8'}</span>{/if}
+                      {else}
+                        <span class="pkc-hist-badge pkc-hist-badge--{$e.action|escape:'html':'UTF-8'}">{if $e.action == 'add'}{$t.h_add|escape:'html':'UTF-8'}{else}{$t.h_delete|escape:'html':'UTF-8'}{/if}</span>
+                      {/if}
+                    </span>
+                    <span class="pkc-hist-act">
+                      {if $e.undone}
+                        <span class="pkc-hist-badge">{$t.h_is_undone|escape:'html':'UTF-8'}</span>
+                      {elseif $pk.history.can_undo && $e.can_undo}
+                        <form method="post" action="{$pk.action_url|escape:'html':'UTF-8'}" class="pkc-inline-form">
+                          <input type="hidden" name="piskee_token" value="{$pk.token|escape:'html':'UTF-8'}">
+                          <input type="hidden" name="piskee_action" value="undo_change">
+                          <input type="hidden" name="history_id" value="{$e.id|intval}">
+                          <button type="submit" class="pkc-btn pkc-btn--small pkc-btn--ghost">&#8634; {$t.h_undo|escape:'html':'UTF-8'}</button>
+                        </form>
+                      {/if}
+                    </span>
+                  </div>
+                {/foreach}
+              </div>
+            </div>
+          {/foreach}
+          <p class="pkc-muted pkc-hist-foot">{$t.h_foot|escape:'html':'UTF-8'}</p>
+        {/if}
+      </section>
+
+{* ---------- Free / Pro ---------- *}
       <section class="pkc-panel" data-panel="pro">
         <div class="pkc-card">
           <h2>{$t.plan_current|escape:'html':'UTF-8'}{if $pk.lang == 'fr'}&nbsp;:{else}:{/if} {if $pk.plan.license.valid}{$t.plan_pro|escape:'html':'UTF-8'}{else}{$t.plan_free|escape:'html':'UTF-8'}{/if}</h2>
