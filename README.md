@@ -189,7 +189,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 ## 🇫🇷 En français
 
-**Pilotez votre boutique PrestaShop en parlant à Claude.** Vous décrivez le résultat, par exemple « réécris les meta descriptions de la catégorie Robes », « crée les tailles S à XL » ou « quelles commandes attendent un numéro de suivi ? ». Claude fait les clics dans votre back-office, avec vos droits, après votre accord.
+**Pilotez votre boutique PrestaShop en parlant à Claude.** Vous décrivez le résultat, par exemple « réécrivez les meta descriptions de la catégorie Robes », « créez les tailles S à XL » ou « quelles commandes attendent un numéro de suivi ? ». Claude fait les clics dans votre back-office, avec vos droits, après votre accord.
 
 - **60 outils :** catalogue, SEO, traductions, déclinaisons, stocks, images, vente croisée, commandes, service client, CMS et thème enfant.
 - **Sans risque :**
@@ -212,12 +212,12 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 ## 🇪🇸 En español
 
-**Gestiona tu tienda PrestaShop hablando con Claude.** Describes el resultado, por ejemplo «reescribe las meta descriptions de la categoría Vestidos», «crea las tallas S a XL» o «¿qué pedidos están esperando un número de seguimiento?». Claude hace los clics en tu back office, con tus permisos y después de tu aprobación.
+**Gestione su tienda PrestaShop hablando con Claude.** Usted describe el resultado, por ejemplo «reescriba las meta descriptions de la categoría Vestidos», «cree las tallas S a XL» o «¿qué pedidos están esperando un número de seguimiento?». Claude hace los clics en su back office, con sus permisos y después de su aprobación.
 
 - **60 herramientas:** catálogo, SEO, traducciones, combinaciones, stock, imágenes, venta cruzada, pedidos, atención al cliente, CMS y tema hijo.
 - **Sin riesgos:**
-  - apruebas cada modificación;
-  - el tema publicado nunca se toca: Claude trabaja en un borrador que publicas con un clic;
+  - usted aprueba cada modificación;
+  - el tema publicado nunca se toca: Claude trabaja en un borrador que usted publica con un clic;
   - todo se guarda en copias de seguridad;
   - ningún dato pasa por Piskee.
 - **Instalación en 5 minutos:** sin módulos ni cuenta PrestaShop adicionales. Compatible con **PrestaShop 1.7.6 a 9**, PHP 7.2 o superior.
@@ -225,7 +225,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 [⬇ Descargar el módulo](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Documentación en español](piskeeconnector/docs/README.es.md)
 
-**¿Prefieres que lo hagamos contigo?**
+**¿Prefiere que lo hagamos con usted?**
 - Sesión de puesta en marcha por 300 € + IVA.
 - Auditoría SEO y GEO gratuita en 48 h.
 
@@ -235,20 +235,20 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 ## 🇮🇹 In italiano
 
-**Gestisci il tuo negozio PrestaShop parlando con Claude.** Descrivi il risultato, per esempio «riscrivi le meta description della categoria Abiti», «crea le taglie dalla S alla XL» o «quali ordini aspettano ancora un numero di tracciamento?». Claude fa i clic nel tuo back office, con i tuoi permessi, dopo la tua approvazione.
+**Gestisca il Suo negozio PrestaShop parlando con Claude.** Lei descrive il risultato, per esempio «riscriva le meta description della categoria Abiti», «crei le taglie dalla S alla XL» o «quali ordini aspettano ancora un numero di tracciamento?». Claude fa i clic nel Suo back office, con i Suoi permessi, dopo la Sua approvazione.
 
 - **60 strumenti:** catalogo, SEO, traduzioni, combinazioni, giacenze, immagini, vendita incrociata, ordini, assistenza clienti, CMS e tema figlio.
 - **Senza rischi:**
-  - approvi ogni modifica;
-  - il tema online non viene mai toccato: Claude lavora su una bozza che metti online con un clic;
+  - Lei approva ogni modifica;
+  - il tema online non viene mai toccato: Claude lavora su una bozza che Lei mette online con un clic;
   - tutto viene salvato in un backup;
   - nessun dato passa da Piskee.
 - **Installazione in 5 minuti:** nessun modulo né account PrestaShop aggiuntivo. Compatibile con **PrestaShop dalla 1.7.6 alla 9**, PHP 7.2 o successivo.
 - **Gratis** fino a 100 modifiche al mese. **Pro illimitato** a 29 € + IVA al mese, prezzo garantito a vita per i primi 100 clienti, senza vincoli.
 
-[⬇ Scarica il modulo](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Documentazione in italiano](piskeeconnector/docs/README.it.md)
+[⬇ Scarichi il modulo](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Documentazione in italiano](piskeeconnector/docs/README.it.md)
 
-**Preferisci che lo facciamo insieme?**
+**Preferisce che lo facciamo insieme?**
 - Sessione di avvio a 300 € + IVA.
 - Audit SEO e GEO gratuito in 48 h.
 
@@ -258,20 +258,20 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 ## 🇵🇱 Po polsku
 
-**Zarządzaj sklepem PrestaShop, rozmawiając z Claude.** Opisujesz efekt, na przykład „przepisz meta opisy kategorii Sukienki”, „utwórz rozmiary od S do XL” albo „które zamówienia czekają na numer przesyłki?”. Claude wykonuje kliknięcia w Twoim panelu administracyjnym, z Twoimi uprawnieniami, po Twojej akceptacji.
+**Zarządzanie sklepem PrestaShop w rozmowie z Claude.** Wystarczy opisać efekt, na przykład „Proszę przepisać meta opisy kategorii Sukienki”, „Proszę utworzyć rozmiary od S do XL” albo „Które zamówienia czekają na numer przesyłki?”. Claude wykonuje kliknięcia w Państwa panelu administracyjnym, z Państwa uprawnieniami, po Państwa akceptacji.
 
 - **60 narzędzi:** katalog, SEO, tłumaczenia, kombinacje, stany magazynowe, zdjęcia, sprzedaż krzyżowa, zamówienia, obsługa klienta, CMS i motyw potomny.
 - **Bez ryzyka:**
-  - akceptujesz każdą zmianę;
-  - opublikowany motyw nigdy nie jest zmieniany: Claude pracuje na szkicu, który publikujesz jednym kliknięciem;
+  - każdą zmianę akceptują Państwo;
+  - opublikowany motyw nigdy nie jest zmieniany: Claude pracuje na szkicu, który Państwo publikują jednym kliknięciem;
   - wszystko trafia do kopii zapasowej;
   - żadne dane nie przechodzą przez Piskee.
 - **Instalacja w 5 minut:** bez dodatkowych modułów i bez konta PrestaShop. Działa z **PrestaShop od 1.7.6 do 9**, PHP 7.2 lub nowszym.
 - **Za darmo** do 100 zmian miesięcznie. **Pro bez limitu** za 29 € netto miesięcznie, cena gwarantowana dożywotnio dla pierwszych 100 klientów, bez zobowiązań.
 
-[⬇ Pobierz moduł](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Dokumentacja po polsku](piskeeconnector/docs/README.pl.md)
+[⬇ Pobieranie modułu](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Dokumentacja po polsku](piskeeconnector/docs/README.pl.md)
 
-**Wolisz, żebyśmy zrobili to razem z Tobą?**
+**Wolą Państwo, żebyśmy zrobili to razem?**
 - Sesja wdrożeniowa za 300 € netto.
 - Bezpłatny audyt SEO i GEO w 48 h.
 

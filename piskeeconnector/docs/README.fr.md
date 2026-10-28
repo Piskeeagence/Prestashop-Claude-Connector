@@ -1,6 +1,6 @@
 # Piskee pour PrestaShop, documentation
 
-Piskee relie votre boutique PrestaShop à Claude : c'est l'assistant IA de votre back-office. Vous demandez en français ce que vous voulez faire (« réécris les meta descriptions de la catégorie Robes », « crée les tailles S à XL pour ce produit », « quels produits sont en rupture ? ») et Claude agit directement dans votre boutique, avec vos droits et sous votre contrôle.
+Piskee relie votre boutique PrestaShop à Claude : c'est l'assistant IA de votre back-office. Vous demandez en français ce que vous voulez faire (« réécrivez les meta descriptions de la catégorie Robes », « créez les tailles S à XL pour ce produit », « quels produits sont en rupture ? ») et Claude agit directement dans votre boutique, avec vos droits et sous votre contrôle.
 
 Conçu et développé à Chantilly (Oise) par Piskee, agence SEO & GEO e-commerce.
 

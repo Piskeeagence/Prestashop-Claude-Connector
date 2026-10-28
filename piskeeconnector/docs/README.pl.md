@@ -1,10 +1,10 @@
 # Piskee dla PrestaShop, dokumentacja
 
-Piskee łączy Twój sklep PrestaShop z Claude: asystentem AI Twojego panelu administracyjnego. Mówisz, co chcesz zrobić („przepisz meta opisy kategorii Sukienki”, „utwórz rozmiary od S do XL dla tego produktu”, „których produktów nie ma w magazynie?”), a Claude działa bezpośrednio w Twoim sklepie, z Twoimi uprawnieniami i pod Twoją kontrolą.
+Piskee łączy Państwa sklep PrestaShop z Claude: asystentem AI panelu administracyjnego. Wystarczy powiedzieć, co ma zostać zrobione („Proszę przepisać meta opisy kategorii Sukienki”, „Proszę utworzyć rozmiary od S do XL dla tego produktu”, „Których produktów nie ma w magazynie?”), a Claude działa bezpośrednio w Państwa sklepie, z Państwa uprawnieniami i pod Państwa kontrolą.
 
 Zaprojektowany i zbudowany w Chantilly (Francja) przez Piskee, agencję SEO i GEO specjalizującą się w e-commerce.
 
-## Zanim zaczniesz
+## Przed rozpoczęciem
 
 - PrestaShop 1.7.6 lub nowszy (1.7, 8 i 9), PHP 7.2 lub nowszy.
 - Sklep działający na HTTPS, w katalogu głównym domeny, z włączonymi przyjaznymi adresami URL.
@@ -13,23 +13,23 @@ Zaprojektowany i zbudowany w Chantilly (Francja) przez Piskee, agencję SEO i GE
 
 ## Instalacja
 
-1. Moduły, Menedżer modułów, Prześlij moduł: przeciągnij plik zip modułu.
-2. Otwórz moduł Piskee: zakładka Połączenie sprawdza wszystko. Kliknij **Przetestuj połączenie**, aby wykonać test publicznych adresów na żywo.
+1. Moduły, Menedżer modułów, Prześlij moduł: należy przeciągnąć plik zip modułu.
+2. Następnie prosimy otworzyć moduł Piskee: zakładka Połączenie sprawdza wszystko. Przycisk **Test połączenia** wykonuje test publicznych adresów na żywo.
 
-## Połącz Claude
+## Połączenie z Claude
 
-1. Skopiuj adres widoczny w zakładce Połączenie (kończy się na `/module/piskeeconnector/mcp`).
+1. Prosimy skopiować adres widoczny w zakładce Połączenie (kończy się na `/module/piskeeconnector/mcp`).
 2. W Claude: Ustawienia, Łączniki, Dodaj, Dodaj własny łącznik.
-3. Nazwij go „Piskee”, wklej adres, zostaw wykryte ustawienia (logowanie teraz, automatyczna rejestracja), kliknij Dodaj, a potem Połącz.
-4. Panel administracyjny sklepu otworzy się na ekranie autoryzacji: sprawdź wymagane uprawnienia i kliknij **Zezwól**.
+3. Łącznik należy nazwać „Piskee”, wkleić adres, zostawić wykryte ustawienia (logowanie teraz, automatyczna rejestracja), kliknąć Dodaj, a potem Połącz.
+4. Panel administracyjny sklepu otworzy się na ekranie autoryzacji: prosimy sprawdzić wymagane uprawnienia i kliknąć **Zezwól**.
 
-Z Claude Code wystarczy jedno polecenie:
+W Claude Code wystarczy jedno polecenie:
 
 ```
-claude mcp add --transport http piskee https://twoj-sklep.pl/module/piskeeconnector/mcp
+claude mcp add --transport http piskee https://adres-sklepu.pl/module/piskeeconnector/mcp
 ```
 
-Następnie wpisz `/mcp` w Claude Code, aby się zalogować.
+Następnie należy wpisać `/mcp` w Claude Code, aby się zalogować.
 
 ## Co potrafi Claude
 
@@ -39,25 +39,25 @@ Następnie wpisz `/mcp` w Claude Code, aby się zalogować.
 
 **Zdjęcia**: dodawanie zdjęcia z adresu internetowego, pisanie tekstów alternatywnych, wybór zdjęcia głównego, zmniejszanie zbyt ciężkich oryginałów, wyśrodkowanie ich na kwadratowym tle i ponowne generowanie wszystkich miniatur.
 
-**Wzbogacanie**: cechy, marki, produkty powiązane, promocje (procentowe lub kwotowe, z datami) oraz pełny audyt katalogu wskazujący, co hamuje Twoją sprzedaż i widoczność w wyszukiwarkach.
+**Wzbogacanie**: cechy, marki, produkty powiązane, promocje (procentowe lub kwotowe, z datami) oraz pełny audyt katalogu wskazujący, co hamuje sprzedaż i widoczność sklepu w wyszukiwarkach.
 
-**Sprzedaż krzyżowa i koszyk**: produkty powiązane (dodawanie, usuwanie, zastępowanie, do 50 produktów naraz), sugestie „często kupowane razem” wyliczane na podstawie Twoich rzeczywistych zamówień oraz natywny blok „klienci kupili również” na karcie produktu i w koszyku jako dodatkowe zakupy. Inne moduły upsellingowe są wykrywane i wymieniane, ale nigdy zmieniane.
+**Sprzedaż krzyżowa i koszyk**: produkty powiązane (dodawanie, usuwanie, zastępowanie, do 50 produktów naraz), sugestie „często kupowane razem” wyliczane na podstawie rzeczywistych zamówień sklepu oraz natywny blok „klienci kupili również” na karcie produktu i w koszyku jako dodatkowe zakupy. Inne moduły upsellingowe są wykrywane i wymieniane, ale nigdy zmieniane.
 
 **Zamówienia i śledzenie**: wyszukiwanie zamówienia (numer, klient, numer przesyłki), odczyt zamówienia z historią i linkiem do śledzenia przesyłki u przewoźnika, zmiana statusu, ustawienie numeru przesyłki.
 
 **Strony CMS i tłumaczenia**: odczyt i edycja stron CMS, edycja do 50 produktów naraz (ceny, statusy, teksty lub tłumaczenia).
 
-**Codzienne zarządzanie**: podsumowanie sprzedaży za wybrany okres, niskie stany magazynowe, wyszukiwanie i karta klienta, odczyt wiadomości obsługi klienta i odpowiedź e-mailem (po Twojej akceptacji), tworzenie kodów rabatowych.
+**Codzienne zarządzanie**: podsumowanie sprzedaży za wybrany okres, niskie stany magazynowe, wyszukiwanie i karta klienta, odczyt wiadomości obsługi klienta i odpowiedź e-mailem (po Państwa akceptacji), tworzenie kodów rabatowych.
 
 **Motyw potomny**: tworzenie szkicu motywu potomnego, odczyt i przeszukiwanie plików motywu, audyt nagłówków i ścieżki nawigacyjnej opublikowanej strony, zmiany w szablonach, CSS i JavaScript szkicu, przywracanie kopii zapasowej.
 
-W menu Claude dostępne są też trzy gotowe przewodniki: Podsumowanie dnia, Optymalizuj katalog, Uporządkuj nagłówki Hn i dodaj ścieżkę nawigacyjną.
+W menu Claude dostępne są też trzy gotowe przewodniki: Podsumowanie dnia, Optymalizacja katalogu, Porządkowanie nagłówków Hn i ścieżki nawigacyjnej.
 
 ## Czego Claude nie potrafi
 
 - Zwrócić pieniędzy klientowi ani dotknąć płatności.
 - Zmienić opublikowanego motywu ani motywu nadrzędnego.
-- Opublikować motywu: to Ty klikasz, w zakładce Motyw potomny.
+- Opublikować motywu: to Państwo klikają, w zakładce Motyw potomny.
 - Usunąć produktu, klienta ani zamówienia.
 - Uzyskać większych uprawnień niż pracownik, który go połączył.
 
@@ -66,16 +66,16 @@ W menu Claude dostępne są też trzy gotowe przewodniki: Podsumowanie dnia, Opt
 - Każde narzędzie zmieniające sklep jest oznaczone jako wrażliwe: Claude prosi o potwierdzenie przed jego użyciem.
 - Uprawnienia odpowiadają profilowi PrestaShop pracownika, który autoryzował połączenie, i są sprawdzane przy każdym wywołaniu.
 - Każda zmiana motywu jest zapisywana w kopii zapasowej. Plików PHP i konfiguracji motywu nie można zmieniać. Szablony są sprawdzane przed zapisem: odrzucane są niezamknięte tagi Smarty, funkcje PHP spoza krótkiej listy dozwolonych, wywołania klas, stałe i odczyty plików.
-- W każdej chwili możesz wyłączyć serwer i odłączyć każdego asystenta, w zakładce Połączenie.
+- W każdej chwili mogą Państwo wyłączyć serwer i odłączyć każdego asystenta, w zakładce Połączenie.
 - Żadne dane nie są wysyłane do Piskee.
 
 ## Publikacja motywu
 
-1. Poproś Claude o pracę na szkicu motywu potomnego.
-2. Otwórz Piskee, zakładkę Motyw potomny, i kliknij **Opublikuj** obok szkicu.
-3. Sprawdź stronę główną, jedną kategorię i jeden produkt. Jeśli coś wygląda źle, kliknij **Wróć do poprzedniego motywu**.
+1. Prosimy poprosić Claude o pracę na szkicu motywu potomnego.
+2. Następnie należy otworzyć Piskee, zakładkę Motyw potomny, i kliknąć **Opublikuj** obok szkicu.
+3. Warto sprawdzić stronę główną, jedną kategorię i jeden produkt. Jeśli coś wygląda źle, wystarczy kliknąć **Powrót do poprzedniego motywu**.
 
-Zmienia się tylko motyw: Twoje moduły, ich ustawienia, pozycje hooków, rozmiary zdjęć i układy stron pozostają bez zmian. Szkic można opublikować tylko w miejsce motywu z tej samej rodziny (z tym samym motywem nadrzędnym).
+Zmienia się tylko motyw: moduły, ich ustawienia, pozycje hooków, rozmiary zdjęć i układy stron pozostają bez zmian. Szkic można opublikować tylko w miejsce motywu z tej samej rodziny (z tym samym motywem nadrzędnym).
 
 ## Darmowy czy Pro
 
@@ -83,17 +83,17 @@ Wersja darmowa pozwala na 100 zmian miesięcznie na sklep; odczyt, wyszukiwanie 
 
 Piskee Pro (29 € netto miesięcznie, cena startowa gwarantowana dożywotnio dla pierwszych 100 klientów, bez zobowiązań) znosi limit i dodaje przekierowania 301, faktury korygujące i zwroty, multistore z dziennikiem audytu oraz wsparcie priorytetowe. Sesja wdrożeniowa z agencją kosztuje 300 € netto.
 
-Klucz licencyjny otrzymany e-mailem wklej w zakładce Darmowy / Pro.
+Klucz licencyjny otrzymany e-mailem należy wkleić w zakładce Darmowy / Pro.
 
 ## Rozwiązywanie problemów
 
-- **„Ta prośba o połączenie jest nieprawidłowa”** podczas autoryzacji: usuń łącznik w Claude, a następnie dodaj go ponownie.
-- **Stały błąd 401**: niektóre hostingi usuwają nagłówek Authorization. Dodaj `SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1` na początku pliku `.htaccess`.
-- **Claude nie widzi nowych narzędzi**: otwórz nową rozmowę.
-- **Błąd przy otwieraniu ekranu autoryzacji**: sprawdź, czy sklep nie jest w trybie konserwacji i czy żadna zapora nie blokuje adresów `/.well-known/`.
+- **„Ta prośba o połączenie jest nieprawidłowa”** podczas autoryzacji: należy usunąć łącznik w Claude, a następnie dodać go ponownie.
+- **Stały błąd 401**: niektóre hostingi usuwają nagłówek Authorization. Należy dodać `SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1` na początku pliku `.htaccess`.
+- **Claude nie widzi nowych narzędzi**: należy otworzyć nową rozmowę.
+- **Błąd przy otwieraniu ekranu autoryzacji**: prosimy sprawdzić, czy sklep nie jest w trybie konserwacji i czy żadna zapora nie blokuje adresów `/.well-known/`.
 - **Zmiana w motywie nie jest widoczna**: to normalne, dopóki szkic nie zostanie opublikowany.
 
-## Potrzebujesz pomocy?
+## Potrzebują Państwo pomocy?
 
 Zespół Piskee odpowiada na pytania dotyczące modułu i wspiera sklepy, które chcą pójść dalej: audyty SEO i GEO, treści, Google Ads, rozwiązania na zamówienie.
 
@@ -104,4 +104,4 @@ Zespół Piskee odpowiada na pytania dotyczące modułu i wspiera sklepy, które
 
 ## Informacje prawne
 
-Piskee dla PrestaShop to niezależny moduł wydawany przez Piskee (Chantilly, Francja). Nie jest oficjalnym produktem PrestaShop SA ani Anthropic, PBC, które go nie opracowały, nie zweryfikowały ani nie zatwierdziły i nie ponoszą za niego żadnej odpowiedzialności. PrestaShop jest znakiem towarowym PrestaShop SA; Claude jest znakiem towarowym Anthropic, PBC; nazwy te są używane wyłącznie w celu wskazania kompatybilności. Moduł jest dostarczany „w stanie, w jakim jest”, bez gwarancji, w granicach przewidzianych przez prawo i licencję AFL-3.0. Za działania podjęte i zatwierdzone przez sprzedawcę odpowiada sprzedawca: regularnie twórz kopie zapasowe i sprawdzaj zmiany przed ich zaakceptowaniem.
+Piskee dla PrestaShop to niezależny moduł wydawany przez Piskee (Chantilly, Francja). Nie jest oficjalnym produktem PrestaShop SA ani Anthropic, PBC, które go nie opracowały, nie zweryfikowały ani nie zatwierdziły i nie ponoszą za niego żadnej odpowiedzialności. PrestaShop jest znakiem towarowym PrestaShop SA; Claude jest znakiem towarowym Anthropic, PBC; nazwy te są używane wyłącznie w celu wskazania kompatybilności. Moduł jest dostarczany „w stanie, w jakim jest”, bez gwarancji, w granicach przewidzianych przez prawo i licencję AFL-3.0. Za działania podjęte i zatwierdzone przez sprzedawcę odpowiada sprzedawca: zalecamy regularne tworzenie kopii zapasowych i sprawdzanie zmian przed ich zaakceptowaniem.
