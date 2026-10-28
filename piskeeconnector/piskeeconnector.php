@@ -48,7 +48,7 @@ class Piskeeconnector extends Module
     {
         $this->name = 'piskeeconnector';
         $this->tab = 'administration';
-        $this->version = '2.4.1';
+        $this->version = '2.4.2';
         $this->author = 'Piskee';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -480,6 +480,19 @@ class Piskeeconnector extends Module
         }
         if (!$this->loadHistory()) {
             return ['state' => 'no_module', 'sessions' => [], 'total' => 0];
+        }
+        if (method_exists('PiskeeProHistory', 'purge')) {
+            PiskeeProHistory::purge($idShop);
+        } else {
+            // Piskee Pro 1.1.0: same limits, applied here.
+            $db = Db::getInstance();
+            $table = '`' . _DB_PREFIX_ . 'piskeeconnector_history`';
+            $db->execute('DELETE FROM ' . $table . ' WHERE `id_shop` = ' . $idShop . ' AND `date_add` < \'' . pSQL(date('Y-m-d H:i:s', time() - 30 * 86400)) . '\'');
+            $cut = $db->executeS('SELECT `id_history` FROM ' . $table . ' WHERE `id_shop` = ' . $idShop . ' ORDER BY `id_history` DESC LIMIT 9999, 1', true, false);
+            $limit = is_array($cut) && $cut !== [] ? (int) $cut[0]['id_history'] : 0;
+            if ($limit > 0) {
+                $db->execute('DELETE FROM ' . $table . ' WHERE `id_shop` = ' . $idShop . ' AND `id_history` < ' . $limit);
+            }
         }
         $sessions = [];
         $total = 0;

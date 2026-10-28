@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.4.2
+- History (Piskee Pro): kept 30 days, and 10,000 changes at most per shop; older changes are removed automatically.
+
 ## 2.4.1
 - New "History" tab on the module page: every change Claude made, grouped by work session, with the value before and after. "Restore previous version" on each change brings the item back to its state before that change (Claude's later changes to the same item are undone with it); "Undo the whole session" on each session. Needs Piskee Pro; on the free plan the tab shows what the history does.
 
