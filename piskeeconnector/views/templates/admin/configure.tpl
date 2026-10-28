@@ -373,8 +373,8 @@
             <div class="pkc-usage__label"><span><strong>{$pk.plan.used|intval} / {$pk.plan.allowance|intval}</strong> {$t.plan_usage|escape:'html':'UTF-8'}</span></div>
           </div>
           <p class="pkc-muted">{$t.plan_reads|escape:'html':'UTF-8'}</p>
+          <p class="pkc-plan-card__offer">{$t.plan_year_hint|escape:'html':'UTF-8'}</p>
           <button type="button" class="pkc-btn pkc-btn--block" data-open-tab="pro">{$t.pro_cta|escape:'html':'UTF-8'}</button>
-          <p class="pkc-plan-card__hint">{$t.plan_year_hint|escape:'html':'UTF-8'}</p>
         {/if}
       </div>
       <div class="pkc-card pkc-onboard">
