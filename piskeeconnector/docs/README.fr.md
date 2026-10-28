@@ -81,7 +81,7 @@ Seul le thème change : vos modules, leurs réglages, la position des modules, l
 
 La version gratuite permet 100 modifications par mois et par boutique ; la lecture, les recherches et les audits sont illimités. Le compteur repart à zéro le 1er du mois.
 
-Piskee Pro (29 € HT par mois, prix de lancement garanti à vie pour les 100 premiers clients, sans engagement) lève la limite et ajoute les redirections 301, les avoirs et retours, le multiboutique avec journal d'audit, et le support prioritaire. Une prise en main avec l'agence est proposée à 300 € HT.
+Piskee Pro (29 € HT par mois, prix de lancement garanti à vie pour les 100 premiers clients, sans engagement) lève la limite et ajoute les redirections 301, les avoirs et retours, le multiboutique avec journal d'audit, et le support prioritaire. Une prise en main avec l'agence est proposée à 150 € HT.
 
 La clé de licence reçue par e-mail se colle dans l'onglet Gratuit / Pro.
 

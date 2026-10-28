@@ -124,7 +124,7 @@ Start free. When your catalogue work outgrows 100 changes a month, the module te
 
 Piskee is the e-commerce SEO & GEO agency behind this module, based in Chantilly, France.
 
-- **Onboarding session (€300 excl. VAT):** we set it up with you, connect Claude, and run your first catalogue optimisation together.
+- **Onboarding session (€150 excl. VAT):** we set it up with you, connect Claude, and run your first catalogue optimisation together.
 - **Free SEO & GEO audit in 48 h** for your store.
 
 → [piskee.com/contact](https://www.piskee.com/contact/) · louisalexandre@piskee.com · WhatsApp +33 7 69 15 39 92
@@ -203,7 +203,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 [⬇ Télécharger le module](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Documentation en français](piskeeconnector/docs/README.fr.md)
 
 **Envie qu'on le fasse avec vous ?**
-- Session d'onboarding à 300 € HT.
+- Session d'onboarding à 150 € HT.
 - Audit SEO & GEO gratuit en 48 h.
 
 [piskee.com/contact](https://www.piskee.com/contact/) · louisalexandre@piskee.com · WhatsApp +33 7 69 15 39 92
@@ -226,7 +226,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 [⬇ Descargar el módulo](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Documentación en español](piskeeconnector/docs/README.es.md)
 
 **¿Prefiere que lo hagamos con usted?**
-- Sesión de puesta en marcha por 300 € + IVA.
+- Sesión de puesta en marcha por 150 € + IVA.
 - Auditoría SEO y GEO gratuita en 48 h.
 
 [piskee.com/contact](https://www.piskee.com/contact/) · louisalexandre@piskee.com · WhatsApp +33 7 69 15 39 92
@@ -249,7 +249,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 [⬇ Scarichi il modulo](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Documentazione in italiano](piskeeconnector/docs/README.it.md)
 
 **Preferisce che lo facciamo insieme?**
-- Sessione di avvio a 300 € + IVA.
+- Sessione di avvio a 150 € + IVA.
 - Audit SEO e GEO gratuito in 48 h.
 
 [piskee.com/contact](https://www.piskee.com/contact/) · louisalexandre@piskee.com · WhatsApp +33 7 69 15 39 92
@@ -272,7 +272,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 [⬇ Pobieranie modułu](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Dokumentacja po polsku](piskeeconnector/docs/README.pl.md)
 
 **Wolą Państwo, żebyśmy zrobili to razem?**
-- Sesja wdrożeniowa za 300 € netto.
+- Sesja wdrożeniowa za 150 € netto.
 - Bezpłatny audyt SEO i GEO w 48 h.
 
 [piskee.com/contact](https://www.piskee.com/contact/) · louisalexandre@piskee.com · WhatsApp +33 7 69 15 39 92

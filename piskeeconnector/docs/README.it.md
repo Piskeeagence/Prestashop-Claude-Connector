@@ -81,7 +81,7 @@ Cambia solo il tema: i Suoi moduli, le loro impostazioni, le posizioni degli hoo
 
 La versione gratuita consente 100 modifiche al mese per negozio; lettura, ricerche e audit sono illimitati. Il contatore si azzera il 1° del mese.
 
-Piskee Pro (29 € + IVA al mese, prezzo di lancio garantito a vita per i primi 100 clienti, senza vincoli) elimina il limite e aggiunge i redirect 301, le note di credito e i resi, il multinegozio con registro di audit e il supporto prioritario. È disponibile una sessione di avvio con l'agenzia a 300 € + IVA.
+Piskee Pro (29 € + IVA al mese, prezzo di lancio garantito a vita per i primi 100 clienti, senza vincoli) elimina il limite e aggiunge i redirect 301, le note di credito e i resi, il multinegozio con registro di audit e il supporto prioritario. È disponibile una sessione di avvio con l'agenzia a 150 € + IVA.
 
 Incolli la chiave di licenza ricevuta via e-mail nella scheda Gratis / Pro.
 

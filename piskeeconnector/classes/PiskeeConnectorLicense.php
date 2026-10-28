@@ -25,8 +25,8 @@ class PiskeeConnectorLicense
     public const FREE_MONTHLY_WRITES = 100;
     public const PRO_PRICE = '29 € HT / mois';
     public const PRO_PRICE_EN = '€29 excl. VAT / month';
-    public const ONBOARDING_PRICE = '300 € HT';
-    public const ONBOARDING_PRICE_EN = '€300 excl. VAT';
+    public const ONBOARDING_PRICE = '150 € HT';
+    public const ONBOARDING_PRICE_EN = '€150 excl. VAT';
 
     /** Public half of Piskee's licence signing key. */
     private const PUBLIC_KEY = 'mrt9wtRyHudcJnaxipWzjDu1sRFXqCos/yF1MDLlVv0=';

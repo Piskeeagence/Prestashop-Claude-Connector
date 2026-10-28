@@ -244,9 +244,9 @@ class PiskeeConnectorI18n
             'pl' => '29 € netto / mies.',
         ],
         'onboarding' => [
-            'es' => '300 € + IVA',
-            'it' => '300 € + IVA',
-            'pl' => '300 € netto',
+            'es' => '150 € + IVA',
+            'it' => '150 € + IVA',
+            'pl' => '150 € netto',
         ],
     ];
 
