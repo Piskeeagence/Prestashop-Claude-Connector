@@ -48,8 +48,8 @@
         <div class="pkc-card pkc-welcome">
           <h2>{$t.welcome_title|escape:'html':'UTF-8'}</h2>
           <ul class="pkc-list-check">
-            <li>{$t.w1|escape:'html':'UTF-8'}</li>
             <li>{$t.w2|escape:'html':'UTF-8'}</li>
+            <li>{$t.w1|escape:'html':'UTF-8'}</li>
             <li>{$t.w3|escape:'html':'UTF-8'}</li>
             <li>{$t.w4|escape:'html':'UTF-8'}</li>
             <li>{$t.w5|escape:'html':'UTF-8'}</li>
@@ -57,6 +57,7 @@
             <li>{$t.w7|escape:'html':'UTF-8'}</li>
             <li>{$t.w8|escape:'html':'UTF-8'}</li>
             <li class="pkc-pro-item"><span class="pkc-badge-pro">Pro</span> {$t.w9|escape:'html':'UTF-8'}</li>
+            <li class="pkc-pro-item"><span class="pkc-badge-soon">{$t.soon|escape:'html':'UTF-8'}</span> {$t.w10|escape:'html':'UTF-8'}</li>
           </ul>
         </div>
 
@@ -359,6 +360,22 @@
           <p class="pkc-muted">{$t.plan_reads|escape:'html':'UTF-8'}</p>
           <button type="button" class="pkc-btn pkc-btn--block" data-open-tab="pro">{$t.pro_cta|escape:'html':'UTF-8'}</button>
         {/if}
+      </div>
+      <div class="pkc-card pkc-onboard">
+        <p class="pkc-onboard__kicker">{$t.ob_kicker|escape:'html':'UTF-8'}</p>
+        <h2 class="pkc-onboard__title">{$t.ob_title|escape:'html':'UTF-8'}</h2>
+        <p class="pkc-onboard__text">{$t.ob_text|escape:'html':'UTF-8'}</p>
+        <ul class="pkc-onboard__list">
+          <li>{$t.ob_b1|escape:'html':'UTF-8'}</li>
+          <li>{$t.ob_b2|escape:'html':'UTF-8'}</li>
+          <li>{$t.ob_b3|escape:'html':'UTF-8'}</li>
+        </ul>
+        <div class="pkc-onboard__price">
+          <span class="pkc-onboard__amount">{$t.ob_amount|escape:'html':'UTF-8'}</span>
+          <span class="pkc-onboard__tax">{$t.ob_tax|escape:'html':'UTF-8'}</span>
+        </div>
+        <p class="pkc-onboard__unit">{$t.ob_unit|escape:'html':'UTF-8'}</p>
+        <a class="pkc-btn pkc-btn--cream pkc-btn--block" href="{$pk.brand.contact_pro|escape:'html':'UTF-8'}" target="_blank" rel="noopener">{$t.ob_cta|escape:'html':'UTF-8'}</a>
       </div>
       <div class="pkc-card pkc-help">
         <h2>{$t.help_title|escape:'html':'UTF-8'}</h2>

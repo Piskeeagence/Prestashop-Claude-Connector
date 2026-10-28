@@ -217,3 +217,19 @@
 .pkc-langs{display:inline-flex;gap:10px;align-items:center}
 .pkc-langs .pkc-link-light{opacity:.7;font-weight:600}
 .pkc-langs .pkc-link-light.is-active{opacity:1;text-decoration:underline}
+
+/* Guided setup (onboarding) card, under the plan card */
+.pkc .pkc-onboard { background: linear-gradient(160deg, var(--pkc-olive-dark) 0%, var(--pkc-olive) 100%); color: var(--pkc-cream); border: 0; position: relative; overflow: hidden; }
+.pkc .pkc-onboard::after { content: ""; position: absolute; right: -40px; top: -40px; width: 140px; height: 140px; border-radius: 50%; background: rgba(255, 245, 238, .07); pointer-events: none; }
+.pkc .pkc-onboard__kicker { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255, 245, 238, .72); margin: 0 0 6px; }
+.pkc .pkc-onboard__title { color: var(--pkc-white); font-size: 18px; line-height: 1.25; margin: 0 0 8px; }
+.pkc .pkc-onboard__text { font-size: 13px; line-height: 1.5; color: rgba(255, 245, 238, .9); margin: 0 0 12px; }
+.pkc .pkc-onboard__list { list-style: none; margin: 0 0 16px; padding: 0; }
+.pkc .pkc-onboard__list li { position: relative; padding-left: 22px; font-size: 13px; line-height: 1.45; margin-bottom: 6px; color: var(--pkc-cream); }
+.pkc .pkc-onboard__list li::before { content: ""; position: absolute; left: 2px; top: 4px; width: 11px; height: 6px; border-left: 2px solid var(--pkc-cream); border-bottom: 2px solid var(--pkc-cream); transform: rotate(-45deg); }
+.pkc .pkc-onboard__price { display: flex; align-items: baseline; gap: 6px; padding-top: 14px; border-top: 1px solid rgba(255, 245, 238, .22); }
+.pkc .pkc-onboard__amount { font-family: 'Gotham', 'Gotham Black', Satoshi, Inter, sans-serif; font-weight: 800; font-size: 34px; line-height: 1; letter-spacing: -.02em; color: var(--pkc-white); }
+.pkc .pkc-onboard__tax { font-size: 13px; font-weight: 600; color: rgba(255, 245, 238, .8); }
+.pkc .pkc-onboard__unit { font-size: 12px; color: rgba(255, 245, 238, .72); margin: 4px 0 14px; }
+.pkc .pkc-onboard .pkc-btn { margin: 0; }
+.pkc .pkc-badge-soon { display: inline-block; padding: 1px 8px; border-radius: 999px; background: var(--pkc-olive-soft); color: var(--pkc-olive-dark); border: 1px solid var(--pkc-olive); font-size: 11px; font-weight: 700; letter-spacing: .02em; margin-right: 4px; }
