@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.4.3
+- Module page: a gold "PRO" badge on the History tab shows that it is a Piskee Pro feature.
+
 ## 2.4.2
 - History (Piskee Pro): kept 30 days, and 10,000 changes at most per shop; older changes are removed automatically.
 

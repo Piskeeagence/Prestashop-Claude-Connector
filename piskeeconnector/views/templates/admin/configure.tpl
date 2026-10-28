@@ -36,7 +36,7 @@
     <button type="button" class="pkc-tab" data-tab="tools">{$t.tab_tools|escape:'html':'UTF-8'} <span class="pkc-count">{$pk.tool_count|intval}</span></button>
     <button type="button" class="pkc-tab" data-tab="theme">{$t.tab_theme|escape:'html':'UTF-8'}</button>
     <button type="button" class="pkc-tab" data-tab="docs">{$t.tab_docs|escape:'html':'UTF-8'}</button>
-    <button type="button" class="pkc-tab" data-tab="history">{$t.tab_history|escape:'html':'UTF-8'}{if $pk.history.state == 'ok' && $pk.history.total > 0} <span class="pkc-count">{$pk.history.total|intval}</span>{elseif $pk.history.state != 'ok'} <span class="pkc-pro-tag">Pro</span>{/if}</button>
+    <button type="button" class="pkc-tab" data-tab="history">{$t.tab_history|escape:'html':'UTF-8'} <span class="pkc-pro-tag" title="Piskee Pro">&#9733; PRO</span>{if $pk.history.state == 'ok' && $pk.history.total > 0} <span class="pkc-count">{$pk.history.total|intval}</span>{/if}</button>
     <button type="button" class="pkc-tab" data-tab="pro">{$t.tab_pro|escape:'html':'UTF-8'}</button>
     <button type="button" class="pkc-tab" data-tab="about">{$t.tab_about|escape:'html':'UTF-8'}</button>
   </nav>
