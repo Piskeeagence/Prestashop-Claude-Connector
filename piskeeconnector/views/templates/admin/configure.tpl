@@ -291,8 +291,9 @@
               <tr><td>{$t.row_tools|escape:'html':'UTF-8'}</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td></tr>
               <tr><td>{$t.row_writes|escape:'html':'UTF-8'}</td><td>{$t.row_writes_free|escape:'html':'UTF-8'}</td><td class="yes">{$t.row_writes_pro|escape:'html':'UTF-8'}</td></tr>
               <tr><td>{$t.row_bulk|escape:'html':'UTF-8'}</td><td>{$t.within_quota|escape:'html':'UTF-8'}</td><td class="yes">&#10003;</td></tr>
+              <tr><td>{$t.row_history|escape:'html':'UTF-8'}</td><td class="no">&#8212;</td><td class="yes">&#10003;</td></tr>
               <tr><td>{$t.row_redirects|escape:'html':'UTF-8'}</td><td class="no">&#8212;</td><td class="yes">&#10003;</td></tr>
-              <tr><td>{$t.row_refunds|escape:'html':'UTF-8'}</td><td class="no">&#8212;</td><td class="yes">&#10003;</td></tr>
+              <tr><td>{$t.row_refunds|escape:'html':'UTF-8'}</td><td class="no">&#8212;</td><td><span class="pkc-badge-soon">{$t.soon|escape:'html':'UTF-8'}</span></td></tr>
               <tr><td>{$t.row_multistore|escape:'html':'UTF-8'}</td><td class="no">&#8212;</td><td class="yes">&#10003;</td></tr>
               <tr><td>{$t.row_support|escape:'html':'UTF-8'}</td><td class="no">&#8212;</td><td class="yes">&#10003;</td></tr>
             </tbody>

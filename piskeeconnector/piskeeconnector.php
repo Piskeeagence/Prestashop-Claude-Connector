@@ -22,6 +22,7 @@ if (!defined('_PS_VERSION_')) {
 require_once __DIR__ . '/classes/PiskeeConnectorBrand.php';
 require_once __DIR__ . '/classes/PiskeeConnectorI18n.php';
 require_once __DIR__ . '/classes/PiskeeConnectorHelper.php';
+require_once __DIR__ . '/classes/PiskeeConnectorCall.php';
 require_once __DIR__ . '/classes/PiskeeConnectorLicense.php';
 require_once __DIR__ . '/classes/PiskeeConnectorCatalog.php';
 require_once __DIR__ . '/classes/PiskeeConnectorVariants.php';
@@ -47,7 +48,7 @@ class Piskeeconnector extends Module
     {
         $this->name = 'piskeeconnector';
         $this->tab = 'administration';
-        $this->version = '2.3.1';
+        $this->version = '2.4.0';
         $this->author = 'Piskee';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -150,6 +151,7 @@ class Piskeeconnector extends Module
             $this->installTab();
         }
         PiskeeConnectorOAuth::purge();
+        PiskeeConnectorLicense::autoRenew((int) $this->context->shop->id);
 
         $lang = $this->uiLang();
         $t = PiskeeConnectorI18n::ui($lang);

@@ -112,6 +112,7 @@ Then type `/mcp` to sign in.
 | All 62 tools | ✓ | ✓ |
 | Reading, searches, audits | Unlimited | Unlimited |
 | Changes | 100 per month | **Unlimited** |
+| History of every change Claude makes, with one-click undo (one change, a tool call or a whole work session) | — | ✓ |
 | 301 redirects: managed by Claude or in bulk, automatic when a product, category or page URL changes or is deleted, 404 follow-up | — | ✓ |
 | Scheduled rules (stock alerts, weekly report) | — | Coming soon |
 | GEO content fields, AI product feed | — | Coming soon |

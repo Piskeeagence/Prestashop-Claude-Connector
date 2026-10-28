@@ -81,7 +81,7 @@ Solo cambia el tema: sus módulos, sus ajustes, las posiciones de los hooks, los
 
 La versión gratuita permite 100 modificaciones al mes y por tienda; la lectura, las búsquedas y las auditorías son ilimitadas. El contador se reinicia el día 1 de cada mes.
 
-Piskee Pro (29 € + IVA al mes, o 290 € + IVA al año con 2 meses gratis, precio de lanzamiento garantizado de por vida para los 100 primeros clientes, sin permanencia) elimina el límite y añade las redirecciones 301 y el soporte prioritario. Una licencia Pro cubre una tienda: en multitienda, cada tienda adicional cuesta 10 € + IVA al mes. Se ofrece una sesión de puesta en marcha con la agencia por 150 € + IVA.
+Piskee Pro (29 € + IVA al mes, o 290 € + IVA al año con 2 meses gratis, precio de lanzamiento garantizado de por vida para los 100 primeros clientes, sin permanencia) elimina el límite y añade el historial de cada cambio con vuelta atrás, las redirecciones 301 y el soporte prioritario. Una licencia Pro cubre una tienda: en multitienda, cada tienda adicional cuesta 10 € + IVA al mes. Se ofrece una sesión de puesta en marcha con la agencia por 150 € + IVA.
 
 Suscribirse: [mensual](https://buy.stripe.com/28EbJ1bO4121gcQ0kZ9EI00) · [anual](https://buy.stripe.com/28EcN59FW5ihd0Ed7L9EI02) · [tienda adicional](https://buy.stripe.com/aFa6oH19qaCBgcQ2t79EI04) · [puesta en marcha](https://buy.stripe.com/3cI14nbO47qp7GkffT9EI03).
 

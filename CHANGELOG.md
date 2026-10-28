@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.4.0
+- Piskee Pro 1.1.0, history and undo: every change Claude makes (products, categories, CMS pages, combinations, prices, stock, vouchers...) is recorded field by field and language by language. One change, a whole tool call or a whole work session can be undone from the Pro module page or by asking Claude (`list_changes`, `undo_changes`). A value changed again since by someone else is never overwritten without confirmation.
+- Add-ons can know which tool call is running (`PiskeeConnectorCall`): the history needs it to record only Claude's changes.
+- Online subscriptions: a few days before a licence key ends, the module asks Piskee's licence server for the key of the next paid period (at most once a day, only the current key is sent). Keys bought online therefore renew themselves.
+- Module page: "History and undo" row in the Free / Pro comparison; credit slips and returns shown as coming soon.
+
 ## 2.3.1
 - Buying Pro from the module page: the "Go Pro" button opens the Stripe checkout of the plan chosen in the monthly / yearly switch, and the onboarding buttons open the €150 excl. VAT onboarding checkout.
 - Multistore pricing: a Pro licence covers one shop. Each additional shop of a multistore installation needs its own key, at €10 excl. VAT per month, shown on the module page, in the limit message given to Claude, in the README and the documentation. Without its own key, an additional shop can be read but not changed.

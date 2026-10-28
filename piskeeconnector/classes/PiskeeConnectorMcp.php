@@ -94,6 +94,7 @@ class PiskeeConnectorMcp
      */
     private function initialize(array $params): array
     {
+        PiskeeConnectorLicense::autoRenew((int) $this->grant['id_shop']);
         $asked = (string) ($params['protocolVersion'] ?? '');
 
         return [
@@ -182,18 +183,28 @@ class PiskeeConnectorMcp
         $context = Context::getContext();
         $context->employee = $this->employee;
 
+        PiskeeConnectorCall::begin([
+            'tool' => $name,
+            'writes' => ($tools[$name]['permission'][0] ?? 'view') !== 'view',
+            'id_shop' => (int) $this->grant['id_shop'],
+            'id_employee' => (int) $this->grant['id_employee'],
+            'id_client' => (int) $this->grant['id_client'],
+        ]);
         try {
             $result = call_user_func($tools[$name]['handler'], $arguments, [
                 'id_shop' => $this->grant['id_shop'],
                 'id_employee' => $this->grant['id_employee'],
                 'id_lang' => (int) $this->employee->id_lang,
+                'id_client' => (int) $this->grant['id_client'],
             ]);
         } catch (Throwable $e) {
+            PiskeeConnectorCall::end();
             PrestaShopLogger::addLog('Piskee tool ' . $name . ': ' . Tools::substr($e->getMessage(), 0, 500), 3, null, 'PiskeeConnector');
 
             return self::toolError('The tool failed on the shop side. Nothing is known to have changed; read the object again before retrying. If it keeps failing: ' . PiskeeConnectorBrand::helpLine());
         }
 
+        PiskeeConnectorCall::end();
         if (!is_array($result)) {
             return self::toolError('The tool returned nothing usable.');
         }

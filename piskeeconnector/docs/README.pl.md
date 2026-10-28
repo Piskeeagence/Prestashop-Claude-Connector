@@ -81,7 +81,7 @@ Zmienia się tylko motyw: moduły, ich ustawienia, pozycje hooków, rozmiary zdj
 
 Wersja darmowa pozwala na 100 zmian miesięcznie na sklep; odczyt, wyszukiwanie i audyty są bez limitu. Licznik zeruje się 1. dnia miesiąca.
 
-Piskee Pro (29 € netto miesięcznie lub 290 € netto rocznie z 2 miesiącami gratis, cena startowa gwarantowana dożywotnio dla pierwszych 100 klientów, bez zobowiązań) znosi limit i dodaje przekierowania 301 oraz wsparcie priorytetowe. Licencja Pro obejmuje jeden sklep: w multistore każdy dodatkowy sklep kosztuje 10 € netto miesięcznie. Sesja wdrożeniowa z agencją kosztuje 150 € netto.
+Piskee Pro (29 € netto miesięcznie lub 290 € netto rocznie z 2 miesiącami gratis, cena startowa gwarantowana dożywotnio dla pierwszych 100 klientów, bez zobowiązań) znosi limit i dodaje historię każdej zmiany z możliwością cofnięcia, przekierowania 301 oraz wsparcie priorytetowe. Licencja Pro obejmuje jeden sklep: w multistore każdy dodatkowy sklep kosztuje 10 € netto miesięcznie. Sesja wdrożeniowa z agencją kosztuje 150 € netto.
 
 Subskrypcja: [miesięczna](https://buy.stripe.com/28EbJ1bO4121gcQ0kZ9EI00) · [roczna](https://buy.stripe.com/28EcN59FW5ihd0Ed7L9EI02) · [dodatkowy sklep](https://buy.stripe.com/aFa6oH19qaCBgcQ2t79EI04) · [wdrożenie](https://buy.stripe.com/3cI14nbO47qp7GkffT9EI03).
 

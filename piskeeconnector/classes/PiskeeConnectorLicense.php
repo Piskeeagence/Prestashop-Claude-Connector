@@ -34,6 +34,7 @@ class PiskeeConnectorLicense
 
     private const KEY_LICENSE = 'PISKEECONNECTOR_LICENSE';
     private const KEY_USAGE = 'PISKEECONNECTOR_USAGE';
+    private const KEY_RENEW_TRY = 'PISKEECONNECTOR_RENEW_TRY';
 
     /**
      * @return array{valid:bool, plan:string, domain:string, expires:string, error:string}
@@ -139,6 +140,64 @@ class PiskeeConnectorLicense
         }
 
         return $status;
+    }
+
+    /**
+     * Subscriptions bought online come with keys that run to the end of the
+     * paid period. A few days before the end, and at most once a day, the
+     * module asks Piskee's licence server for the key of the next period.
+     * Only the current key is sent; nothing else leaves the shop. Silent on
+     * any failure: the merchant can always paste a key by hand.
+     */
+    public static function autoRenew(int $idShop): void
+    {
+        try {
+            $key = trim((string) Configuration::get(self::KEY_LICENSE, null, null, $idShop));
+            if ($key === '') {
+                return;
+            }
+            $status = self::verify($key, self::shopDomain($idShop));
+            if (!$status['valid'] && $status['error'] !== 'expired') {
+                return;
+            }
+            $daysLeft = (strtotime($status['expires'] . ' 23:59:59') - time()) / 86400;
+            if ($daysLeft > 12 || $daysLeft < -60) {
+                return;
+            }
+            $last = (int) Configuration::get(self::KEY_RENEW_TRY, null, null, $idShop);
+            if ($last > time() - 86400) {
+                return;
+            }
+            Configuration::updateValue(self::KEY_RENEW_TRY, time(), false, null, $idShop);
+
+            // A returned key is checked against Piskee's public key, so the address can be changed (tests) without risk.
+            $url = (string) (Configuration::get('PISKEECONNECTOR_RENEW_URL') ?: PiskeeConnectorBrand::RENEW_URL);
+            $body = http_build_query(['key' => $key]);
+            $answer = '';
+            if (function_exists('curl_init')) {
+                $curl = curl_init($url);
+                curl_setopt_array($curl, [CURLOPT_POST => true, CURLOPT_POSTFIELDS => $body, CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_TIMEOUT => 5, CURLOPT_CONNECTTIMEOUT => 3, CURLOPT_HTTPHEADER => ['Accept: application/json']]);
+                $answer = (string) curl_exec($curl);
+                curl_close($curl);
+            } else {
+                $answer = (string) @file_get_contents($url, false, stream_context_create(['http' => [
+                    'method' => 'POST', 'header' => "Content-Type: application/x-www-form-urlencoded\r\nAccept: application/json\r\n",
+                    'content' => $body, 'timeout' => 5,
+                ]]));
+            }
+            $data = json_decode($answer, true);
+            $newKey = is_array($data) ? (string) ($data['key'] ?? '') : '';
+            if ($newKey === '' || $newKey === $key) {
+                return;
+            }
+            $new = self::verify($newKey, self::shopDomain($idShop));
+            if ($new['valid'] && $new['expires'] > $status['expires']) {
+                Configuration::updateValue(self::KEY_LICENSE, $newKey, false, null, $idShop);
+            }
+        } catch (Throwable $e) {
+            // Never in the merchant's way.
+        }
     }
 
     /**
