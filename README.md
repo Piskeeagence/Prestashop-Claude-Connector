@@ -2,11 +2,11 @@
   <img src="piskeeconnector/views/img/piskee-olive.png" alt="Piskee" width="88">
 </p>
 
-<h1 align="center">Run your PrestaShop store by talking to Claude</h1>
+<h1 align="center">Stop clicking through your PrestaShop back office</h1>
 
 <p align="center">
-  <strong>Piskee</strong> is the AI sidekick for PrestaShop.<br>
-  Ask in plain words, review, approve: Claude does the back office work for you.
+  Type one sentence. Claude does the work. You approve every change.<br>
+  <strong>93 tools, 5-minute setup, free for 100 changes a month.</strong>
 </p>
 
 <p align="center">
@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest"><strong>⬇ Download the module</strong></a> ·
+  <a href="https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest"><strong>⬇ Download the module (free)</strong></a> ·
   <a href="#set-up-in-5-minutes">Set up in 5 minutes</a> ·
   <a href="#-en-français">Français</a> ·
   <a href="#-en-español">Español</a> ·
@@ -28,36 +28,43 @@
 
 ---
 
-## Your back office, minus the busywork
+## Your store doesn't grow while you're clicking
 
-Running a PrestaShop store means hours of small, repetitive tasks: rewriting product texts, building size and colour variants, chasing tracking numbers, answering "where is my order?". You know what needs doing, but doing it by hand takes the time.
+You didn't open a store to spend your evenings in the back office. Yet that's where the hours go: product texts to rewrite, sizes and colours to build, promotions to set up, tracking numbers to chase, "where is my order?" emails to answer.
 
-With Piskee, you describe the result and Claude makes the change **directly in your shop, through the Piskee module, with the rights of your employee account and after your approval.** No clicking, no browser automation: the module saves the changes the way PrestaShop's own back office does.
+You already know what needs doing. The problem is the 40 clicks it takes to do it.
+
+**Piskee removes the clicks.** You say what you want. Claude prepares the change and shows it to you. You approve. The Piskee module saves it in your shop, with your own employee rights, exactly like the back office would.
+
+What that sounds like:
 
 > *"Rewrite the meta descriptions of the Dresses category, under 155 characters, in French and English."*
 > *"Create sizes S to XL in black and white for this T-shirt, 10 units each."*
+> *"Put the whole Outdoor category at -20 % until Sunday, and send me the invoice of order 1042."*
 > *"Which paid orders still have no tracking number?"*
 > *"Find the products customers buy together, and suggest related products for my 15 best sellers."*
-> *"Our product pages have two H1 headings. Fix it in a draft theme so I can check before it goes live."*
-> *"Put the whole Outdoor category at -20 % until Sunday, and send me the invoice of order 1042."*
 > *"Build a mega menu with our categories, best sellers and the winter banner."*
+> *"Our product pages have two H1 headings. Fix it in a draft theme so I can check before it goes live."*
+
+One sentence each. Work that used to eat an afternoon.
 
 <p align="center">
   <img src=".github/assets/module-connection.jpg" alt="The Piskee module page in the PrestaShop back office" width="760">
 </p>
 
-## The usual way vs. with Piskee
+## Before and after
 
-| Task | The usual way | With Piskee |
+| Task | Without Piskee | With Piskee |
 |---|---|---|
-| SEO texts for a whole category | Open each product, write, save, repeat | One sentence. You review the batch and approve it |
-| 12 combinations with stock and references | Click through the combination generator, then edit each line | One sentence with sizes, colours and quantities |
-| Heavy or non-square product photos | Export, resize, re-upload, rebuild thumbnails | "Square and resize the images of this product". Originals are kept |
-| Catalogue health check | Spreadsheets and guesswork | A full audit: missing texts, duplicate titles, no images, out of stock but active… |
-| Cross-selling | Pick related products by hand | Suggestions computed from what your customers actually buy together |
-| A theme fix | Edit live files and hope | Work in a draft child theme, check it, put it live in one click, roll back in one click |
+| SEO texts for a whole category | Open each product, write, save. Repeat 50 times | One sentence. You review the batch, you approve |
+| 12 combinations with stock and references | The combination generator, then every line by hand | One sentence with sizes, colours and quantities |
+| A promotion on a whole category | Product by product, or a price rule you have to get right | "-20 % on Outdoor until Sunday". Done |
+| Heavy or non-square product photos | Export, resize, re-upload, rebuild thumbnails | "Square and resize the images of this product". Originals kept |
+| Catalogue health check | Spreadsheets and guesswork | Full audit: missing texts, duplicate titles, no images, out of stock but active |
+| Cross-selling | Related products picked by hand | Suggestions from what your customers really buy together |
+| A theme fix | Edit live files and pray | A draft child theme, checked, put live in one click, rolled back in one click |
 
-## What's inside: 93 tools across your back office (117 with Pro)
+## Everything you get: 93 tools across your back office (117 with Pro)
 
 | Area | What Claude can do |
 |---|---|
@@ -76,16 +83,20 @@ With Piskee, you describe the result and Claude makes the change **directly in y
 | **Visibility in AI assistants (GEO)** | Generate and publish your shop's `llms.txt` file (llmstxt.org): a map of your categories, best sellers and customer pages that helps ChatGPT, Claude and Perplexity understand and cite your shop. Preview first, previous version kept. |
 | **Theme** | Audit headings, breadcrumb and structured data. Edit templates, CSS and JS **in a draft child theme only**; a new draft keeps every module where the live shop shows it. Preview a draft with a private link (Pro). |
 
-## Why you can trust it
+## Zero risk, by design
 
-- **You approve every change.** Claude reads freely, but asks before it writes.
-- **Nothing goes live without you.** Theme work happens in a draft child theme. You put it live with one click, and roll back with one click.
-- **Everything is backed up.** Every theme file change and every reshaped image keeps its previous version.
+Handing your shop to an AI sounds scary. So we built it so it can't hurt you.
+
+- **Nothing changes without your yes.** Claude reads freely. Before it writes, it asks.
+- **Nothing goes live without you.** Theme work happens in a draft child theme. One click to put it live, one click to roll back.
+- **Nothing is lost.** Every theme file and every reshaped image keeps its previous version.
 - **It can never do more than you.** Claude acts as the employee who connected it, with that employee's PrestaShop rights, checked on every call.
-- **It can't do the dangerous things.** No payments and no money moved: a refund (Pro) only makes the credit slip, after you confirm the amounts. No deletion of products, customers or orders.
-- **Every change can be undone (Pro).** The history records what Claude changed, field by field, and puts it back on request.
-- **Your data stays yours.** The module runs inside your shop and talks to Claude directly. Nothing goes through Piskee.
-- **Tested for real** on PrestaShop 1.7.8, 8.1 and 9.1, open source, and reviewed for security ([details below](#security-model)).
+- **The dangerous things are off the table.** No payments, no money moved: a refund (Pro) only makes the credit slip, after you confirm the amounts. No deletion of products, customers or orders.
+- **Changed your mind? Undo it (Pro).** The history records every change, field by field, and puts it back on request.
+- **Your data stays home.** The module runs inside your shop and talks to Claude directly. Nothing goes through Piskee.
+- **Tested for real** on PrestaShop 1.7.8, 8.1 and 9.1. Open source and reviewed for security ([details below](#security-model)).
+
+And the free plan costs nothing. If it doesn't save you time, uninstall it. You've lost five minutes.
 
 ## Set up in 5 minutes
 
@@ -99,7 +110,7 @@ With Piskee, you describe the result and Claude makes the change **directly in y
    - In Claude, open **Settings › Connectors › Add custom connector** and paste the address shown in the module.
    - Click **Connect**, then **Allow** on the consent screen of your back office.
 
-That's it. Open a new conversation and ask Claude for a catalogue audit.
+That's it. Open a new conversation and type: *"Audit my catalogue."* You'll see what your shop has been missing.
 
 <details>
 <summary>With Claude Code</summary>
@@ -112,7 +123,7 @@ Then type `/mcp` to sign in.
 
 **Requirements:** PrestaShop 1.7.6 to 9.x, PHP 7.2 or later, HTTPS, friendly URLs. Any Claude plan works; the free plan allows one custom connector. Claude Pro or Max is recommended for large catalogues.
 
-## Free and Pro
+## Start free. Go unlimited when it pays for itself.
 
 | | **Free** | **Pro** |
 |---|---|---|
@@ -136,15 +147,17 @@ Then type `/mcp` to sign in.
 | Priority support | — | ✓ |
 | Price | **€0** | **€29 excl. VAT / month**, cancel anytime, or **€290 excl. VAT / year: 2 months free**. Launch price locked in for life for the first 100 customers |
 
-Start free. When your catalogue work outgrows 100 changes a month, the module tells you, and going Pro takes a minute from the *Free / Pro* tab.
+Do the maths: Pro costs €29 a month. If it saves you one hour of back office work a month, it has already paid for itself. For scale: rewriting the texts of one 50-product category is already 50 changes.
+
+Start free. When you outgrow 100 changes a month, the module tells you, and going Pro takes one minute from the *Free / Pro* tab. No commitment, cancel anytime. **The first 100 customers keep their launch price for life.**
 
 **Go Pro:** [€29 / month](https://buy.stripe.com/28EbJ1bO4121gcQ0kZ9EI00) · [€290 / year, 2 months free](https://buy.stripe.com/28EcN59FW5ihd0Ed7L9EI02) · [additional shop, €10 / month](https://buy.stripe.com/aFa6oH19qaCBgcQ2t79EI04). A Pro licence covers one shop; each additional shop of a multistore gets its own key.
 
-## Want it done for you?
+## Rather have us set it up with you?
 
 Piskee is the e-commerce SEO & GEO agency behind this module, based in Chantilly, France.
 
-- **[Onboarding session (€150 excl. VAT)](https://buy.stripe.com/3cI14nbO47qp7GkffT9EI03):** we set it up with you, connect Claude, and run your first catalogue optimisation together.
+- **[Onboarding session (€150 excl. VAT)](https://buy.stripe.com/3cI14nbO47qp7GkffT9EI03):** in one session, we install it, connect Claude and run your first catalogue optimisation together. You leave with a cleaner catalogue and the habits to keep it that way.
 - **Free SEO & GEO audit in 48 h** for your store.
 
 → [piskee.com/contact](https://www.piskee.com/contact/) · louisalexandre@piskee.com · WhatsApp +33 7 69 15 39 92
@@ -209,22 +222,24 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 ## 🇫🇷 En français
 
-**Pilotez votre boutique PrestaShop en parlant à Claude.** Vous décrivez le résultat, par exemple « réécrivez les meta descriptions de la catégorie Robes », « créez les tailles S à XL » ou « quelles commandes attendent un numéro de suivi ? ». Claude fait la modification directement dans votre boutique, via le module Piskee, avec les droits de votre compte employé et après votre accord. Pas de clics simulés : le module enregistre les changements comme le back-office de PrestaShop.
+**Arrêtez de cliquer dans votre back-office PrestaShop.** Vous n'avez pas ouvert une boutique pour passer vos soirées à réécrire des fiches, créer des déclinaisons et courir après des numéros de suivi. Vous savez déjà quoi faire : ce qui coûte, ce sont les 40 clics.
+
+Avec Piskee, une phrase suffit : « réécrivez les meta descriptions de la catégorie Robes », « mettez tout l'Outdoor à -20 % jusqu'à dimanche », « quelles commandes attendent un numéro de suivi ? ». Claude prépare la modification, vous la validez, et le module l'enregistre dans votre boutique avec les droits de votre compte employé, exactement comme le back-office.
 
 - **93 outils (117 avec Pro) :** catalogue, SEO, fichier llms.txt pour les IA, traductions, déclinaisons, stocks, images, vente croisée, catégories et menu, apparence de la boutique sans code, emplacement des modules, actions de masse, règles de prix, commandes et factures PDF, clients et groupes, service client, CMS et thème enfant. **Avec Pro :** méga-menu, remboursements, statistiques, relance des paniers abandonnés, avis clients, aperçu de thème, redirections 301, données structurées et historique avec retour en arrière.
-- **Sans risque :**
-  - vous validez chaque modification ;
+- **Zéro risque, par conception :**
+  - rien ne change sans votre accord ;
   - le thème en ligne n'est jamais touché, Claude travaille sur un brouillon que vous mettez en ligne en un clic ;
   - tout est sauvegardé ;
   - aucune donnée ne passe par Piskee.
 - **Installation en 5 minutes :** aucun module ni compte PrestaShop supplémentaire. Compatible **PrestaShop 1.7.6 à 9**, PHP 7.2 et plus.
-- **Gratuit** jusqu'à 100 modifications par mois. **Pro illimité** à 29 € HT par mois sans engagement, ou **290 € HT par an : 2 mois offerts**. Prix garanti à vie pour les 100 premiers clients. Multiboutique : 10 € HT par mois par boutique supplémentaire.
+- **Gratuit** jusqu'à 100 modifications par mois : si ça ne vous fait pas gagner de temps, vous désinstallez et vous avez perdu cinq minutes. **Pro illimité** à 29 € HT par mois sans engagement, ou **290 € HT par an : 2 mois offerts**. Prix garanti à vie pour les 100 premiers clients. Multiboutique : 10 € HT par mois par boutique supplémentaire.
 
 [S'abonner au mois](https://buy.stripe.com/28EbJ1bO4121gcQ0kZ9EI00) · [S'abonner à l'année](https://buy.stripe.com/28EcN59FW5ihd0Ed7L9EI02) · [Boutique supplémentaire](https://buy.stripe.com/aFa6oH19qaCBgcQ2t79EI04)
 
 [⬇ Télécharger le module](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Documentation en français](piskeeconnector/docs/README.fr.md)
 
-**Envie qu'on le fasse avec vous ?**
+**Vous préférez qu'on l'installe avec vous ?**
 - [Session d'onboarding à 150 € HT](https://buy.stripe.com/3cI14nbO47qp7GkffT9EI03).
 - Audit SEO & GEO gratuit en 48 h.
 
@@ -234,22 +249,24 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 ## 🇪🇸 En español
 
-**Gestione su tienda PrestaShop hablando con Claude.** Usted describe el resultado, por ejemplo «reescriba las meta descriptions de la categoría Vestidos», «cree las tallas S a XL» o «¿qué pedidos están esperando un número de seguimiento?». Claude hace el cambio directamente en su tienda, a través del módulo Piskee, con los permisos de su cuenta de empleado y después de su aprobación. Sin clics simulados: el módulo guarda los cambios como lo hace el back office de PrestaShop.
+**Deje de hacer clic en el back office de PrestaShop.** No abrió una tienda para pasar las noches reescribiendo fichas, creando combinaciones y persiguiendo números de seguimiento. Usted ya sabe qué hay que hacer: lo que cuesta son los 40 clics.
+
+Con Piskee basta una frase: «reescriba las meta descriptions de la categoría Vestidos», «ponga todo Outdoor a -20 % hasta el domingo», «¿qué pedidos esperan un número de seguimiento?». Claude prepara el cambio, usted lo aprueba y el módulo lo guarda en su tienda con los permisos de su cuenta de empleado, igual que el back office.
 
 - **93 herramientas (117 con Pro):** catálogo, SEO, archivo llms.txt para las IA, traducciones, combinaciones, stock, imágenes, venta cruzada, categorías y menú, apariencia de la tienda sin código, posición de los módulos, acciones masivas, reglas de precios, pedidos y facturas PDF, clientes y grupos, atención al cliente, CMS y tema hijo. **Con Pro:** megamenú, reembolsos, estadísticas, recordatorio de carritos abandonados, opiniones, vista previa de temas, redirecciones 301, datos estructurados e historial con deshacer.
-- **Sin riesgos:**
-  - usted aprueba cada modificación;
+- **Cero riesgos, por diseño:**
+  - nada cambia sin su aprobación;
   - el tema publicado nunca se toca: Claude trabaja en un borrador que usted publica con un clic;
   - todo se guarda en copias de seguridad;
   - ningún dato pasa por Piskee.
 - **Instalación en 5 minutos:** sin módulos ni cuenta PrestaShop adicionales. Compatible con **PrestaShop 1.7.6 a 9**, PHP 7.2 o superior.
-- **Gratis** hasta 100 modificaciones al mes. **Pro ilimitado** por 29 € + IVA al mes sin permanencia, o **290 € + IVA al año: 2 meses gratis**. Precio garantizado de por vida para los 100 primeros clientes. Multitienda: 10 € + IVA al mes por tienda adicional.
+- **Gratis** hasta 100 modificaciones al mes: si no le ahorra tiempo, lo desinstala y ha perdido cinco minutos. **Pro ilimitado** por 29 € + IVA al mes sin permanencia, o **290 € + IVA al año: 2 meses gratis**. Precio garantizado de por vida para los 100 primeros clientes. Multitienda: 10 € + IVA al mes por tienda adicional.
 
 [Suscripción mensual](https://buy.stripe.com/28EbJ1bO4121gcQ0kZ9EI00) · [Suscripción anual](https://buy.stripe.com/28EcN59FW5ihd0Ed7L9EI02) · [Tienda adicional](https://buy.stripe.com/aFa6oH19qaCBgcQ2t79EI04)
 
 [⬇ Descargar el módulo](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Documentación en español](piskeeconnector/docs/README.es.md)
 
-**¿Prefiere que lo hagamos con usted?**
+**¿Prefiere que lo instalemos con usted?**
 - [Sesión de puesta en marcha por 150 € + IVA](https://buy.stripe.com/3cI14nbO47qp7GkffT9EI03).
 - Auditoría SEO y GEO gratuita en 48 h.
 
@@ -259,22 +276,24 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 ## 🇮🇹 In italiano
 
-**Gestisca il Suo negozio PrestaShop parlando con Claude.** Lei descrive il risultato, per esempio «riscriva le meta description della categoria Abiti», «crei le taglie dalla S alla XL» o «quali ordini aspettano ancora un numero di tracciamento?». Claude fa la modifica direttamente nel Suo negozio, tramite il modulo Piskee, con i permessi del Suo account dipendente e dopo la Sua approvazione. Nessun clic simulato: il modulo salva le modifiche come fa il back office di PrestaShop.
+**Smetta di cliccare nel back office di PrestaShop.** Non ha aperto un negozio per passare le serate a riscrivere schede, creare combinazioni e rincorrere numeri di tracciamento. Lei sa già cosa fare: quello che costa sono i 40 clic.
+
+Con Piskee basta una frase: «riscriva le meta description della categoria Abiti», «metta tutto l'Outdoor a -20 % fino a domenica», «quali ordini aspettano un numero di tracciamento?». Claude prepara la modifica, Lei la approva e il modulo la salva nel Suo negozio con i permessi del Suo account dipendente, esattamente come il back office.
 
 - **93 strumenti (117 con Pro):** catalogo, SEO, file llms.txt per le IA, traduzioni, combinazioni, giacenze, immagini, vendita incrociata, categorie e menu, aspetto del negozio senza codice, posizione dei moduli, azioni di massa, regole di prezzo, ordini e fatture PDF, clienti e gruppi, assistenza clienti, CMS e tema figlio. **Con Pro:** mega menu, rimborsi, statistiche, promemoria carrelli abbandonati, recensioni, anteprima del tema, redirect 301, dati strutturati e cronologia con annullamento.
-- **Senza rischi:**
-  - Lei approva ogni modifica;
+- **Zero rischi, per progettazione:**
+  - niente cambia senza il Suo consenso;
   - il tema online non viene mai toccato: Claude lavora su una bozza che Lei mette online con un clic;
   - tutto viene salvato in un backup;
   - nessun dato passa da Piskee.
 - **Installazione in 5 minuti:** nessun modulo né account PrestaShop aggiuntivo. Compatibile con **PrestaShop dalla 1.7.6 alla 9**, PHP 7.2 o successivo.
-- **Gratis** fino a 100 modifiche al mese. **Pro illimitato** a 29 € + IVA al mese senza vincoli, oppure **290 € + IVA all'anno: 2 mesi gratis**. Prezzo garantito a vita per i primi 100 clienti. Multinegozio: 10 € + IVA al mese per negozio aggiuntivo.
+- **Gratis** fino a 100 modifiche al mese: se non Le fa risparmiare tempo, lo disinstalla e ha perso cinque minuti. **Pro illimitato** a 29 € + IVA al mese senza vincoli, oppure **290 € + IVA all'anno: 2 mesi gratis**. Prezzo garantito a vita per i primi 100 clienti. Multinegozio: 10 € + IVA al mese per negozio aggiuntivo.
 
 [Abbonamento mensile](https://buy.stripe.com/28EbJ1bO4121gcQ0kZ9EI00) · [Abbonamento annuale](https://buy.stripe.com/28EcN59FW5ihd0Ed7L9EI02) · [Negozio aggiuntivo](https://buy.stripe.com/aFa6oH19qaCBgcQ2t79EI04)
 
 [⬇ Scarichi il modulo](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Documentazione in italiano](piskeeconnector/docs/README.it.md)
 
-**Preferisce che lo facciamo insieme?**
+**Preferisce che lo installiamo insieme?**
 - [Sessione di avvio a 150 € + IVA](https://buy.stripe.com/3cI14nbO47qp7GkffT9EI03).
 - Audit SEO e GEO gratuito in 48 h.
 
@@ -284,22 +303,24 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 ## 🇵🇱 Po polsku
 
-**Zarządzanie sklepem PrestaShop w rozmowie z Claude.** Wystarczy opisać efekt, na przykład „Proszę przepisać meta opisy kategorii Sukienki”, „Proszę utworzyć rozmiary od S do XL” albo „Które zamówienia czekają na numer przesyłki?”. Claude wprowadza zmianę bezpośrednio w sklepie, przez moduł Piskee, z uprawnieniami Państwa konta pracownika i po Państwa akceptacji. Bez symulowania kliknięć: moduł zapisuje zmiany tak samo jak panel administracyjny PrestaShop.
+**Koniec z klikaniem w panelu PrestaShop.** Nie otwierali Państwo sklepu po to, by spędzać wieczory na przepisywaniu opisów, tworzeniu kombinacji i szukaniu numerów przesyłek. Wiedzą Państwo, co trzeba zrobić: kosztuje dopiero te 40 kliknięć.
+
+Z Piskee wystarczy jedno zdanie: „Proszę przepisać meta opisy kategorii Sukienki”, „Cała kategoria Outdoor -20 % do niedzieli”, „Które zamówienia czekają na numer przesyłki?”. Claude przygotowuje zmianę, Państwo ją akceptują, a moduł zapisuje ją w sklepie z uprawnieniami Państwa konta pracownika, dokładnie tak jak panel administracyjny.
 
 - **93 narzędzia (117 z Pro):** katalog, SEO, plik llms.txt dla AI, tłumaczenia, kombinacje, stany magazynowe, zdjęcia, sprzedaż krzyżowa, kategorie i menu, wygląd sklepu bez kodu, pozycje modułów, działania masowe, reguły cenowe, zamówienia i faktury PDF, klienci i grupy, obsługa klienta, CMS i motyw potomny. **Z Pro:** mega menu, zwroty, statystyki, przypomnienia o koszykach, opinie, podgląd motywu, przekierowania 301, dane strukturalne i historia z cofaniem.
-- **Bez ryzyka:**
-  - każdą zmianę akceptują Państwo;
+- **Zero ryzyka, z założenia:**
+  - nic się nie zmienia bez Państwa zgody;
   - opublikowany motyw nigdy nie jest zmieniany: Claude pracuje na szkicu, który Państwo publikują jednym kliknięciem;
   - wszystko trafia do kopii zapasowej;
   - żadne dane nie przechodzą przez Piskee.
 - **Instalacja w 5 minut:** bez dodatkowych modułów i bez konta PrestaShop. Działa z **PrestaShop od 1.7.6 do 9**, PHP 7.2 lub nowszym.
-- **Za darmo** do 100 zmian miesięcznie. **Pro bez limitu** za 29 € netto miesięcznie bez zobowiązań lub **290 € netto rocznie: 2 miesiące gratis**. Cena gwarantowana dożywotnio dla pierwszych 100 klientów. Multistore: 10 € netto miesięcznie za każdy dodatkowy sklep.
+- **Za darmo** do 100 zmian miesięcznie: jeśli nie oszczędza to Państwa czasu, wystarczy odinstalować moduł, a strata to pięć minut. **Pro bez limitu** za 29 € netto miesięcznie bez zobowiązań lub **290 € netto rocznie: 2 miesiące gratis**. Cena gwarantowana dożywotnio dla pierwszych 100 klientów. Multistore: 10 € netto miesięcznie za każdy dodatkowy sklep.
 
 [Subskrypcja miesięczna](https://buy.stripe.com/28EbJ1bO4121gcQ0kZ9EI00) · [Subskrypcja roczna](https://buy.stripe.com/28EcN59FW5ihd0Ed7L9EI02) · [Dodatkowy sklep](https://buy.stripe.com/aFa6oH19qaCBgcQ2t79EI04)
 
 [⬇ Pobieranie modułu](https://github.com/Piskeeagence/Prestashop-Claude-Connector/releases/latest) · [Dokumentacja po polsku](piskeeconnector/docs/README.pl.md)
 
-**Wolą Państwo, żebyśmy zrobili to razem?**
+**Wolą Państwo, żebyśmy zainstalowali go razem?**
 - [Sesja wdrożeniowa za 150 € netto](https://buy.stripe.com/3cI14nbO47qp7GkffT9EI03).
 - Bezpłatny audyt SEO i GEO w 48 h.
 
