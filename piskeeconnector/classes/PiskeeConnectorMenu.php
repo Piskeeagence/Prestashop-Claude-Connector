@@ -497,6 +497,80 @@ class PiskeeConnectorMenu
     }
 
     /**
+     * Read-only look at a third-party menu module: its settings and the
+     * tables it keeps, so the assistant can describe the menu. Their layout
+     * is private to each publisher, so nothing is written there.
+     *
+     * @param array<string, mixed> $args
+     * @param array<string, mixed> $context
+     *
+     * @return array<string, mixed>
+     */
+    public function inspectMenuModule(array $args, array $context): array
+    {
+        PiskeeConnectorHelper::boot($context);
+        $name = (string) ($args['module'] ?? '');
+        $known = array_column(self::otherMenus(), 'module');
+        if (!in_array($name, $known, true)) {
+            return PiskeeConnectorHelper::error('Give one of the menu modules listed by get_menu (other_menu_modules): ' . ($known === [] ? 'none is installed.' : implode(', ', $known) . '.'));
+        }
+        $module = Module::getInstanceByName($name);
+        $db = Db::getInstance();
+        $vendor = strpos($name, '_') !== false ? substr($name, 0, (int) strpos($name, '_') + 1) : '';
+        $tables = [];
+        foreach ($db->executeS("SHOW TABLES LIKE '" . pSQL(str_replace('_', '\\_', _DB_PREFIX_)) . "%'") ?: [] as $row) {
+            $table = (string) reset($row);
+            $short = substr($table, strlen(_DB_PREFIX_));
+            $match = strpos($short, $name) === 0 || ($vendor !== '' && strpos($short, $vendor) === 0 && (strpos($short, 'menu') !== false || strpos($short, '_mm_') !== false));
+            if ($match) {
+                $tables[] = $table;
+            }
+        }
+        $maxRows = max(1, min(100, (int) ($args['rows'] ?? 30)));
+        $idLang = (int) Configuration::get('PS_LANG_DEFAULT');
+        $out = [];
+        foreach (array_slice($tables, 0, 20) as $table) {
+            $columns = array_column($db->executeS('SHOW COLUMNS FROM `' . bqSQL($table) . '`') ?: [], 'Field');
+            $where = in_array('id_lang', $columns, true) ? ' WHERE `id_lang` = ' . $idLang : '';
+            $rows = $db->executeS('SELECT * FROM `' . bqSQL($table) . '`' . $where . ' LIMIT ' . $maxRows) ?: [];
+            foreach ($rows as &$row) {
+                foreach ($row as $key => $value) {
+                    $row[$key] = PiskeeConnectorHelper::excerpt((string) $value, 300);
+                }
+            }
+            unset($row);
+            $out[] = [
+                'table' => substr($table, strlen(_DB_PREFIX_)),
+                'columns' => $columns,
+                'rows_total' => (int) $db->getValue('SELECT COUNT(*) FROM `' . bqSQL($table) . '`' . $where),
+                'rows' => $rows,
+            ];
+        }
+        $prefixes = [Tools::strtoupper($name)];
+        if ($vendor !== '') {
+            $prefixes[] = Tools::strtoupper($vendor) . 'MM';
+            $prefixes[] = Tools::strtoupper($vendor) . 'MENU';
+        }
+        $conditions = implode(' OR ', array_map(function ($prefix) {
+            return "`name` LIKE '" . pSQL(str_replace('_', '\\_', $prefix)) . "%'";
+        }, $prefixes));
+        $settings = [];
+        foreach ($db->executeS('SELECT `name`, `value` FROM `' . _DB_PREFIX_ . 'configuration` WHERE (' . $conditions . ') AND `id_shop` IS NULL LIMIT 200') ?: [] as $row) {
+            $settings[(string) $row['name']] = PiskeeConnectorHelper::excerpt((string) $row['value'], 200);
+        }
+
+        return PiskeeConnectorHelper::json([
+            'module' => $name,
+            'name' => $module ? (string) $module->displayName : $name,
+            'version' => $module ? (string) $module->version : '',
+            'tables' => $out,
+            'settings' => $settings,
+            'note' => 'Read-only. This module stores its menu in its own format, so Claude does not change it: the merchant edits it in Modules > Module Manager > ' . ($module ? $module->displayName : $name) . ' > Configure. '
+                . 'Claude can describe the menu, suggest a new structure, or build the same menu with the Piskee Pro mega menu (get_mega_menu).',
+        ]);
+    }
+
+    /**
      * Other active modules that look like a menu.
      *
      * @return array<int, array<string, string>>

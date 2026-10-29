@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.8.0
+- Piskee Pro 1.3.0: mega menu composed by Claude. New Pro tools `get_mega_menu`, `set_mega_menu` (saved as a draft, with a private preview link) and `publish_mega_menu` (publish in place of the native main menu, unpublish, restore the previous version). Up to 12 entries, panels of up to 6 columns with categories, links with badges, pictures, products (chosen, from a category, new, best sellers, on sale), brands and text; accordion on mobile, integrated into the Classic mobile menu; cached HTML rebuilt when a category, product, CMS page or brand changes. Disabling or uninstalling Piskee Pro gives the native menu back.
+- Third-party mega menus: new tool `inspect_menu_module` reads, without changing anything, the entries and settings of an installed menu module (PrestaHero, Iqit...), so Claude can describe it or rebuild it as a Piskee mega menu.
+- Module page: new row in the Free / Pro comparison.
+
 ## 2.7.0
 - Shop appearance, without code: Claude configures the live shop through PrestaShop's native front modules, never through the theme code. New tools: `get_appearance` (home page blocks, slider, banner, text, product blocks, social links), `list_slides`, `save_slide` (add or change a slide from a picture address, texts and link per language, position, active), `configure_slider`, `set_banner`, `set_custom_text`, `configure_home_products`, `set_social_links`, `set_home_blocks` (which blocks the home page shows, in which order). Pictures are downloaded from public addresses only and re-encoded; every answer gives the previous values to undo.
 - New permission "Configure the live shop without touching code", asked when Claude connects. Existing connections see the new reading tools at once and the new changes after reconnecting.

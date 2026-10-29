@@ -62,6 +62,7 @@ With Piskee, you describe the result and Claude does the clicks, **in your own b
 | **Products & SEO** | Search, read and update products: prices, references, EAN, status, texts and SEO in every language. Create products (inactive by default). Bulk-update up to 50 products at once. Translate in batches. |
 | **Categories & menu** | Create categories (inactive until you approve), move and reorder them, and edit the shop's main menu (native "Main menu" module): add, remove or reorder categories, CMS pages, brands and custom links. |
 | **Shop appearance (no code)** | Configure the live shop without touching the theme code: home page slider, banner, custom text, home page product blocks, social links, order of the home page blocks. |
+| **Mega menu (Pro)** | Claude composes a mega menu (columns of categories, links, pictures, products, brands, text), previewed as a draft, then published in place of the native menu. Third-party mega menus are read, not changed. |
 | **Combinations & stock** | Create attributes and values, generate up to 100 combinations at once, set stock exactly or record goods in and out. |
 | **Images** | Add from a URL, write alt texts, set the cover, downsize or square originals (kept as backup), rebuild thumbnails. |
 | **Catalogue optimisation** | Full catalogue audit, features, brands, promotions, categories. |
@@ -116,6 +117,7 @@ Then type `/mcp` to sign in.
 | Changes | 100 per month | **Unlimited** |
 | Structured data for Google and AI assistants (Product, breadcrumb, FAQ, articles), FAQs and blog articles written by Claude | — | ✓ |
 | History of every change Claude makes, with one-click undo (one change, a tool call or a whole work session) | — | ✓ |
+| Mega menu composed by Claude, previewed before going live | — | ✓ |
 | 301 redirects: managed by Claude or in bulk, automatic when a product, category or page URL changes or is deleted, 404 follow-up | — | ✓ |
 | Scheduled rules (stock alerts, weekly report) | — | Coming soon |
 | GEO content fields, AI product feed | — | Coming soon |

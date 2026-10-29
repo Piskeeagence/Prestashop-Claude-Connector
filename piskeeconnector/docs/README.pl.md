@@ -39,6 +39,8 @@ Następnie należy wpisać `/mcp` w Claude Code, aby się zalogować.
 
 **Wygląd sklepu bez kodu**: kod opublikowanego motywu nigdy nie jest zmieniany, ale jego ustawienia tak: slider strony głównej (dodawanie, edycja, zmiana kolejności lub wyłączanie slajdów, szybkość), baner, blok tekstu, bloki produktów strony głównej (ile i z której kategorii), linki do mediów społecznościowych oraz które bloki strona główna pokazuje i w jakiej kolejności. Działa z natywnymi modułami PrestaShop; moduły zewnętrzne są wyświetlane, ale konfiguruje się je na ich własnej stronie.
 
+**Mega menu (Pro)**: Claude tworzy mega menu na podstawie opisu: pozycje otwierające szerokie panele do 6 kolumn z kategoriami, linkami z etykietami, zdjęciami, produktami (wybranymi, z kategorii, nowościami, bestsellerami, promocjami), markami i tekstem. Zapisywane jest jako szkic z prywatnym linkiem podglądu, a następnie publikowane zamiast natywnego menu (i wycofywane jednym kliknięciem). Na telefonie staje się akordeonem. Zewnętrzne mega menu (PrestaHero, Iqit...) są odczytywane, aby Claude mógł je opisać lub odtworzyć, ale nie są zmieniane.
+
 **Kombinacje**: lista i tworzenie atrybutów (rozmiar, kolor...) oraz ich wartości, tworzenie do 100 kombinacji naraz z wpływem na cenę, indeksem, EAN i stanem magazynowym, edycja kombinacji.
 
 **Zdjęcia**: dodawanie zdjęcia z adresu internetowego, pisanie tekstów alternatywnych, wybór zdjęcia głównego, zmniejszanie zbyt ciężkich oryginałów, wyśrodkowanie ich na kwadratowym tle i ponowne generowanie wszystkich miniatur.

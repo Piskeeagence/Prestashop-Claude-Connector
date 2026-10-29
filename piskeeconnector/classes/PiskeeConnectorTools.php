@@ -411,6 +411,17 @@ class PiskeeConnectorTools
                 ], 'required' => ['items']],
             ],
 
+            'inspect_menu_module' => [
+                'group' => 'menu', 'scope' => 'theme.read', 'permission' => ['view', 'AdminModulesSf'],
+                'handler' => ['menu', 'inspectMenuModule'],
+                'description' => 'Reads, without changing anything, a third-party menu or mega menu module listed by get_menu (other_menu_modules): its tables (entries, columns, blocks as the module stores them) and settings. '
+                    . 'Use it to describe the current menu to the merchant or to rebuild it with the Piskee Pro mega menu. Never claim you changed such a module: it is edited in its own configuration page.',
+                'input' => ['properties' => [
+                    'module' => ['type' => 'string', 'description' => 'Technical module name, from get_menu other_menu_modules.'],
+                    'rows' => ['type' => 'integer', 'minimum' => 1, 'maximum' => 100, 'description' => 'Rows read per table (default 30).'],
+                ], 'required' => ['module']],
+            ],
+
             // ----- Shop appearance (live shop settings, no theme code) -----
             'get_appearance' => [
                 'group' => 'appearance', 'scope' => 'theme.read', 'permission' => ['view', 'AdminModulesSf'],

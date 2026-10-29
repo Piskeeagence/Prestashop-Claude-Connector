@@ -39,6 +39,8 @@ Then type `/mcp` in Claude Code to log in.
 
 **Shop appearance, without code**: the live theme's code is never touched, but its settings are: home page image slider (add, change, reorder or deactivate slides, speed), banner, custom text block, product blocks of the home page (how many, from which category), social media links, and which blocks the home page shows in which order. Works with PrestaShop's native front modules; third-party modules are listed but configured in their own page.
 
+**Mega menu (Pro)**: Claude composes a mega menu from your description: top entries opening wide panels of up to 6 columns, with categories, links with badges, pictures, products (chosen, from a category, new, best sellers, on sale), brands and text. It is saved as a draft with a private preview link, then published in place of the native menu (and removed in one click). On mobile it becomes an accordion. Third-party mega menus (PrestaHero, Iqit...) are read so Claude can describe or rebuild them, but not changed.
+
 **Combinations**: list and create attributes (size, colour...) and their values, create up to 100 combinations at once with price impact, reference, EAN and stock, update a combination.
 
 **Images**: add an image from a web address, write alt texts, choose the cover, downsize heavy originals, centre them on a square background and rebuild every thumbnail.
