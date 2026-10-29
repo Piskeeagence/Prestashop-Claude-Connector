@@ -44,8 +44,9 @@ class PiskeeConnectorTools
         $cms = new PiskeeConnectorCms();
         $cross = new PiskeeConnectorCrossSelling();
         $llms = new PiskeeConnectorLlms();
+        $menu = new PiskeeConnectorMenu();
 
-        $instances = ['catalog' => $catalog, 'variants' => $variants, 'merch' => $merch, 'images' => $images, 'ops' => $ops, 'themes' => $themes, 'orders' => $orders, 'cms' => $cms, 'cross' => $cross, 'llms' => $llms];
+        $instances = ['menu' => $menu, 'catalog' => $catalog, 'variants' => $variants, 'merch' => $merch, 'images' => $images, 'ops' => $ops, 'themes' => $themes, 'orders' => $orders, 'cms' => $cms, 'cross' => $cross, 'llms' => $llms];
         $tools = [];
         foreach (self::all() as $name => $def) {
             if (is_array($def['handler']) && is_string($def['handler'][0] ?? null) && isset($instances[$def['handler'][0]])) {
@@ -338,13 +339,31 @@ class PiskeeConnectorTools
             'update_category' => [
                 'group' => 'catalog', 'scope' => 'catalog.write', 'permission' => ['edit', 'AdminCategories'],
                 'handler' => ['catalog', 'updateCategory'],
-                'description' => 'Changes a category: active state and translated name, description, additional description (PrestaShop 8+), meta title, meta description, slug. '
-                    . 'Only what is given changes.' . self::LOST_ANSWER,
+                'description' => 'Changes a category: active state, parent (to move it with its subcategories), position among its sister categories (the order of the menu and of the category pages), '
+                    . 'and translated name, description, additional description (PrestaShop 8+), meta title, meta description, slug. '
+                    . 'Only what is given changes. Changing a slug changes the address of the page: say so to the merchant.' . self::LOST_ANSWER,
                 'input' => ['properties' => [
                     'id_category' => self::id('Category id from list_categories.'),
                     'active' => ['type' => 'boolean'],
+                    'id_parent' => self::id('New parent category, to move the category (and its subcategories) elsewhere in the tree.'),
+                    'position' => ['type' => 'integer', 'minimum' => 1, 'description' => 'Place among the categories of the same parent, from 1 (first). Moving to another parent without a position puts it last.'],
                     'translations' => self::translations(['name', 'description', 'additional_description', 'meta_title', 'meta_description', 'link_rewrite'], 'Translated texts.'),
                 ], 'required' => ['id_category']],
+            ],
+            'create_category' => [
+                'group' => 'catalog', 'scope' => 'catalog.write', 'permission' => ['add', 'AdminCategories'],
+                'handler' => ['catalog', 'createCategory'],
+                'description' => 'Creates a category under a parent (the home category by default, which makes it a top category), visible to the same customer groups as its parent. '
+                    . 'Check list_categories first so you do not create a category that already exists. A name in the default language is required; other languages take it unless given. '
+                    . 'Write a real description and meta texts when the merchant wants the page to rank. It is created INACTIVE unless active is true: inactive categories are hidden everywhere, menu included. '
+                    . 'Under a category that is in the main menu, it appears in the menu by itself once active (see get_menu). Then put products in it with set_product_categories.' . self::LOST_ANSWER,
+                'input' => ['properties' => [
+                    'id_parent' => self::id('Parent category from list_categories. Default: the home category.'),
+                    'translations' => self::translations(['name', 'description', 'additional_description', 'meta_title', 'meta_description', 'link_rewrite'], 'Translated texts.'),
+                    'position' => ['type' => 'integer', 'minimum' => 1, 'description' => 'Place among the categories of the same parent, from 1 (first). Default: last.'],
+                    'active' => ['type' => 'boolean', 'description' => 'Leave out to create it inactive, then activate it with update_category once the merchant approves.'],
+                    'allow_same_name' => ['type' => 'boolean', 'description' => 'Only when the merchant explicitly wants a second category with the same name under the same parent.'],
+                ], 'required' => ['translations']],
             ],
             'set_product_categories' => [
                 'group' => 'catalog', 'scope' => 'catalog.write', 'permission' => ['edit', 'AdminProducts'],
@@ -355,6 +374,40 @@ class PiskeeConnectorTools
                     'category_ids' => ['type' => 'array', 'items' => ['type' => 'integer'], 'minItems' => 1, 'description' => 'Every category the product must be in.'],
                     'id_category_default' => self::id('Main category, must be in category_ids.'),
                 ], 'required' => ['id_product', 'category_ids']],
+            ],
+
+            // ----- Main menu -----
+            'get_menu' => [
+                'group' => 'menu', 'scope' => 'catalog.read', 'permission' => ['view', 'AdminCategories'],
+                'handler' => ['menu', 'getMenu'],
+                'description' => 'Reads the main menu of the shop (native PrestaShop module "Main menu", ps_mainmenu, used by Classic, Hummingbird and most themes): its entries in order '
+                    . '(categories with the subcategories they show, CMS pages, CMS categories, products, brands, suppliers, custom links), the custom links available, '
+                    . 'and any other active menu module. Read it before set_menu. If the shop uses a third-party mega menu, it is listed but cannot be changed from here.',
+                'input' => ['properties' => [
+                    'depth' => ['type' => 'integer', 'minimum' => 1, 'maximum' => 4, 'description' => 'Levels of subcategories shown under each category entry. Default 2.'],
+                ]],
+            ],
+            'set_menu' => [
+                'group' => 'menu', 'scope' => 'catalog.write', 'permission' => ['edit', 'AdminModulesSf'],
+                'handler' => ['menu', 'setMenu'],
+                'description' => 'Replaces the entries of the main menu (ps_mainmenu) with the given ordered list: to add, remove or reorder an entry, call get_menu and send back the WHOLE list with the change. '
+                    . 'Entry types: category (shows the category and its active subcategories, ordered by category position: reorder them with update_category position), cms_page, cms_category, product, brand, supplier, '
+                    . 'all_brands, all_suppliers, shop, and link (an existing custom link by id, or a new one with a label and a url per language; urls start with https:// or / ). '
+                    . 'A category to add as its own entry must exist (create_category). Show the merchant the new menu before calling. The answer gives the previous list to undo.' . self::LOST_ANSWER,
+                'input' => ['properties' => [
+                    'items' => ['type' => 'array', 'minItems' => 1, 'maxItems' => 40, 'description' => 'Every menu entry, in display order.', 'items' => [
+                        'type' => 'object', 'additionalProperties' => false,
+                        'properties' => [
+                            'type' => ['type' => 'string', 'enum' => PiskeeConnectorMenu::typeNames()],
+                            'id' => ['type' => 'integer', 'minimum' => 1, 'description' => 'Id of the category, page, product, brand, supplier, shop or existing link. Leave out for a new link, all_brands and all_suppliers.'],
+                            'translations' => ['type' => 'object', 'description' => 'Links only: label and url keyed by language ISO code. Missing languages take the default language.', 'additionalProperties' => [
+                                'type' => 'object', 'additionalProperties' => false, 'properties' => ['label' => ['type' => 'string'], 'url' => ['type' => 'string']],
+                            ]],
+                            'new_window' => ['type' => 'boolean', 'description' => 'Links only: open in a new tab.'],
+                        ],
+                        'required' => ['type'],
+                    ]],
+                ], 'required' => ['items']],
             ],
 
             // ----- Variants -----

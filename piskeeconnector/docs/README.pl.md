@@ -35,6 +35,8 @@ Następnie należy wpisać `/mcp` w Claude Code, aby się zalogować.
 
 **Produkty i kategorie**: wyszukiwanie, odczyt i edycja produktu (ceny, indeksy, EAN, waga, status, teksty i SEO we wszystkich językach), tworzenie produktu (domyślnie nieaktywnego), zarządzanie stanem magazynowym przez podanie dokładnej wartości lub przyjęć i wydań, przypisywanie kategorii, edycja kategorii.
 
+**Kategorie i menu**: tworzenie kategorii w dowolnym miejscu drzewa (nieaktywnej do Państwa akceptacji, widocznej dla tych samych klientów co kategoria nadrzędna), przenoszenie jej, zmiana kolejności wśród kategorii siostrzanych oraz odczyt i edycja menu głównego sklepu (natywny moduł „Menu główne” motywów Classic, Hummingbird i większości innych): dodawanie, usuwanie i zmiana kolejności kategorii, stron CMS, marek i własnych linków. Kategoria utworzona pod kategorią z menu pojawia się w nim automatycznie. Zewnętrzne mega menu są wyświetlane, ale nie są zmieniane.
+
 **Kombinacje**: lista i tworzenie atrybutów (rozmiar, kolor...) oraz ich wartości, tworzenie do 100 kombinacji naraz z wpływem na cenę, indeksem, EAN i stanem magazynowym, edycja kombinacji.
 
 **Zdjęcia**: dodawanie zdjęcia z adresu internetowego, pisanie tekstów alternatywnych, wybór zdjęcia głównego, zmniejszanie zbyt ciężkich oryginałów, wyśrodkowanie ich na kwadratowym tle i ponowne generowanie wszystkich miniatur.

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.0
+- Categories: new tool `create_category` (under any parent, inactive until approved, same customer groups as its parent, at a chosen position). `update_category` can now move a category under another parent and change its position among its sister categories.
+- Main menu: new tools `get_menu` and `set_menu` for the native "Main menu" module (ps_mainmenu) of Classic, Hummingbird and most themes. Claude reads the menu with the subcategories each entry shows, then adds, removes or reorders categories, CMS pages and categories, products, brands, suppliers and custom links (created or relabelled in every language). The previous menu is returned to undo. Third-party mega menus are listed, not changed.
+
 ## 2.5.2
 - Piskee Pro 1.2.0: structured data for Google and AI assistants (Product, BreadcrumbList, Organization and WebSite, FAQPage, BlogPosting), never duplicating what the theme already publishes; FAQs of products and categories written by Claude and shown on the page; blog articles written by Claude as native CMS pages (drafts until the merchant approves), with links to the products they mention. New tools: `set_faq`, `get_faq`, `get_structured_data`, `set_structured_data`, `create_blog_article`, `list_blog_articles`.
 - Module page: new row in the Free / Pro comparison.

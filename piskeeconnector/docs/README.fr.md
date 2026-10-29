@@ -35,6 +35,8 @@ Puis tapez `/mcp` dans Claude Code pour vous connecter.
 
 **Produits et catégories** : rechercher, lire et modifier un produit (prix, références, EAN, poids, activation, textes et SEO dans toutes les langues), créer un produit (inactif par défaut), gérer le stock à la quantité près ou par entrée et sortie, classer un produit, modifier une catégorie.
 
+**Catégories et menu** : créer une catégorie n'importe où dans l'arborescence (inactive jusqu'à votre accord, visible des mêmes clients que sa catégorie parente), la déplacer, changer son ordre parmi ses catégories sœurs, et lire ou modifier le menu principal de la boutique (module natif « Menu principal » de Classic, Hummingbird et de la plupart des thèmes) : ajouter, retirer ou réordonner des catégories, pages CMS, marques et liens personnalisés. Une catégorie créée sous une catégorie du menu y apparaît d'elle-même. Les méga-menus tiers sont listés mais pas modifiés.
+
 **Déclinaisons** : lister et créer des attributs (taille, couleur...) et leurs valeurs, créer jusqu'à 100 déclinaisons d'un coup avec impact prix, référence, EAN et stock, modifier une déclinaison.
 
 **Images** : ajouter une image depuis une adresse web, écrire les textes alternatifs, choisir l'image de couverture, réduire les originaux trop lourds, les centrer sur un fond carré et régénérer toutes les miniatures.

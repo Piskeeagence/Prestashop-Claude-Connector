@@ -675,18 +675,214 @@ class PiskeeConnectorCatalog
             }
         }
 
-        if ($changes === []) {
+        // Moving under another parent.
+        $moved = false;
+        if (isset($args['id_parent']) && (int) $args['id_parent'] > 0 && (int) $args['id_parent'] !== (int) $category->id_parent) {
+            $idParent = (int) $args['id_parent'];
+            $parentError = $this->parentError($idParent, $c['id_shop'], $category);
+            if ($parentError !== '') {
+                return PiskeeConnectorHelper::error($parentError . ' Nothing was changed.');
+            }
+            $changes['id_parent'] = ['from' => (int) $category->id_parent, 'to' => $idParent];
+            $category->id_parent = $idParent;
+            $moved = true;
+        }
+        $position = isset($args['position']) ? max(1, (int) $args['position']) : null;
+
+        if ($changes === [] && $position === null) {
             return PiskeeConnectorHelper::json(['id_category' => $id, 'updated' => false, 'message' => 'Nothing to change.']);
         }
-        $error = PiskeeConnectorHelper::validate($category);
-        if ($error !== '') {
-            return PiskeeConnectorHelper::error('Not saved: ' . $error);
+        if ($changes !== []) {
+            $error = PiskeeConnectorHelper::validate($category);
+            if ($error !== '') {
+                return PiskeeConnectorHelper::error('Not saved: ' . $error);
+            }
+            if (!$category->update()) {
+                return PiskeeConnectorHelper::error('PrestaShop refused to save category ' . $id . '.');
+            }
+            if ($moved) {
+                // PrestaShop 1.7 skips this when the new parent has the same depth as the old one.
+                Category::regenerateEntireNtree();
+                $category->recalculateLevelDepth($id);
+                if ($position === null) {
+                    $position = PHP_INT_MAX;
+                }
+            }
         }
-        if (!$category->update()) {
-            return PiskeeConnectorHelper::error('PrestaShop refused to save category ' . $id . '.');
+        if ($position !== null) {
+            $before = $this->siblingIndex($id, (int) $category->id_parent, $c['id_shop']);
+            $after = $this->placeCategory($id, (int) $category->id_parent, $position, $c['id_shop']);
+            if ($before !== $after) {
+                $changes['position'] = ['from' => $before, 'to' => $after];
+            }
         }
 
-        return PiskeeConnectorHelper::json(['id_category' => $id, 'updated' => true, 'changes' => $changes]);
+        return PiskeeConnectorHelper::json(['id_category' => $id, 'updated' => $changes !== [], 'changes' => $changes]);
+    }
+
+    /**
+     * Creates a category under a parent (the home category by default), with
+     * the access groups of its parent, as the back office would.
+     *
+     * @param array<string, mixed> $args
+     * @param array<string, mixed> $context
+     *
+     * @return array<string, mixed>
+     */
+    public function createCategory(array $args, array $context): array
+    {
+        $c = PiskeeConnectorHelper::boot($context);
+        $idShop = $c['id_shop'];
+
+        $translations = PiskeeConnectorHelper::translations($args['translations'] ?? null, $idShop);
+        if (!$translations['ok']) {
+            return PiskeeConnectorHelper::error($translations['error']);
+        }
+        $defaultLang = (int) Configuration::get('PS_LANG_DEFAULT');
+        $defaultName = trim((string) ($translations['map'][$defaultLang]['name'] ?? ''));
+        if ($defaultName === '') {
+            return PiskeeConnectorHelper::error('A name in the default language ("' . PiskeeConnectorHelper::iso($defaultLang) . '") is required.');
+        }
+        foreach ($translations['map'] as $fields) {
+            foreach (array_keys($fields) as $field) {
+                if (!in_array($field, self::CATEGORY_LANG_FIELDS, true)) {
+                    return PiskeeConnectorHelper::error('Unknown category field "' . $field . '".');
+                }
+            }
+        }
+
+        $idParent = (int) ($args['id_parent'] ?? 0);
+        if ($idParent <= 0) {
+            $idParent = (int) Context::getContext()->shop->id_category ?: (int) Configuration::get('PS_HOME_CATEGORY');
+        }
+        $parentError = $this->parentError($idParent, $idShop, null);
+        if ($parentError !== '') {
+            return PiskeeConnectorHelper::error($parentError);
+        }
+
+        // The same name under the same parent is almost always a mistake.
+        $twin = (int) Db::getInstance()->getValue('SELECT c.`id_category` FROM `' . _DB_PREFIX_ . 'category` c'
+            . ' INNER JOIN `' . _DB_PREFIX_ . 'category_lang` cl ON cl.`id_category` = c.`id_category` AND cl.`id_lang` = ' . $defaultLang . ' AND cl.`id_shop` = ' . $idShop
+            . ' WHERE c.`id_parent` = ' . $idParent . " AND cl.`name` = '" . pSQL($defaultName) . "'");
+        if ($twin > 0 && empty($args['allow_same_name'])) {
+            return PiskeeConnectorHelper::error('Category ' . $twin . ' already has this name under the same parent. Use it, or pass allow_same_name: true if the merchant really wants a second one.');
+        }
+
+        $category = new Category(null, null, $idShop);
+        $category->id_parent = $idParent;
+        $category->active = (bool) ($args['active'] ?? false);
+        foreach (PiskeeConnectorHelper::languages($idShop) as $idLang) {
+            $fields = $translations['map'][$idLang] ?? [];
+            $name = trim((string) ($fields['name'] ?? $defaultName));
+            $category->name[$idLang] = $name;
+            $category->link_rewrite[$idLang] = Tools::str2url((string) ($fields['link_rewrite'] ?? $name));
+            foreach (['description', 'additional_description', 'meta_title', 'meta_description'] as $field) {
+                if (property_exists($category, $field)) {
+                    $category->{$field}[$idLang] = (string) ($fields[$field] ?? '');
+                }
+            }
+        }
+        $parent = new Category($idParent);
+        $groups = array_map('intval', (array) $parent->getGroups());
+        $category->groupBox = $groups !== [] ? $groups : null;
+
+        $error = PiskeeConnectorHelper::validate($category);
+        if ($error !== '') {
+            return PiskeeConnectorHelper::error('Not created: ' . $error);
+        }
+        if (!$category->add()) {
+            return PiskeeConnectorHelper::error('PrestaShop refused to create the category.');
+        }
+        $id = (int) $category->id;
+        $position = null;
+        if (isset($args['position'])) {
+            $position = $this->placeCategory($id, $idParent, max(1, (int) $args['position']), $idShop);
+        }
+
+        return PiskeeConnectorHelper::json([
+            'id_category' => $id,
+            'created' => true,
+            'id_parent' => $idParent,
+            'position' => $position ?? $this->siblingIndex($id, $idParent, $idShop),
+            'active' => (bool) $category->active,
+            'url' => Context::getContext()->link->getCategoryLink($category, null, $c['id_lang'], null, $idShop),
+            'message' => $category->active
+                ? 'Category created and visible.'
+                : 'Category created as inactive: customers do not see it, in the menu or elsewhere, until it is activated with update_category.',
+        ]);
+    }
+
+    /**
+     * Why a category cannot be the parent (of $moving, if given), or ''.
+     */
+    private function parentError(int $idParent, int $idShop, ?Category $moving): string
+    {
+        $parent = new Category($idParent, null, $idShop);
+        if (!PiskeeConnectorHelper::inShop($parent, $idShop) || $idParent === (int) Configuration::get('PS_ROOT_CATEGORY')) {
+            return 'Parent category ' . $idParent . ' not found. Call list_categories first.';
+        }
+        if ($moving !== null) {
+            if ($idParent === (int) $moving->id) {
+                return 'A category cannot be its own parent.';
+            }
+            if ((int) $parent->nleft > (int) $moving->nleft && (int) $parent->nright < (int) $moving->nright) {
+                return 'Category ' . $idParent . ' is inside category ' . (int) $moving->id . ': it cannot become its parent.';
+            }
+        }
+
+        return '';
+    }
+
+    /**
+     * Position of a category among its siblings in this shop, from 1.
+     */
+    private function siblingIndex(int $id, int $idParent, int $idShop): int
+    {
+        $ids = $this->siblings($idParent, $idShop);
+        $index = array_search($id, $ids, true);
+
+        return $index === false ? 0 : $index + 1;
+    }
+
+    /**
+     * @return array<int, int>
+     */
+    private function siblings(int $idParent, int $idShop): array
+    {
+        $rows = Db::getInstance()->executeS('SELECT c.`id_category` FROM `' . _DB_PREFIX_ . 'category` c'
+            . ' INNER JOIN `' . _DB_PREFIX_ . 'category_shop` cs ON cs.`id_category` = c.`id_category` AND cs.`id_shop` = ' . $idShop
+            . ' WHERE c.`id_parent` = ' . $idParent . ' ORDER BY cs.`position` ASC, c.`id_category` ASC') ?: [];
+
+        return array_map(function ($row) {
+            return (int) $row['id_category'];
+        }, $rows);
+    }
+
+    /**
+     * Puts a category at a position (from 1) among its siblings and renumbers
+     * them from 0, the way the back office drag and drop does. Returns the
+     * final position, from 1.
+     */
+    private function placeCategory(int $id, int $idParent, int $position, int $idShop): int
+    {
+        $ids = array_values(array_filter($this->siblings($idParent, $idShop), function ($other) use ($id) {
+            return $other !== $id;
+        }));
+        $position = min(max(1, $position), count($ids) + 1);
+        array_splice($ids, $position - 1, 0, [$id]);
+        $db = Db::getInstance();
+        foreach ($ids as $index => $idCategory) {
+            $db->execute('UPDATE `' . _DB_PREFIX_ . 'category_shop` SET `position` = ' . (int) $index . ' WHERE `id_category` = ' . (int) $idCategory . ' AND `id_shop` = ' . $idShop);
+            if (!Shop::isFeatureActive()) {
+                $db->execute('UPDATE `' . _DB_PREFIX_ . 'category` SET `position` = ' . (int) $index . ' WHERE `id_category` = ' . (int) $idCategory);
+            }
+        }
+        // The tree order (nleft) follows positions, as after a drag and drop in the back office.
+        Category::regenerateEntireNtree();
+        // Menus and caches listen to this hook (ps_mainmenu empties its cache).
+        Hook::exec('actionCategoryUpdate', ['category' => new Category($id)]);
+
+        return $position;
     }
 
     /**

@@ -35,6 +35,8 @@ Then type `/mcp` in Claude Code to log in.
 
 **Products and categories**: search, read and update a product (prices, references, EAN, weight, status, texts and SEO in every language), create a product (inactive by default), manage stock exactly or by goods in and out, set categories, update a category.
 
+**Categories and menu**: create a category anywhere in the tree (inactive until you approve it, visible to the same customers as its parent), move it, change its order among its sister categories, and read or change the main menu of the shop (native "Main menu" module of Classic, Hummingbird and most themes): add, remove or reorder categories, CMS pages, brands and custom links. A category created under a category of the menu appears in it by itself. Third-party mega menus are listed but not changed.
+
 **Combinations**: list and create attributes (size, colour...) and their values, create up to 100 combinations at once with price impact, reference, EAN and stock, update a combination.
 
 **Images**: add an image from a web address, write alt texts, choose the cover, downsize heavy originals, centre them on a square background and rebuild every thumbnail.

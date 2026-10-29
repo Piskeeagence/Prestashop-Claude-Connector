@@ -60,6 +60,9 @@ class PiskeeConnectorI18n
         'set_stock' => ['fr' => 'Modifier le stock', 'en' => 'Set stock', 'es' => 'Modificar el stock', 'it' => 'Aggiornamento delle giacenze', 'pl' => 'Zmiana stanu magazynowego'],
         'list_categories' => ['fr' => 'Lister les catégories', 'en' => 'List categories', 'es' => 'Listar las categorías', 'it' => 'Elenco delle categorie', 'pl' => 'Lista kategorii'],
         'get_category' => ['fr' => 'Lire une catégorie', 'en' => 'Read a category', 'es' => 'Ver una categoría', 'it' => 'Lettura di una categoria', 'pl' => 'Podgląd kategorii'],
+        'create_category' => ['fr' => 'Créer une catégorie', 'en' => 'Create a category', 'es' => 'Crear una categoría', 'it' => 'Creare una categoria', 'pl' => 'Utwórz kategorię'],
+        'get_menu' => ['fr' => 'Lire le menu', 'en' => 'Read the menu', 'es' => 'Ver el menú', 'it' => 'Lettura del menu', 'pl' => 'Podgląd menu'],
+        'set_menu' => ['fr' => 'Modifier le menu', 'en' => 'Change the menu', 'es' => 'Modificar el menú', 'it' => 'Modifica del menu', 'pl' => 'Edycja menu'],
         'update_category' => ['fr' => 'Modifier une catégorie', 'en' => 'Update a category', 'es' => 'Modificar una categoría', 'it' => 'Modifica di una categoria', 'pl' => 'Edycja kategorii'],
         'set_product_categories' => ['fr' => 'Classer un produit', 'en' => 'Set product categories', 'es' => 'Asignar categorías a un producto', 'it' => 'Assegnazione delle categorie di un prodotto', 'pl' => 'Przypisanie kategorii produktu'],
         'list_combinations' => ['fr' => 'Lister les déclinaisons', 'en' => 'List combinations', 'es' => 'Listar las combinaciones', 'it' => 'Elenco delle combinazioni', 'pl' => 'Lista kombinacji'],
@@ -199,6 +202,7 @@ class PiskeeConnectorI18n
     private const GROUPS = [
         'shop' => ['fr' => 'Boutique', 'en' => 'Shop', 'es' => 'Tienda', 'it' => 'Negozio', 'pl' => 'Sklep'],
         'catalog' => ['fr' => 'Produits et catégories', 'en' => 'Products and categories', 'es' => 'Productos y categorías', 'it' => 'Prodotti e categorie', 'pl' => 'Produkty i kategorie'],
+        'menu' => ['fr' => 'Menu de la boutique', 'en' => 'Shop menu', 'es' => 'Menú de la tienda', 'it' => 'Menu del negozio', 'pl' => 'Menu sklepu'],
         'variants' => ['fr' => 'Déclinaisons', 'en' => 'Combinations', 'es' => 'Combinaciones', 'it' => 'Combinazioni', 'pl' => 'Kombinacje'],
         'images' => ['fr' => 'Images', 'en' => 'Images', 'es' => 'Imágenes', 'it' => 'Immagini', 'pl' => 'Zdjęcia'],
         'enrichment' => ['fr' => 'Enrichissement et optimisation', 'en' => 'Enrichment and optimisation', 'es' => 'Enriquecimiento y optimización', 'it' => 'Arricchimento e ottimizzazione', 'pl' => 'Wzbogacanie i optymalizacja'],
