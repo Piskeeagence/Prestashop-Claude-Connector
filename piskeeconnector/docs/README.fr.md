@@ -41,6 +41,10 @@ Puis tapez `/mcp` dans Claude Code pour vous connecter.
 
 **Méga-menu (Pro)** : Claude compose un méga-menu à partir de votre description : des entrées qui ouvrent de larges panneaux jusqu'à 6 colonnes, avec catégories, liens avec pastilles, images, produits (choisis, d'une catégorie, nouveautés, meilleures ventes, promotions), marques et texte. Il est enregistré en brouillon avec un lien d'aperçu privé, puis publié à la place du menu natif (et retiré en un clic). Sur mobile, il devient un accordéon. Les méga-menus tiers (PrestaHero, Iqit...) sont lus pour que Claude puisse les décrire ou les reconstruire, mais pas modifiés.
 
+**Gestion courante** : emplacement des modules (accrocher, décrocher, déplacer un module dans n'importe quelle zone du thème, le masquer sur certaines pages), bons de réduction (lister, supprimer), actions de masse (statut de 50 commandes, promotion sur une catégorie, une marque ou tout le catalogue, caractéristique sur de nombreux produits), règles de prix catalogue, facture, bon de livraison et avoir en PDF, comptes clients et groupes avec leurs prix (B2B), duplication de produit, cache et mode maintenance.
+
+**Piskee Pro ajoute** : remboursements avec avoir et remise en stock, statistiques de trafic et de conversion, paniers abandonnés et leurs relances par e-mail, modération des avis clients, aperçu d'un thème avant sa mise en ligne, export des inscrits à la newsletter.
+
 **Déclinaisons** : lister et créer des attributs (taille, couleur...) et leurs valeurs, créer jusqu'à 100 déclinaisons d'un coup avec impact prix, référence, EAN et stock, modifier une déclinaison.
 
 **Images** : ajouter une image depuis une adresse web, écrire les textes alternatifs, choisir l'image de couverture, réduire les originaux trop lourds, les centrer sur un fond carré et régénérer toutes les miniatures.

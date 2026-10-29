@@ -41,6 +41,10 @@ Después escriba `/mcp` en Claude Code para iniciar sesión.
 
 **Megamenú (Pro)**: Claude compone un megamenú a partir de su descripción: entradas que abren amplios paneles de hasta 6 columnas, con categorías, enlaces con etiquetas, imágenes, productos (elegidos, de una categoría, novedades, más vendidos, ofertas), marcas y texto. Se guarda como borrador con un enlace de vista previa privado y luego se publica en lugar del menú nativo (y se retira con un clic). En móvil se convierte en un acordeón. Los megamenús de terceros (PrestaHero, Iqit...) se leen para que Claude pueda describirlos o reconstruirlos, pero no se modifican.
 
+**Gestión diaria**: posición de los módulos (enganchar, desenganchar, mover un módulo en cualquier zona del tema, ocultarlo en algunas páginas), cupones (listar, eliminar), acciones masivas (estado de hasta 50 pedidos, una promoción en una categoría, una marca o todo el catálogo, una característica en muchos productos), reglas de precios del catálogo, factura, albarán y factura rectificativa en PDF, cuentas y grupos de clientes con sus precios (B2B), duplicación de productos, caché y modo mantenimiento.
+
+**Piskee Pro añade**: reembolsos con factura rectificativa y reposición de stock, estadísticas de tráfico y conversión, carritos abandonados y sus recordatorios por e-mail, moderación de opiniones, vista previa de un tema antes de publicarlo, exportación de suscriptores.
+
 **Combinaciones**: listar y crear atributos (talla, color...) y sus valores, crear hasta 100 combinaciones de una vez con impacto en el precio, referencia, EAN y stock, modificar una combinación.
 
 **Imágenes**: añadir una imagen desde una dirección web, redactar los textos alternativos, elegir la imagen de portada, reducir los originales demasiado pesados, centrarlos sobre un fondo cuadrado y regenerar todas las miniaturas.

@@ -169,6 +169,9 @@ class PiskeeConnectorMerchandising
             $idValue = (int) $value->id;
         }
 
+        // Recorded before the old custom value is deleted, so that an undo recreates that value first.
+        PiskeeConnectorHelper::recordChange('ProductFeature', $idProduct, (string) Product::getProductName($idProduct) . ' / feature ' . $idFeature, 'update',
+            ['id_feature' => $idFeature, 'values' => array_map('intval', array_column($old, 'id_feature_value'))], ['id_feature' => $idFeature, 'values' => [$idValue]]);
         $db->delete('feature_product', '`id_product` = ' . $idProduct . ' AND `id_feature` = ' . $idFeature);
         foreach ($old as $row) {
             if ((int) $row['custom'] === 1 && (int) $row['id_feature_value'] !== $idValue) {
@@ -181,6 +184,53 @@ class PiskeeConnectorMerchandising
         Hook::exec('actionProductUpdate', ['id_product' => $idProduct, 'product' => new Product($idProduct)]);
 
         return PiskeeConnectorHelper::json(['id_product' => $idProduct, 'id_feature' => $idFeature, 'id_feature_value' => $idValue, 'updated' => true]);
+    }
+
+    /**
+     * One feature value on many products (a list, a category, a brand or the whole catalogue).
+     *
+     * @param array<string, mixed> $args
+     * @param array<string, mixed> $context
+     *
+     * @return array<string, mixed>
+     */
+    public function bulkSetProductFeature(array $args, array $context): array
+    {
+        $c = PiskeeConnectorHelper::boot($context);
+        $ids = (new PiskeeConnectorSales())->targetProducts($args, $c['id_shop']);
+        if (is_string($ids)) {
+            return PiskeeConnectorHelper::error($ids);
+        }
+        if ($ids === [] || count($ids) > 300) {
+            return PiskeeConnectorHelper::error($ids === [] ? 'No product matches.' : count($ids) . ' products match: 300 at most per call.');
+        }
+        if (empty($args['id_feature_value']) && empty($args['shared_value'])) {
+            return PiskeeConnectorHelper::error('Give id_feature_value or shared_value (the same value for every product).');
+        }
+        $done = 0;
+        $failed = [];
+        $value = 0;
+        $notDone = [];
+        foreach ($ids as $id) {
+            if (PiskeeConnectorLicense::gate($c['id_shop']) !== '') {
+                $notDone[] = $id;
+                continue;
+            }
+            $one = $this->setProductFeature(['id_product' => $id, 'id_feature' => $args['id_feature'] ?? 0]
+                + ($value > 0 ? ['id_feature_value' => $value] : array_intersect_key($args, array_flip(['id_feature_value', 'shared_value']))), $context);
+            if (!empty($one['error'])) {
+                $failed[] = ['id_product' => $id, 'reason' => PiskeeConnectorHelper::excerpt((string) $one['text'], 200)];
+                if (count($failed) === 1 && $done === 0 && count($ids) > 1 && strpos((string) $one['text'], 'not found in this shop') === false) {
+                    return PiskeeConnectorHelper::error((string) $one['text']);
+                }
+                continue;
+            }
+            $value = (int) ($one['json']['id_feature_value'] ?? 0);
+            PiskeeConnectorLicense::count($c['id_shop']);
+            ++$done;
+        }
+
+        return PiskeeConnectorHelper::json(['products' => count($ids), 'updated' => $done, 'id_feature_value' => $value, 'not_updated' => $failed, 'not_done_free_plan_limit' => $notDone]);
     }
 
     /**
@@ -282,7 +332,7 @@ class PiskeeConnectorMerchandising
         $conflicts = Db::getInstance()->executeS('SELECT `id_specific_price`, `reduction`, `reduction_type`, `from`, `to` FROM `' . _DB_PREFIX_ . 'specific_price`'
             . ' WHERE `id_product` = ' . $idProduct . ' AND `id_cart` = 0 AND `id_customer` = 0 AND `id_shop` IN (0, ' . (int) $c['id_shop'] . ')'
             . ' AND `id_product_attribute` IN (0, ' . $idCombination . ') AND `id_group` IN (0, ' . $idGroup . ') AND `from_quantity` = ' . $quantity
-            . " AND (`to` = '0000-00-00 00:00:00' OR `to` >= " . ($fromDate === '0000-00-00 00:00:00' ? 'NOW()' : "'" . pSQL($fromDate) . "'") . ')'
+            . " AND (`to` = '0000-00-00 00:00:00' OR `to` >= " . ($fromDate === '0000-00-00 00:00:00' ? "'" . date('Y-m-d H:i:s') . "'" : "'" . pSQL($fromDate) . "'") . ')'
             . ($toDate !== '0000-00-00 00:00:00' ? " AND (`from` = '0000-00-00 00:00:00' OR `from` <= '" . pSQL($toDate) . "')" : '')) ?: [];
         if ($conflicts !== []) {
             if (empty($args['replace_existing'])) {

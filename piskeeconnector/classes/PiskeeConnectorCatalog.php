@@ -437,6 +437,107 @@ class PiskeeConnectorCatalog
     }
 
     /**
+     * Copies a product with its combinations, images, features, categories, related products,
+     * prices and promotions, the way the back office "Duplicate" does. The copy is inactive.
+     *
+     * @param array<string, mixed> $args
+     * @param array<string, mixed> $context
+     *
+     * @return array<string, mixed>
+     */
+    public function duplicateProduct(array $args, array $context): array
+    {
+        $c = PiskeeConnectorHelper::boot($context);
+        $idOld = (int) ($args['id_product'] ?? 0);
+        $product = new Product($idOld, false, null, $c['id_shop']);
+        if (!PiskeeConnectorHelper::inShop($product, $c['id_shop'])) {
+            return PiskeeConnectorHelper::error('Product ' . $idOld . ' not found in this shop.');
+        }
+        $translations = PiskeeConnectorHelper::translations($args['translations'] ?? null, $c['id_shop']);
+        if (!$translations['ok']) {
+            return PiskeeConnectorHelper::error($translations['error']);
+        }
+        $withImages = !isset($args['copy_images']) || $args['copy_images'];
+
+        unset($product->id, $product->id_product);
+        $product->id = null;
+        $product->indexed = 0;
+        $product->active = 0;
+        if (isset($args['reference'])) {
+            $product->reference = (string) $args['reference'];
+        }
+        $product->ean13 = '';
+        if (property_exists($product, 'upc')) {
+            $product->upc = '';
+        }
+        if (property_exists($product, 'isbn')) {
+            $product->isbn = '';
+        }
+        if (property_exists($product, 'mpn')) {
+            $product->mpn = '';
+        }
+        foreach ($translations['map'] as $idLang => $fields) {
+            foreach (['name', 'description_short', 'description', 'meta_title', 'meta_description', 'link_rewrite'] as $field) {
+                if (isset($fields[$field])) {
+                    $product->{$field}[$idLang] = $field === 'link_rewrite' ? Tools::str2url((string) $fields[$field]) : (string) $fields[$field];
+                }
+            }
+            if (isset($fields['name']) && !isset($fields['link_rewrite'])) {
+                $product->link_rewrite[$idLang] = Tools::str2url((string) $fields['name']);
+            }
+        }
+        if (!$product->add()) {
+            return PiskeeConnectorHelper::error('PrestaShop refused to create the copy.');
+        }
+        $idNew = (int) $product->id;
+        $steps = [
+            'categories' => ['Category', 'duplicateProductCategories'], 'suppliers' => ['Product', 'duplicateSuppliers'],
+            'group_reductions' => ['GroupReduction', 'duplicateReduction'], 'related_products' => ['Product', 'duplicateAccessories'],
+            'features' => ['Product', 'duplicateFeatures'], 'promotions' => ['Product', 'duplicateSpecificPrices'], 'pack' => ['Pack', 'duplicate'],
+            'customization' => ['Product', 'duplicateCustomizationFields'], 'tags' => ['Product', 'duplicateTags'], 'carriers' => ['Product', 'duplicateCarriers'],
+            'attachments' => ['Product', 'duplicateAttachmentAssociation'], 'virtual_file' => ['Product', 'duplicateDownload'],
+        ];
+        $failed = [];
+        $combinationImages = [];
+        try {
+            $combinationImages = Product::duplicateAttributes($idOld, $idNew);
+            if ($combinationImages === false) {
+                $failed[] = 'combinations';
+                $combinationImages = [];
+            }
+        } catch (Throwable $e) {
+            $failed[] = 'combinations';
+        }
+        foreach ($steps as $label => [$class, $method]) {
+            if (!method_exists($class, $method)) {
+                continue;
+            }
+            try {
+                if ($class::$method($idOld, $idNew) === false) {
+                    $failed[] = $label;
+                }
+            } catch (Throwable $e) {
+                $failed[] = $label;
+            }
+        }
+        if ($product->hasAttributes()) {
+            Product::updateDefaultAttribute($idNew);
+        }
+        if ($withImages && !Image::duplicateProductImages($idOld, $idNew, $combinationImages)) {
+            $failed[] = 'images';
+        }
+        Search::indexation(false, $idNew);
+
+        return PiskeeConnectorHelper::json([
+            'id_product' => $idNew,
+            'copied_from' => $idOld,
+            'active' => false,
+            'not_copied' => $failed,
+            'message' => 'Copy created as inactive, with stock 0 and without EAN / UPC (they must be unique). Give it its own name, reference and slug before activating it.',
+        ]);
+    }
+
+    /**
      * @param array<string, mixed> $args
      * @param array<string, mixed> $context
      *

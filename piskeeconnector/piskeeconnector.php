@@ -34,6 +34,11 @@ require_once __DIR__ . '/classes/PiskeeConnectorOrders.php';
 require_once __DIR__ . '/classes/PiskeeConnectorCms.php';
 require_once __DIR__ . '/classes/PiskeeConnectorMenu.php';
 require_once __DIR__ . '/classes/PiskeeConnectorAppearance.php';
+require_once __DIR__ . '/classes/PiskeeConnectorFiles.php';
+require_once __DIR__ . '/classes/PiskeeConnectorHooks.php';
+require_once __DIR__ . '/classes/PiskeeConnectorSales.php';
+require_once __DIR__ . '/classes/PiskeeConnectorCustomers.php';
+require_once __DIR__ . '/classes/PiskeeConnectorSystem.php';
 require_once __DIR__ . '/classes/PiskeeConnectorLlms.php';
 require_once __DIR__ . '/classes/PiskeeConnectorCrossSelling.php';
 require_once __DIR__ . '/classes/PiskeeConnectorThemes.php';
@@ -51,7 +56,7 @@ class Piskeeconnector extends Module
     {
         $this->name = 'piskeeconnector';
         $this->tab = 'administration';
-        $this->version = '2.8.1';
+        $this->version = '2.9.0';
         $this->author = 'Piskee';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -599,21 +604,28 @@ class Piskeeconnector extends Module
         return $out;
     }
 
+    /**
+     * The page follows the back office language of the employee. A language picked in the
+     * menu of the page holds only while that back office language stays the same.
+     */
     private function uiLang(): string
     {
+        $employee = $this->context->employee ?? null;
+        $boIso = $employee && (int) $employee->id_lang > 0 ? (string) Language::getIsoById((int) $employee->id_lang) : (string) $this->context->language->iso_code;
+        $bo = PiskeeConnectorI18n::lang($boIso);
         $forced = (string) Tools::getValue('pklang', '');
         if (PiskeeConnectorI18n::isSupported($forced)) {
-            $this->context->cookie->__set('piskee_lang', $forced);
+            $this->context->cookie->__set('piskee_lang', $forced . ':' . $bo);
             $this->context->cookie->write();
 
             return $forced;
         }
-        $saved = (string) $this->context->cookie->__get('piskee_lang');
-        if (PiskeeConnectorI18n::isSupported($saved)) {
-            return $saved;
+        $saved = explode(':', (string) $this->context->cookie->__get('piskee_lang'));
+        if (count($saved) === 2 && $saved[1] === $bo && PiskeeConnectorI18n::isSupported($saved[0])) {
+            return $saved[0];
         }
 
-        return PiskeeConnectorI18n::lang((string) $this->context->language->iso_code);
+        return $bo;
     }
 
     private function csrfToken(): string

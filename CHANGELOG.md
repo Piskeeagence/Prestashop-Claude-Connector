@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.9.0
+- Module positions: `list_module_hooks` and `set_module_hook` attach, detach or move a module in any zone of the shop front, and hide it on some pages (Design > Positions), without touching the theme code. Recorded in the Pro history and undoable.
+- Vouchers: `list_vouchers` and `delete_voucher` (a voucher already used by orders is deactivated instead).
+- Bulk actions: `bulk_set_order_status` (50 orders), `bulk_create_promotion` (a list, a category, a brand or the whole catalogue, 300 products), `bulk_set_product_feature` (one shared value on many products). Each item counts as one change on the free plan.
+- Catalogue price rules: `list_price_rules`, `create_price_rule`, `delete_price_rule` (sales, prices per group, country or currency).
+- Documents: `get_order_document` makes the PDF invoice, delivery slip or credit slip, behind a private download link valid 30 minutes.
+- Customers and groups (B2B): `list_customer_groups`, `save_customer_group`, `create_customer`, `update_customer`. New permission "Create and change customer accounts and customer groups", asked when Claude reconnects.
+- `duplicate_product` copies a product with its combinations, images, features and prices, as an inactive product.
+- `clear_cache` and `set_maintenance`.
+- Module page: it now follows the back office language of the employee; a language picked in its menu holds only while that back office language stays the same.
+- Piskee Pro 1.4.0: `refund_order` (credit slip, restocking, "Refunded" status when everything is refunded), `shop_statistics` (visits, conversion, revenue, abandoned carts, sources, compared with the previous period), `list_abandoned_carts` and `send_cart_reminders` (e-mail with the cart and a link that restores it, once per cart), `list_reviews` and `moderate_reviews` (Product Comments), `preview_theme` (private link showing a theme that is not live), `export_newsletter_subscribers` (CSV behind a private link).
+
 ## 2.8.1
 Fixes from a full day of merchant testing on PrestaShop 9.1.
 - Child themes: a draft made from the live theme family now lists every module where the live shop shows it (with its page exceptions). Putting it live from Design > Theme & Logo no longer empties the home page, the menu or the footer.

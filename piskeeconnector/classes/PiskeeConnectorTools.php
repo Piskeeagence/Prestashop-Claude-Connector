@@ -46,8 +46,12 @@ class PiskeeConnectorTools
         $llms = new PiskeeConnectorLlms();
         $menu = new PiskeeConnectorMenu();
         $look = new PiskeeConnectorAppearance();
+        $hooks = new PiskeeConnectorHooks();
+        $sales = new PiskeeConnectorSales();
+        $customers = new PiskeeConnectorCustomers();
+        $system = new PiskeeConnectorSystem();
 
-        $instances = ['look' => $look, 'menu' => $menu, 'catalog' => $catalog, 'variants' => $variants, 'merch' => $merch, 'images' => $images, 'ops' => $ops, 'themes' => $themes, 'orders' => $orders, 'cms' => $cms, 'cross' => $cross, 'llms' => $llms];
+        $instances = ['hooks' => $hooks, 'sales' => $sales, 'customers' => $customers, 'system' => $system, 'look' => $look, 'menu' => $menu, 'catalog' => $catalog, 'variants' => $variants, 'merch' => $merch, 'images' => $images, 'ops' => $ops, 'themes' => $themes, 'orders' => $orders, 'cms' => $cms, 'cross' => $cross, 'llms' => $llms];
         $tools = [];
         foreach (self::all() as $name => $def) {
             if (is_array($def['handler']) && is_string($def['handler'][0] ?? null) && isset($instances[$def['handler'][0]])) {
@@ -84,7 +88,7 @@ class PiskeeConnectorTools
      */
     public static function scopeNames(): array
     {
-        return ['catalog.read', 'catalog.write', 'orders.read', 'orders.write', 'customers.read', 'sales.read', 'service.read', 'service.write', 'marketing.write', 'appearance.write', 'theme.read', 'theme.write'];
+        return ['catalog.read', 'catalog.write', 'orders.read', 'orders.write', 'customers.read', 'customers.write', 'sales.read', 'service.read', 'service.write', 'marketing.write', 'appearance.write', 'theme.read', 'theme.write'];
     }
 
     /**
@@ -306,6 +310,18 @@ class PiskeeConnectorTools
                     'active' => ['type' => 'boolean', 'description' => 'Leave out to create it inactive (recommended).'],
                 ], 'required' => ['translations', 'id_category_default']],
             ],
+            'duplicate_product' => [
+                'group' => 'catalog', 'scope' => 'catalog.write', 'permission' => ['add', 'AdminProducts'],
+                'handler' => ['catalog', 'duplicateProduct'],
+                'description' => 'Copies a product with its combinations, images, features, categories, related products, prices and promotions (like "Duplicate" in the back office), as an INACTIVE product with stock 0 and no EAN. '
+                    . 'Give the copy its own name, slug and reference (translations, reference) so it does not look like the original.' . self::LOST_ANSWER,
+                'input' => ['properties' => [
+                    'id_product' => $productId,
+                    'translations' => self::translations(['name', 'description_short', 'description', 'meta_title', 'meta_description', 'link_rewrite'], 'Texts of the copy (the original\'s are kept otherwise).'),
+                    'reference' => ['type' => 'string'],
+                    'copy_images' => ['type' => 'boolean', 'description' => 'Default true.'],
+                ], 'required' => ['id_product']],
+            ],
             'set_stock' => [
                 'group' => 'catalog', 'scope' => 'catalog.write', 'permission' => ['edit', 'AdminProducts'],
                 'handler' => ['catalog', 'setStock'],
@@ -511,6 +527,216 @@ class PiskeeConnectorTools
                 'input' => ['properties' => [
                     'blocks' => ['type' => 'array', 'minItems' => 1, 'maxItems' => 30, 'items' => ['type' => 'string'], 'description' => 'Module names, in display order.'],
                 ], 'required' => ['blocks']],
+            ],
+
+            // ----- Module positions (zones of the theme) -----
+            'list_module_hooks' => [
+                'group' => 'appearance', 'scope' => 'theme.read', 'permission' => ['view', 'AdminModulesPositions'],
+                'handler' => ['hooks', 'listModuleHooks'],
+                'description' => 'Where modules show on the shop (back office Design > Positions). Without arguments: the zones (display hooks) that show something. '
+                    . 'With hook: the modules of that zone in order, with the pages they are hidden on. With module: the zones it shows in, and the zones it could show in. '
+                    . 'Use it when a block disappeared, shows twice or in the wrong place, typically after a theme change.',
+                'input' => ['properties' => [
+                    'hook' => ['type' => 'string', 'description' => 'Zone name, such as displayHome, displayTop, displayFooter.'],
+                    'module' => ['type' => 'string', 'description' => 'Technical module name, such as ps_customtext.'],
+                ]],
+            ],
+            'set_module_hook' => [
+                'group' => 'appearance', 'scope' => 'appearance.write', 'permission' => ['edit', 'AdminModulesPositions'],
+                'handler' => ['hooks', 'setModuleHook'],
+                'description' => 'Attaches a module to a zone of the shop front (display hook), detaches it, or moves it in the zone; can also set the pages it is hidden on. '
+                    . 'No theme code changes. Read the zone with list_module_hooks first and show the merchant the change. The answer gives the state before, to undo.' . self::LOST_ANSWER,
+                'input' => ['properties' => [
+                    'action' => ['type' => 'string', 'enum' => ['attach', 'detach', 'move']],
+                    'module' => ['type' => 'string'],
+                    'hook' => ['type' => 'string', 'description' => 'Zone, starting with "display".'],
+                    'position' => ['type' => 'integer', 'minimum' => 1, 'description' => 'Rank in the zone, from 1 (first). attach: default last.'],
+                    'hidden_on' => ['type' => 'array', 'items' => ['type' => 'string'], 'description' => 'Pages (controllers) where the module is hidden in this zone: index, category, product, cms, cart, order... Empty list: shown everywhere.'],
+                ], 'required' => ['action', 'module', 'hook']],
+            ],
+
+            // ----- Vouchers, promotions in bulk, catalogue price rules -----
+            'list_vouchers' => [
+                'group' => 'daily', 'scope' => 'sales.read', 'permission' => ['view', 'AdminCartRules'],
+                'handler' => ['sales', 'listVouchers'],
+                'description' => 'Lists the vouchers (cart rules): code, discount, dates, uses left and times used, customer restriction. Filter by part of the code or name, or by status.',
+                'input' => ['properties' => [
+                    'search' => ['type' => 'string'],
+                    'status' => ['type' => 'string', 'enum' => ['all', 'active', 'expired']],
+                    'limit' => ['type' => 'integer', 'minimum' => 1, 'maximum' => 100],
+                ]],
+            ],
+            'delete_voucher' => [
+                'group' => 'daily', 'scope' => 'marketing.write', 'permission' => ['delete', 'AdminCartRules'],
+                'handler' => ['sales', 'deleteVoucher'],
+                'description' => 'Deletes a voucher (from list_vouchers). A voucher already used by orders is deactivated instead, so those orders keep their discount line; deactivate_only deactivates in any case. '
+                    . 'Confirm the code with the merchant first.' . self::LOST_ANSWER,
+                'input' => ['properties' => [
+                    'id_cart_rule' => self::id('Voucher id, from list_vouchers.'),
+                    'deactivate_only' => ['type' => 'boolean'],
+                ], 'required' => ['id_cart_rule']],
+            ],
+            'bulk_create_promotion' => [
+                'group' => 'enrichment', 'scope' => 'catalog.write', 'permission' => ['edit', 'AdminProducts'], 'self_metered' => true,
+                'handler' => ['sales', 'bulkCreatePromotion'],
+                'description' => 'Puts the same promotion (percentage or amount, optional dates) on many products at once: a list, every product of a category (subcategories included by default), of a brand, '
+                    . 'or the whole catalogue (300 products at most; beyond, use create_price_rule). Products that already have a promotion for the period are left as they are and listed, unless replace_existing. '
+                    . 'The discount always comes from the merchant. On the free plan each product counts as one change.' . self::LOST_ANSWER,
+                'input' => ['properties' => [
+                    'product_ids' => ['type' => 'array', 'maxItems' => 300, 'items' => ['type' => 'integer', 'minimum' => 1]],
+                    'id_category' => self::id('Every product of this category.'),
+                    'include_subcategories' => ['type' => 'boolean', 'description' => 'With id_category. Default true.'],
+                    'id_manufacturer' => self::id('Every product of this brand.'),
+                    'all_products' => ['type' => 'boolean'],
+                    'type' => ['type' => 'string', 'enum' => ['percentage', 'amount']],
+                    'value' => ['type' => 'number', 'exclusiveMinimum' => 0, 'description' => '20 for 20 %, or an amount in the default currency.'],
+                    'tax_included' => ['type' => 'boolean'],
+                    'date_from' => $date,
+                    'date_to' => $date,
+                    'id_group' => ['type' => 'integer', 'minimum' => 0, 'description' => 'Customer group only, 0 for everyone.'],
+                    'replace_existing' => ['type' => 'boolean'],
+                ], 'required' => ['type', 'value']],
+            ],
+            'list_price_rules' => [
+                'group' => 'enrichment', 'scope' => 'catalog.read', 'permission' => ['view', 'AdminSpecificPriceRule'],
+                'handler' => ['sales', 'listPriceRules'],
+                'description' => 'Lists the catalogue price rules (Catalog > Discounts > Catalog price rules): reduction, dates, group, country, currency and the categories or brands they apply to.',
+            ],
+            'create_price_rule' => [
+                'group' => 'enrichment', 'scope' => 'catalog.write', 'permission' => ['add', 'AdminSpecificPriceRule'],
+                'handler' => ['sales', 'createPriceRule'],
+                'description' => 'Creates a catalogue price rule: one reduction (percentage or amount) on the whole catalogue, or on products of some categories or brands, optionally for one customer group, '
+                    . 'country or currency, from a quantity, between dates. Best for sales and for prices per group (B2B). Shown as a promotion on every matching product. '
+                    . 'The reduction always comes from the merchant.' . self::LOST_ANSWER,
+                'input' => ['properties' => [
+                    'name' => ['type' => 'string', 'description' => 'Internal name, such as "Winter sales 2026".'],
+                    'type' => ['type' => 'string', 'enum' => ['percentage', 'amount']],
+                    'value' => ['type' => 'number', 'exclusiveMinimum' => 0],
+                    'tax_included' => ['type' => 'boolean', 'description' => 'For amounts. Default true.'],
+                    'category_ids' => ['type' => 'array', 'items' => ['type' => 'integer', 'minimum' => 1], 'description' => 'Products of any of these categories. None: whole catalogue (or brands below).'],
+                    'manufacturer_ids' => ['type' => 'array', 'items' => ['type' => 'integer', 'minimum' => 1]],
+                    'id_group' => ['type' => 'integer', 'minimum' => 0],
+                    'id_country' => ['type' => 'integer', 'minimum' => 0],
+                    'id_currency' => ['type' => 'integer', 'minimum' => 0],
+                    'from_quantity' => ['type' => 'integer', 'minimum' => 1],
+                    'date_from' => $date,
+                    'date_to' => $date,
+                ], 'required' => ['name', 'type', 'value']],
+            ],
+            'delete_price_rule' => [
+                'group' => 'enrichment', 'scope' => 'catalog.write', 'permission' => ['delete', 'AdminSpecificPriceRule'],
+                'handler' => ['sales', 'deletePriceRule'],
+                'description' => 'Deletes a catalogue price rule (from list_price_rules): the products get their normal price back. Confirm with the merchant first.',
+                'input' => ['properties' => ['id_price_rule' => self::id('From list_price_rules.')], 'required' => ['id_price_rule']],
+            ],
+            'bulk_set_product_feature' => [
+                'group' => 'enrichment', 'scope' => 'catalog.write', 'permission' => ['edit', 'AdminProducts'], 'self_metered' => true,
+                'handler' => ['merch', 'bulkSetProductFeature'],
+                'description' => 'Sets one feature to the same value on many products: a list, a category (subcategories included by default), a brand or the whole catalogue, 300 at most. '
+                    . 'The value is one predefined value (id_feature_value, or shared_value found or created by its text), so customers can filter on it. On the free plan each product counts as one change.' . self::LOST_ANSWER,
+                'input' => ['properties' => [
+                    'id_feature' => self::id('From list_features.'),
+                    'id_feature_value' => self::id('A predefined value from list_features.'),
+                    'shared_value' => self::translations(['value'], 'Text of the value per language: reused if it exists, created once otherwise.'),
+                    'product_ids' => ['type' => 'array', 'maxItems' => 300, 'items' => ['type' => 'integer', 'minimum' => 1]],
+                    'id_category' => self::id('Every product of this category.'),
+                    'include_subcategories' => ['type' => 'boolean'],
+                    'id_manufacturer' => self::id('Every product of this brand.'),
+                    'all_products' => ['type' => 'boolean'],
+                ], 'required' => ['id_feature']],
+            ],
+
+            // ----- Customers and groups -----
+            'list_customer_groups' => [
+                'group' => 'customers', 'scope' => 'customers.read', 'permission' => ['view', 'AdminGroups'],
+                'handler' => ['customers', 'listGroups'],
+                'description' => 'Lists the customer groups: discount, prices shown tax included or excluded, whether prices are shown, number of customers.',
+            ],
+            'save_customer_group' => [
+                'group' => 'customers', 'scope' => 'customers.write', 'permission' => ['edit', 'AdminGroups'],
+                'handler' => ['customers', 'saveGroup'],
+                'description' => 'Creates a customer group (such as "Professionals") or changes one (id_group): name, discount on the whole catalogue for its members, prices shown tax excluded, prices shown or hidden. '
+                    . 'For prices on some products only, use create_promotion or create_price_rule with id_group.' . self::LOST_ANSWER,
+                'input' => ['properties' => [
+                    'id_group' => self::id('Group to change. Leave out to create one.'),
+                    'translations' => self::translations(['name'], 'Group name (32 characters at most).'),
+                    'discount_percent' => ['type' => 'number', 'minimum' => 0, 'maximum' => 99],
+                    'prices_tax_excluded' => ['type' => 'boolean'],
+                    'show_prices' => ['type' => 'boolean'],
+                ]],
+            ],
+            'create_customer' => [
+                'group' => 'customers', 'scope' => 'customers.write', 'permission' => ['add', 'AdminCustomers'],
+                'handler' => ['customers', 'createCustomer'],
+                'description' => 'Creates a customer account, typically a professional one, in the groups given. No e-mail is sent and no password is set: the customer gets in with "Forgot your password?". '
+                    . 'Newsletter and partner offers stay off. Only with details given by the merchant.' . self::LOST_ANSWER,
+                'input' => ['properties' => [
+                    'email' => ['type' => 'string'],
+                    'firstname' => ['type' => 'string'],
+                    'lastname' => ['type' => 'string'],
+                    'company' => ['type' => 'string'],
+                    'siret' => ['type' => 'string'],
+                    'group_ids' => ['type' => 'array', 'items' => ['type' => 'integer', 'minimum' => 1]],
+                    'id_default_group' => ['type' => 'integer', 'minimum' => 1, 'description' => 'Group whose prices the customer sees.'],
+                ], 'required' => ['email', 'firstname', 'lastname']],
+            ],
+            'update_customer' => [
+                'group' => 'customers', 'scope' => 'customers.write', 'permission' => ['edit', 'AdminCustomers'],
+                'handler' => ['customers', 'updateCustomer'],
+                'description' => 'Changes a customer account: name, company, SIRET, e-mail, active, groups (the whole list) and default group. Never the password, newsletter or partner consent. Only what is given changes.' . self::LOST_ANSWER,
+                'input' => ['properties' => [
+                    'id_customer' => self::id('From search_customers.'),
+                    'firstname' => ['type' => 'string'],
+                    'lastname' => ['type' => 'string'],
+                    'company' => ['type' => 'string'],
+                    'siret' => ['type' => 'string'],
+                    'email' => ['type' => 'string'],
+                    'active' => ['type' => 'boolean'],
+                    'group_ids' => ['type' => 'array', 'items' => ['type' => 'integer', 'minimum' => 1]],
+                    'id_default_group' => ['type' => 'integer', 'minimum' => 1],
+                ], 'required' => ['id_customer']],
+            ],
+
+            // ----- Shop maintenance -----
+            'clear_cache' => [
+                'group' => 'shop', 'scope' => 'appearance.write', 'permission' => ['edit', 'AdminPerformance'],
+                'handler' => ['system', 'clearCache'],
+                'description' => 'Empties PrestaShop\'s caches (templates, CSS and JS, data), like the "Clear cache" button. Use it when a change does not show on the shop.',
+            ],
+            'set_maintenance' => [
+                'group' => 'shop', 'scope' => 'appearance.write', 'permission' => ['edit', 'AdminMaintenance'],
+                'handler' => ['system', 'setMaintenance'],
+                'description' => 'Puts the shop in maintenance mode (visitors see the maintenance page, except from the allowed IP addresses) or opens it again; can set the allowed IPs and the message. '
+                    . 'Without shop_open, reads the current state. Only on the merchant\'s explicit request.',
+                'input' => ['properties' => [
+                    'shop_open' => ['type' => 'boolean'],
+                    'allowed_ips' => ['type' => 'array', 'items' => ['type' => 'string'], 'description' => 'IP addresses that still see the shop (the whole list).'],
+                    'message' => self::translations(['text'], 'Maintenance message (simple HTML).'),
+                ]],
+            ],
+
+            // ----- Orders in bulk and documents -----
+            'bulk_set_order_status' => [
+                'group' => 'orders', 'scope' => 'orders.write', 'permission' => ['edit', 'AdminOrders'], 'self_metered' => true,
+                'handler' => ['orders', 'bulkSetOrderStatus'],
+                'description' => 'Gives the same status to up to 50 orders, each exactly like set_order_status (history, stock, invoice, customer e-mail). '
+                    . 'Unpaid orders are not marked paid unless confirm_paid. Say which e-mail customers receive before asking for approval. On the free plan each order counts as one change.' . self::LOST_ANSWER,
+                'input' => ['properties' => [
+                    'order_ids' => ['type' => 'array', 'minItems' => 1, 'maxItems' => 50, 'items' => ['type' => 'integer', 'minimum' => 1]],
+                    'id_order_state' => self::id('From list_order_statuses.'),
+                    'confirm_paid' => ['type' => 'boolean', 'description' => 'true only when the merchant confirmed that unpaid orders may be marked as paid.'],
+                ], 'required' => ['order_ids', 'id_order_state']],
+            ],
+            'get_order_document' => [
+                'group' => 'orders', 'scope' => 'orders.read', 'permission' => ['view', 'AdminOrders'],
+                'handler' => ['orders', 'getOrderDocument'],
+                'description' => 'Makes the PDF invoice, delivery slip or credit slip of an order, as PrestaShop prints it, and gives a download link valid 30 minutes. '
+                    . 'Give the link to the merchant only; never publish it.',
+                'input' => ['properties' => [
+                    'id_order' => self::id('Order id.'),
+                    'document' => ['type' => 'string', 'enum' => ['invoice', 'delivery_slip', 'credit_slip']],
+                    'id_order_slip' => self::id('credit_slip: which one (default: the latest).'),
+                ], 'required' => ['id_order', 'document']],
             ],
 
             // ----- Variants -----

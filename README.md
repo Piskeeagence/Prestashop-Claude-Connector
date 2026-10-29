@@ -63,6 +63,7 @@ With Piskee, you describe the result and Claude does the clicks, **in your own b
 | **Categories & menu** | Create categories (inactive until you approve), move and reorder them, and edit the shop's main menu (native "Main menu" module): add, remove or reorder categories, CMS pages, brands and custom links. |
 | **Shop appearance (no code)** | Configure the live shop without touching the theme code: home page slider, banner, custom text, home page product blocks, social links, order of the home page blocks. |
 | **Mega menu (Pro)** | Claude composes a mega menu (columns of categories, links, pictures, products, brands, text), previewed as a draft, then published in place of the native menu. Third-party mega menus are read, not changed. |
+| **Daily admin** | Module positions in any zone of the theme, vouchers, bulk actions (orders, promotions, features), catalogue price rules, PDF invoices and delivery slips, customer accounts and groups (B2B), product duplication, cache and maintenance. |
 | **Combinations & stock** | Create attributes and values, generate up to 100 combinations at once, set stock exactly or record goods in and out. |
 | **Images** | Add from a URL, write alt texts, set the cover, downsize or square originals (kept as backup), rebuild thumbnails. |
 | **Catalogue optimisation** | Full catalogue audit, features, brands, promotions, categories. |
@@ -118,6 +119,11 @@ Then type `/mcp` to sign in.
 | Structured data for Google and AI assistants (Product, breadcrumb, FAQ, articles), FAQs and blog articles written by Claude | — | ✓ |
 | History of every change Claude makes, with one-click undo (one change, a tool call or a whole work session) | — | ✓ |
 | Mega menu composed by Claude, previewed before going live | — | ✓ |
+| Refunds and credit slips with restocking | — | ✓ |
+| Traffic and conversion statistics, abandoned carts and reminders | — | ✓ |
+| Moderation of customer reviews | — | ✓ |
+| Preview of a theme before it goes live | — | ✓ |
+| Export of newsletter subscribers | — | ✓ |
 | 301 redirects: managed by Claude or in bulk, automatic when a product, category or page URL changes or is deleted, 404 follow-up | — | ✓ |
 | Scheduled rules (stock alerts, weekly report) | — | Coming soon |
 | GEO content fields, AI product feed | — | Coming soon |

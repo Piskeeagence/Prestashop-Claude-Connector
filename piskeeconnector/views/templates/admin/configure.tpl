@@ -412,7 +412,11 @@
               <tr><td>{$t.row_geo|escape:'html':'UTF-8'}</td><td class="no">&#8212;</td><td class="yes">&#10003;</td></tr>
               <tr><td>{$t.row_megamenu|escape:'html':'UTF-8'}</td><td class="no">&#8212;</td><td class="yes">&#10003;</td></tr>
               <tr><td>{$t.row_redirects|escape:'html':'UTF-8'}</td><td class="no">&#8212;</td><td class="yes">&#10003;</td></tr>
-              <tr><td>{$t.row_refunds|escape:'html':'UTF-8'}</td><td class="no">&#8212;</td><td><span class="pkc-badge-soon">{$t.soon|escape:'html':'UTF-8'}</span></td></tr>
+              <tr><td>{$t.row_refunds|escape:'html':'UTF-8'}</td><td class="no">&#8212;</td><td class="yes">&#10003;</td></tr>
+              <tr><td>{$t.row_growth|escape:'html':'UTF-8'}</td><td class="no">&#8212;</td><td class="yes">&#10003;</td></tr>
+              <tr><td>{$t.row_reviews|escape:'html':'UTF-8'}</td><td class="no">&#8212;</td><td class="yes">&#10003;</td></tr>
+              <tr><td>{$t.row_preview|escape:'html':'UTF-8'}</td><td class="no">&#8212;</td><td class="yes">&#10003;</td></tr>
+              <tr><td>{$t.row_newsletter|escape:'html':'UTF-8'}</td><td class="no">&#8212;</td><td class="yes">&#10003;</td></tr>
               <tr><td>{$t.row_multistore|escape:'html':'UTF-8'}</td><td class="no">&#8212;</td><td class="yes">&#10003;</td></tr>
               <tr><td>{$t.row_support|escape:'html':'UTF-8'}</td><td class="no">&#8212;</td><td class="yes">&#10003;</td></tr>
             </tbody>

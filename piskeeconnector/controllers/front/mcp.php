@@ -32,6 +32,8 @@ class PiskeeconnectorMcpModuleFrontController extends ModuleFrontController
 
     public function initContent()
     {
+        // Amounts such as 19.9 are written 19.9, not 19.899999999999999.
+        @ini_set('serialize_precision', '-1');
         $method = PiskeeConnectorHttp::method();
         if ($method === 'OPTIONS') {
             PiskeeConnectorHttp::send(204, [], '');

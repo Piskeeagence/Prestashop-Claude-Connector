@@ -41,6 +41,10 @@ Then type `/mcp` in Claude Code to log in.
 
 **Mega menu (Pro)**: Claude composes a mega menu from your description: top entries opening wide panels of up to 6 columns, with categories, links with badges, pictures, products (chosen, from a category, new, best sellers, on sale), brands and text. It is saved as a draft with a private preview link, then published in place of the native menu (and removed in one click). On mobile it becomes an accordion. Third-party mega menus (PrestaHero, Iqit...) are read so Claude can describe or rebuild them, but not changed.
 
+**Daily admin**: where modules show (attach, detach, move a module in any zone of the theme, hide it on some pages), vouchers (list, delete), actions in bulk (status of up to 50 orders, a promotion on a category, a brand or the whole catalogue, a feature on many products), catalogue price rules, PDF invoice, delivery slip and credit slip, customer accounts and groups with their prices (B2B), product duplication, cache and maintenance mode.
+
+**Piskee Pro also brings**: refunds with credit slip and restocking, traffic and conversion statistics, abandoned carts and their reminders by e-mail, moderation of customer reviews, preview of a theme before it goes live, export of newsletter subscribers.
+
 **Combinations**: list and create attributes (size, colour...) and their values, create up to 100 combinations at once with price impact, reference, EAN and stock, update a combination.
 
 **Images**: add an image from a web address, write alt texts, choose the cover, downsize heavy originals, centre them on a square background and rebuild every thumbnail.

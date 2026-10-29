@@ -294,6 +294,115 @@ class PiskeeConnectorOrders
     }
 
     /**
+     * Same status for up to 50 orders, each one exactly as set_order_status does.
+     *
+     * @param array<string, mixed> $args
+     * @param array<string, mixed> $context
+     *
+     * @return array<string, mixed>
+     */
+    public function bulkSetOrderStatus(array $args, array $context): array
+    {
+        PiskeeConnectorHelper::boot($context);
+        $ids = array_slice(array_values(array_unique(array_filter(array_map('intval', is_array($args['order_ids'] ?? null) ? $args['order_ids'] : [])))), 0, 50);
+        if ($ids === []) {
+            return PiskeeConnectorHelper::error('order_ids must list 1 to 50 order ids.');
+        }
+        $done = [];
+        $failed = [];
+        $idShop = (int) ($context['id_shop'] ?? 0);
+        $notDone = [];
+        foreach ($ids as $id) {
+            if (PiskeeConnectorLicense::gate($idShop) !== '') {
+                $notDone[] = $id;
+                continue;
+            }
+            $one = $this->setOrderStatus(['id_order' => $id, 'id_order_state' => $args['id_order_state'] ?? 0, 'confirm_paid' => !empty($args['confirm_paid'])], $context);
+            if (!empty($one['error'])) {
+                $failed[] = ['id_order' => $id, 'reason' => PiskeeConnectorHelper::excerpt((string) $one['text'], 220)];
+            } else {
+                if (!empty($one['json']['updated'])) {
+                    PiskeeConnectorLicense::count($idShop);
+                }
+                $done[] = ['id_order' => $id] + array_intersect_key((array) $one['json'], array_flip(['reference', 'updated', 'from', 'to', 'customer_emailed', 'warning', 'message']));
+            }
+        }
+
+        return PiskeeConnectorHelper::json(['changed' => count(array_filter($done, static function ($d) {
+            return !empty($d['updated']);
+        })), 'orders' => $done, 'not_changed' => $failed]);
+    }
+
+    /**
+     * Invoice, delivery slip or credit slip of an order, as a PDF download link.
+     *
+     * @param array<string, mixed> $args
+     * @param array<string, mixed> $context
+     *
+     * @return array<string, mixed>
+     */
+    public function getOrderDocument(array $args, array $context): array
+    {
+        $c = PiskeeConnectorHelper::boot($context);
+        $order = $this->load($args, $c['id_shop']);
+        if ($order === null) {
+            return PiskeeConnectorHelper::error('Order not found in this shop.');
+        }
+        $type = (string) ($args['document'] ?? 'invoice');
+        $context = Context::getContext();
+        $context->language = new Language((int) $order->id_lang ?: (int) Configuration::get('PS_LANG_DEFAULT'));
+        if ($type === 'invoice' || $type === 'delivery_slip') {
+            $invoices = $order->getInvoicesCollection();
+            if (!count($invoices)) {
+                return PiskeeConnectorHelper::error('This order has no invoice yet: PrestaShop creates it when the order reaches a status that generates an invoice (Payment accepted, Shipped...).');
+            }
+            if ($type === 'delivery_slip' && !(int) $order->delivery_number) {
+                return PiskeeConnectorHelper::error('This order has no delivery slip yet: PrestaShop creates it when the order reaches a status with a delivery slip (Processing in progress, Shipped...).');
+            }
+            $template = $type === 'invoice' ? PDF::TEMPLATE_INVOICE : PDF::TEMPLATE_DELIVERY_SLIP;
+            $objects = $invoices;
+            $name = ($type === 'invoice' ? 'invoice-' : 'delivery-slip-') . $order->reference . '.pdf';
+        } elseif ($type === 'credit_slip') {
+            $slips = OrderSlip::getOrdersSlip((int) $order->id_customer, (int) $order->id);
+            if ($slips === []) {
+                return PiskeeConnectorHelper::error('This order has no credit slip.');
+            }
+            $idSlip = (int) ($args['id_order_slip'] ?? $slips[0]['id_order_slip']);
+            $slip = new OrderSlip($idSlip);
+            if (!Validate::isLoadedObject($slip) || (int) $slip->id_order !== (int) $order->id) {
+                return PiskeeConnectorHelper::error('Credit slip ' . $idSlip . ' does not belong to this order.');
+            }
+            $template = PDF::TEMPLATE_ORDER_SLIP;
+            $objects = $slip;
+            $name = 'credit-slip-' . $order->reference . '-' . $idSlip . '.pdf';
+        } else {
+            return PiskeeConnectorHelper::error('document must be invoice, delivery_slip or credit_slip.');
+        }
+        ob_start();
+        try {
+            $pdf = new PDF($objects, $template, $context->smarty);
+            $content = (string) $pdf->render(false);
+        } catch (Throwable $e) {
+            ob_end_clean();
+
+            return PiskeeConnectorHelper::error('PrestaShop could not make the PDF: ' . Tools::substr($e->getMessage(), 0, 200));
+        }
+        ob_end_clean();
+        if (strpos($content, '%PDF') !== 0) {
+            return PiskeeConnectorHelper::error('PrestaShop could not make the PDF.');
+        }
+        $file = PiskeeConnectorFiles::put($content, $name, 'application/pdf', $c['id_shop']);
+
+        return PiskeeConnectorHelper::json([
+            'id_order' => (int) $order->id,
+            'document' => $type,
+            'download_url' => $file['url'],
+            'expires' => $file['expires'],
+            'note' => 'Give the merchant the link: it works for 30 minutes, for whoever has it. Do not paste it anywhere public.',
+        ]);
+    }
+
+    /**
      * @param array<string, mixed> $args
      */
     private function load(array $args, int $idShop): ?Order
