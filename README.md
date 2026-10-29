@@ -39,6 +39,8 @@ With Piskee, you describe the result and Claude makes the change **directly in y
 > *"Which paid orders still have no tracking number?"*
 > *"Find the products customers buy together, and suggest related products for my 15 best sellers."*
 > *"Our product pages have two H1 headings. Fix it in a draft theme so I can check before it goes live."*
+> *"Put the whole Outdoor category at -20 % until Sunday, and send me the invoice of order 1042."*
+> *"Build a mega menu with our categories, best sellers and the winter banner."*
 
 <p align="center">
   <img src=".github/assets/module-connection.jpg" alt="The Piskee module page in the PrestaShop back office" width="760">
@@ -55,7 +57,7 @@ With Piskee, you describe the result and Claude makes the change **directly in y
 | Cross-selling | Pick related products by hand | Suggestions computed from what your customers actually buy together |
 | A theme fix | Edit live files and hope | Work in a draft child theme, check it, put it live in one click, roll back in one click |
 
-## What's inside: 62 tools across your back office
+## What's inside: 93 tools across your back office (117 with Pro)
 
 | Area | What Claude can do |
 |---|---|
@@ -66,13 +68,13 @@ With Piskee, you describe the result and Claude makes the change **directly in y
 | **Daily admin** | Module positions in any zone of the theme, vouchers, bulk actions (orders, promotions, features), catalogue price rules, PDF invoices and delivery slips, customer accounts and groups (B2B), product duplication, cache and maintenance. |
 | **Combinations & stock** | Create attributes and values, generate up to 100 combinations at once, set stock exactly or record goods in and out. |
 | **Images** | Add from a URL, write alt texts, set the cover, downsize or square originals (kept as backup), rebuild thumbnails. |
-| **Catalogue optimisation** | Full catalogue audit, features, brands, promotions, categories. |
+| **Catalogue optimisation** | Full catalogue audit, features (one value on many products at once), brands, promotions (one product, a category, a brand or the whole catalogue), catalogue price rules, product duplication. |
 | **Cross-selling & cart** | Related products in bulk, "frequently bought together" suggestions from real orders, the native "customers also bought" block on the product page and in the cart. |
-| **Orders** | Find orders, read their history, change status, add tracking numbers. |
-| **Customer service** | Read customer messages and reply by email, after you approve the text. Create vouchers. |
+| **Orders** | Find orders, read their history, change status (one or 50 at once; an unpaid order is never marked paid without your confirmation), add tracking numbers, get the PDF invoice, delivery slip or credit slip. Refunds with credit slip and restocking with Pro. |
+| **Customers & service** | Read customer messages and reply by email, after you approve the text. Create, list and delete vouchers. Create and update customer accounts and groups, with prices per group (B2B). Review moderation and abandoned cart reminders with Pro. |
 | **CMS** | Read and update CMS pages, in every language. |
 | **Visibility in AI assistants (GEO)** | Generate and publish your shop's `llms.txt` file (llmstxt.org): a map of your categories, best sellers and customer pages that helps ChatGPT, Claude and Perplexity understand and cite your shop. Preview first, previous version kept. |
-| **Theme** | Audit headings, breadcrumb and structured data. Edit templates, CSS and JS **in a draft child theme only**. |
+| **Theme** | Audit headings, breadcrumb and structured data. Edit templates, CSS and JS **in a draft child theme only**; a new draft keeps every module where the live shop shows it. Preview a draft with a private link (Pro). |
 
 ## Why you can trust it
 
@@ -80,7 +82,8 @@ With Piskee, you describe the result and Claude makes the change **directly in y
 - **Nothing goes live without you.** Theme work happens in a draft child theme. You put it live with one click, and roll back with one click.
 - **Everything is backed up.** Every theme file change and every reshaped image keeps its previous version.
 - **It can never do more than you.** Claude acts as the employee who connected it, with that employee's PrestaShop rights, checked on every call.
-- **It can't do the dangerous things.** No refunds, no payments, no deletion of products, customers or orders.
+- **It can't do the dangerous things.** No payments and no money moved: a refund (Pro) only makes the credit slip, after you confirm the amounts. No deletion of products, customers or orders.
+- **Every change can be undone (Pro).** The history records what Claude changed, field by field, and puts it back on request.
 - **Your data stays yours.** The module runs inside your shop and talks to Claude directly. Nothing goes through Piskee.
 - **Tested for real** on PrestaShop 1.7.8, 8.1 and 9.1, open source, and reviewed for security ([details below](#security-model)).
 
@@ -113,7 +116,8 @@ Then type `/mcp` to sign in.
 
 | | **Free** | **Pro** |
 |---|---|---|
-| All 62 tools | ✓ | ✓ |
+| All 93 tools | ✓ | ✓ |
+| 24 Pro tools (below) | — | ✓ |
 | Reading, searches, audits | Unlimited | Unlimited |
 | Changes | 100 per month | **Unlimited** |
 | Structured data for Google and AI assistants (Product, breadcrumb, FAQ, articles), FAQs and blog articles written by Claude | — | ✓ |
@@ -128,7 +132,7 @@ Then type `/mcp` to sign in.
 | Scheduled rules (stock alerts, weekly report) | — | Coming soon |
 | GEO content fields, AI product feed | — | Coming soon |
 | Multistore: changes on additional shops | Main shop only | **+€10 excl. VAT / month per additional shop** |
-| Credit slips and returns, audit log per employee | — | Coming soon |
+| Product returns (RMA), audit log per employee | — | Coming soon |
 | Priority support | — | ✓ |
 | Price | **€0** | **€29 excl. VAT / month**, cancel anytime, or **€290 excl. VAT / year: 2 months free**. Launch price locked in for life for the first 100 customers |
 
@@ -162,7 +166,7 @@ It is built and tested for Claude: claude.ai, the Claude apps and Claude Code. I
 <details>
 <summary><strong>Can Claude break my shop?</strong></summary>
 
-It can only do what you approve, with your own rights. It cannot refund, take payments or delete products, customers or orders. Theme changes stay in a draft until you put it live yourself. Keep regular backups, as with any module.
+It can only do what you approve, with your own rights. It cannot take payments, move money or delete products, customers or orders. Theme changes stay in a draft until you put it live yourself. Keep regular backups, as with any module.
 </details>
 
 <details>
@@ -207,7 +211,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 **Pilotez votre boutique PrestaShop en parlant à Claude.** Vous décrivez le résultat, par exemple « réécrivez les meta descriptions de la catégorie Robes », « créez les tailles S à XL » ou « quelles commandes attendent un numéro de suivi ? ». Claude fait la modification directement dans votre boutique, via le module Piskee, avec les droits de votre compte employé et après votre accord. Pas de clics simulés : le module enregistre les changements comme le back-office de PrestaShop.
 
-- **62 outils :** catalogue, SEO, fichier llms.txt pour les IA, traductions, déclinaisons, stocks, images, vente croisée, commandes, service client, CMS et thème enfant.
+- **93 outils (117 avec Pro) :** catalogue, SEO, fichier llms.txt pour les IA, traductions, déclinaisons, stocks, images, vente croisée, catégories et menu, apparence de la boutique sans code, emplacement des modules, actions de masse, règles de prix, commandes et factures PDF, clients et groupes, service client, CMS et thème enfant. **Avec Pro :** méga-menu, remboursements, statistiques, relance des paniers abandonnés, avis clients, aperçu de thème, redirections 301, données structurées et historique avec retour en arrière.
 - **Sans risque :**
   - vous validez chaque modification ;
   - le thème en ligne n'est jamais touché, Claude travaille sur un brouillon que vous mettez en ligne en un clic ;
@@ -232,7 +236,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 **Gestione su tienda PrestaShop hablando con Claude.** Usted describe el resultado, por ejemplo «reescriba las meta descriptions de la categoría Vestidos», «cree las tallas S a XL» o «¿qué pedidos están esperando un número de seguimiento?». Claude hace el cambio directamente en su tienda, a través del módulo Piskee, con los permisos de su cuenta de empleado y después de su aprobación. Sin clics simulados: el módulo guarda los cambios como lo hace el back office de PrestaShop.
 
-- **62 herramientas:** catálogo, SEO, archivo llms.txt para las IA, traducciones, combinaciones, stock, imágenes, venta cruzada, pedidos, atención al cliente, CMS y tema hijo.
+- **93 herramientas (117 con Pro):** catálogo, SEO, archivo llms.txt para las IA, traducciones, combinaciones, stock, imágenes, venta cruzada, categorías y menú, apariencia de la tienda sin código, posición de los módulos, acciones masivas, reglas de precios, pedidos y facturas PDF, clientes y grupos, atención al cliente, CMS y tema hijo. **Con Pro:** megamenú, reembolsos, estadísticas, recordatorio de carritos abandonados, opiniones, vista previa de temas, redirecciones 301, datos estructurados e historial con deshacer.
 - **Sin riesgos:**
   - usted aprueba cada modificación;
   - el tema publicado nunca se toca: Claude trabaja en un borrador que usted publica con un clic;
@@ -257,7 +261,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 **Gestisca il Suo negozio PrestaShop parlando con Claude.** Lei descrive il risultato, per esempio «riscriva le meta description della categoria Abiti», «crei le taglie dalla S alla XL» o «quali ordini aspettano ancora un numero di tracciamento?». Claude fa la modifica direttamente nel Suo negozio, tramite il modulo Piskee, con i permessi del Suo account dipendente e dopo la Sua approvazione. Nessun clic simulato: il modulo salva le modifiche come fa il back office di PrestaShop.
 
-- **62 strumenti:** catalogo, SEO, file llms.txt per le IA, traduzioni, combinazioni, giacenze, immagini, vendita incrociata, ordini, assistenza clienti, CMS e tema figlio.
+- **93 strumenti (117 con Pro):** catalogo, SEO, file llms.txt per le IA, traduzioni, combinazioni, giacenze, immagini, vendita incrociata, categorie e menu, aspetto del negozio senza codice, posizione dei moduli, azioni di massa, regole di prezzo, ordini e fatture PDF, clienti e gruppi, assistenza clienti, CMS e tema figlio. **Con Pro:** mega menu, rimborsi, statistiche, promemoria carrelli abbandonati, recensioni, anteprima del tema, redirect 301, dati strutturati e cronologia con annullamento.
 - **Senza rischi:**
   - Lei approva ogni modifica;
   - il tema online non viene mai toccato: Claude lavora su una bozza che Lei mette online con un clic;
@@ -282,7 +286,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 **Zarządzanie sklepem PrestaShop w rozmowie z Claude.** Wystarczy opisać efekt, na przykład „Proszę przepisać meta opisy kategorii Sukienki”, „Proszę utworzyć rozmiary od S do XL” albo „Które zamówienia czekają na numer przesyłki?”. Claude wprowadza zmianę bezpośrednio w sklepie, przez moduł Piskee, z uprawnieniami Państwa konta pracownika i po Państwa akceptacji. Bez symulowania kliknięć: moduł zapisuje zmiany tak samo jak panel administracyjny PrestaShop.
 
-- **62 narzędzia:** katalog, SEO, plik llms.txt dla AI, tłumaczenia, kombinacje, stany magazynowe, zdjęcia, sprzedaż krzyżowa, zamówienia, obsługa klienta, CMS i motyw potomny.
+- **93 narzędzia (117 z Pro):** katalog, SEO, plik llms.txt dla AI, tłumaczenia, kombinacje, stany magazynowe, zdjęcia, sprzedaż krzyżowa, kategorie i menu, wygląd sklepu bez kodu, pozycje modułów, działania masowe, reguły cenowe, zamówienia i faktury PDF, klienci i grupy, obsługa klienta, CMS i motyw potomny. **Z Pro:** mega menu, zwroty, statystyki, przypomnienia o koszykach, opinie, podgląd motywu, przekierowania 301, dane strukturalne i historia z cofaniem.
 - **Bez ryzyka:**
   - każdą zmianę akceptują Państwo;
   - opublikowany motyw nigdy nie jest zmieniany: Claude pracuje na szkicu, który Państwo publikują jednym kliknięciem;
