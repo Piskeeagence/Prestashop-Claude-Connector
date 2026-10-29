@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "piskee": {
+      "type": "http",
+      "url": "${user_config.shop_mcp_url}"
+    }
+  }
+}

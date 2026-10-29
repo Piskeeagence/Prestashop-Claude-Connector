@@ -1,0 +1,27 @@
+{
+  "name": "piskee",
+  "displayName": "Piskee for PrestaShop",
+  "version": "1.0.0",
+  "description": "Run your PrestaShop store from Claude: catalogue audit, SEO product pages, promotions, orders and invoices, menus and home page, safe theme fixes, llms.txt. Works with the free Piskee module installed in your shop. You approve every change.",
+  "author": {
+    "name": "Piskee",
+    "email": "louisalexandre@piskee.com",
+    "url": "https://www.piskee.com/"
+  },
+  "homepage": "https://github.com/Piskeeagence/Prestashop-Claude-Connector",
+  "repository": "https://github.com/Piskeeagence/Prestashop-Claude-Connector",
+  "license": "AFL-3.0",
+  "keywords": ["prestashop", "ecommerce", "seo", "catalogue", "orders", "geo"],
+  "icon": "./icon.png",
+  "documentationUrl": "https://github.com/Piskeeagence/Prestashop-Claude-Connector/blob/main/piskeeconnector/docs/README.en.md",
+  "supportUrl": "https://www.piskee.com/contact/",
+  "privacyPolicyUrl": "https://github.com/Piskeeagence/Prestashop-Claude-Connector/blob/main/PRIVACY.md",
+  "userConfig": {
+    "shop_mcp_url": {
+      "type": "string",
+      "title": "Your shop's Piskee address",
+      "description": "The connector address shown in your back office, Modules > Piskee > Connection tab. Example: https://your-shop.com/module/piskeeconnector/mcp",
+      "required": true
+    }
+  }
+}
