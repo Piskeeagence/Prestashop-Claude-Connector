@@ -1,4 +1,4 @@
-# Piskee for PrestaShop
+# PrestaShop by Piskee
 
 **Stop clicking through your PrestaShop back office.** Type one sentence. Claude does the work. You approve every change.
 
