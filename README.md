@@ -30,9 +30,9 @@
 
 ## Your back office, minus the busywork
 
-Running a PrestaShop store means hours of small, repetitive tasks: rewriting product texts, building size and colour variants, chasing tracking numbers, answering "where is my order?". You know what needs doing, but the clicks take the time.
+Running a PrestaShop store means hours of small, repetitive tasks: rewriting product texts, building size and colour variants, chasing tracking numbers, answering "where is my order?". You know what needs doing, but doing it by hand takes the time.
 
-With Piskee, you describe the result and Claude does the clicks, **in your own back office, with your rights, after your approval.**
+With Piskee, you describe the result and Claude makes the change **directly in your shop, through the Piskee module, with the rights of your employee account and after your approval.** No clicking, no browser automation: the module saves the changes the way PrestaShop's own back office does.
 
 > *"Rewrite the meta descriptions of the Dresses category, under 155 characters, in French and English."*
 > *"Create sizes S to XL in black and white for this T-shirt, 10 units each."*
@@ -205,7 +205,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 ## 🇫🇷 En français
 
-**Pilotez votre boutique PrestaShop en parlant à Claude.** Vous décrivez le résultat, par exemple « réécrivez les meta descriptions de la catégorie Robes », « créez les tailles S à XL » ou « quelles commandes attendent un numéro de suivi ? ». Claude fait les clics dans votre back-office, avec vos droits, après votre accord.
+**Pilotez votre boutique PrestaShop en parlant à Claude.** Vous décrivez le résultat, par exemple « réécrivez les meta descriptions de la catégorie Robes », « créez les tailles S à XL » ou « quelles commandes attendent un numéro de suivi ? ». Claude fait la modification directement dans votre boutique, via le module Piskee, avec les droits de votre compte employé et après votre accord. Pas de clics simulés : le module enregistre les changements comme le back-office de PrestaShop.
 
 - **62 outils :** catalogue, SEO, fichier llms.txt pour les IA, traductions, déclinaisons, stocks, images, vente croisée, commandes, service client, CMS et thème enfant.
 - **Sans risque :**
@@ -230,7 +230,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 ## 🇪🇸 En español
 
-**Gestione su tienda PrestaShop hablando con Claude.** Usted describe el resultado, por ejemplo «reescriba las meta descriptions de la categoría Vestidos», «cree las tallas S a XL» o «¿qué pedidos están esperando un número de seguimiento?». Claude hace los clics en su back office, con sus permisos y después de su aprobación.
+**Gestione su tienda PrestaShop hablando con Claude.** Usted describe el resultado, por ejemplo «reescriba las meta descriptions de la categoría Vestidos», «cree las tallas S a XL» o «¿qué pedidos están esperando un número de seguimiento?». Claude hace el cambio directamente en su tienda, a través del módulo Piskee, con los permisos de su cuenta de empleado y después de su aprobación. Sin clics simulados: el módulo guarda los cambios como lo hace el back office de PrestaShop.
 
 - **62 herramientas:** catálogo, SEO, archivo llms.txt para las IA, traducciones, combinaciones, stock, imágenes, venta cruzada, pedidos, atención al cliente, CMS y tema hijo.
 - **Sin riesgos:**
@@ -255,7 +255,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 ## 🇮🇹 In italiano
 
-**Gestisca il Suo negozio PrestaShop parlando con Claude.** Lei descrive il risultato, per esempio «riscriva le meta description della categoria Abiti», «crei le taglie dalla S alla XL» o «quali ordini aspettano ancora un numero di tracciamento?». Claude fa i clic nel Suo back office, con i Suoi permessi, dopo la Sua approvazione.
+**Gestisca il Suo negozio PrestaShop parlando con Claude.** Lei descrive il risultato, per esempio «riscriva le meta description della categoria Abiti», «crei le taglie dalla S alla XL» o «quali ordini aspettano ancora un numero di tracciamento?». Claude fa la modifica direttamente nel Suo negozio, tramite il modulo Piskee, con i permessi del Suo account dipendente e dopo la Sua approvazione. Nessun clic simulato: il modulo salva le modifiche come fa il back office di PrestaShop.
 
 - **62 strumenti:** catalogo, SEO, file llms.txt per le IA, traduzioni, combinazioni, giacenze, immagini, vendita incrociata, ordini, assistenza clienti, CMS e tema figlio.
 - **Senza rischi:**
@@ -280,7 +280,7 @@ Found a security issue? Please email louisalexandre@piskee.com rather than openi
 
 ## 🇵🇱 Po polsku
 
-**Zarządzanie sklepem PrestaShop w rozmowie z Claude.** Wystarczy opisać efekt, na przykład „Proszę przepisać meta opisy kategorii Sukienki”, „Proszę utworzyć rozmiary od S do XL” albo „Które zamówienia czekają na numer przesyłki?”. Claude wykonuje kliknięcia w Państwa panelu administracyjnym, z Państwa uprawnieniami, po Państwa akceptacji.
+**Zarządzanie sklepem PrestaShop w rozmowie z Claude.** Wystarczy opisać efekt, na przykład „Proszę przepisać meta opisy kategorii Sukienki”, „Proszę utworzyć rozmiary od S do XL” albo „Które zamówienia czekają na numer przesyłki?”. Claude wprowadza zmianę bezpośrednio w sklepie, przez moduł Piskee, z uprawnieniami Państwa konta pracownika i po Państwa akceptacji. Bez symulowania kliknięć: moduł zapisuje zmiany tak samo jak panel administracyjny PrestaShop.
 
 - **62 narzędzia:** katalog, SEO, plik llms.txt dla AI, tłumaczenia, kombinacje, stany magazynowe, zdjęcia, sprzedaż krzyżowa, zamówienia, obsługa klienta, CMS i motyw potomny.
 - **Bez ryzyka:**
