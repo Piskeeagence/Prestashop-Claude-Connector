@@ -37,6 +37,8 @@ Después escriba `/mcp` en Claude Code para iniciar sesión.
 
 **Categorías y menú**: crear una categoría en cualquier lugar del árbol (inactiva hasta su aprobación, visible para los mismos clientes que su categoría padre), moverla, cambiar su orden entre sus categorías hermanas, y ver o modificar el menú principal de la tienda (módulo nativo «Menú principal» de Classic, Hummingbird y la mayoría de los temas): añadir, quitar o reordenar categorías, páginas CMS, marcas y enlaces personalizados. Una categoría creada bajo una categoría del menú aparece en él automáticamente. Los megamenús de terceros se listan pero no se modifican.
 
+**Apariencia de la tienda, sin código**: el código del tema en línea nunca se modifica, pero sus ajustes sí: slider de la página de inicio (añadir, modificar, reordenar o desactivar diapositivas, velocidad), banner, bloque de texto personalizado, bloques de productos de la página de inicio (cuántos, de qué categoría), enlaces a redes sociales y qué bloques muestra la página de inicio y en qué orden. Funciona con los módulos nativos de PrestaShop; los módulos de terceros se listan pero se configuran en su propia página.
+
 **Combinaciones**: listar y crear atributos (talla, color...) y sus valores, crear hasta 100 combinaciones de una vez con impacto en el precio, referencia, EAN y stock, modificar una combinación.
 
 **Imágenes**: añadir una imagen desde una dirección web, redactar los textos alternativos, elegir la imagen de portada, reducir los originales demasiado pesados, centrarlos sobre un fondo cuadrado y regenerar todas las miniaturas.

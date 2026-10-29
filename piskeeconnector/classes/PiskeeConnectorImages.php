@@ -373,7 +373,7 @@ class PiskeeConnectorImages
      *
      * @return array{path:string, error:string}
      */
-    private function download(string $url): array
+    public function download(string $url): array
     {
         $parts = parse_url($url);
         $scheme = is_array($parts) ? Tools::strtolower((string) ($parts['scheme'] ?? '')) : '';

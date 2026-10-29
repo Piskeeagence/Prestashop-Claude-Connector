@@ -61,6 +61,7 @@ With Piskee, you describe the result and Claude does the clicks, **in your own b
 |---|---|
 | **Products & SEO** | Search, read and update products: prices, references, EAN, status, texts and SEO in every language. Create products (inactive by default). Bulk-update up to 50 products at once. Translate in batches. |
 | **Categories & menu** | Create categories (inactive until you approve), move and reorder them, and edit the shop's main menu (native "Main menu" module): add, remove or reorder categories, CMS pages, brands and custom links. |
+| **Shop appearance (no code)** | Configure the live shop without touching the theme code: home page slider, banner, custom text, home page product blocks, social links, order of the home page blocks. |
 | **Combinations & stock** | Create attributes and values, generate up to 100 combinations at once, set stock exactly or record goods in and out. |
 | **Images** | Add from a URL, write alt texts, set the cover, downsize or square originals (kept as backup), rebuild thumbnails. |
 | **Catalogue optimisation** | Full catalogue audit, features, brands, promotions, categories. |

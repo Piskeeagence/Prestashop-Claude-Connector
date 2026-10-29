@@ -37,6 +37,8 @@ Then type `/mcp` in Claude Code to log in.
 
 **Categories and menu**: create a category anywhere in the tree (inactive until you approve it, visible to the same customers as its parent), move it, change its order among its sister categories, and read or change the main menu of the shop (native "Main menu" module of Classic, Hummingbird and most themes): add, remove or reorder categories, CMS pages, brands and custom links. A category created under a category of the menu appears in it by itself. Third-party mega menus are listed but not changed.
 
+**Shop appearance, without code**: the live theme's code is never touched, but its settings are: home page image slider (add, change, reorder or deactivate slides, speed), banner, custom text block, product blocks of the home page (how many, from which category), social media links, and which blocks the home page shows in which order. Works with PrestaShop's native front modules; third-party modules are listed but configured in their own page.
+
 **Combinations**: list and create attributes (size, colour...) and their values, create up to 100 combinations at once with price impact, reference, EAN and stock, update a combination.
 
 **Images**: add an image from a web address, write alt texts, choose the cover, downsize heavy originals, centre them on a square background and rebuild every thumbnail.

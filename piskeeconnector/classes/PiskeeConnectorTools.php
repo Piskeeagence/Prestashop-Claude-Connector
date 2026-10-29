@@ -45,8 +45,9 @@ class PiskeeConnectorTools
         $cross = new PiskeeConnectorCrossSelling();
         $llms = new PiskeeConnectorLlms();
         $menu = new PiskeeConnectorMenu();
+        $look = new PiskeeConnectorAppearance();
 
-        $instances = ['menu' => $menu, 'catalog' => $catalog, 'variants' => $variants, 'merch' => $merch, 'images' => $images, 'ops' => $ops, 'themes' => $themes, 'orders' => $orders, 'cms' => $cms, 'cross' => $cross, 'llms' => $llms];
+        $instances = ['look' => $look, 'menu' => $menu, 'catalog' => $catalog, 'variants' => $variants, 'merch' => $merch, 'images' => $images, 'ops' => $ops, 'themes' => $themes, 'orders' => $orders, 'cms' => $cms, 'cross' => $cross, 'llms' => $llms];
         $tools = [];
         foreach (self::all() as $name => $def) {
             if (is_array($def['handler']) && is_string($def['handler'][0] ?? null) && isset($instances[$def['handler'][0]])) {
@@ -83,7 +84,7 @@ class PiskeeConnectorTools
      */
     public static function scopeNames(): array
     {
-        return ['catalog.read', 'catalog.write', 'orders.read', 'orders.write', 'customers.read', 'sales.read', 'service.read', 'service.write', 'marketing.write', 'theme.read', 'theme.write'];
+        return ['catalog.read', 'catalog.write', 'orders.read', 'orders.write', 'customers.read', 'sales.read', 'service.read', 'service.write', 'marketing.write', 'appearance.write', 'theme.read', 'theme.write'];
     }
 
     /**
@@ -408,6 +409,97 @@ class PiskeeConnectorTools
                         'required' => ['type'],
                     ]],
                 ], 'required' => ['items']],
+            ],
+
+            // ----- Shop appearance (live shop settings, no theme code) -----
+            'get_appearance' => [
+                'group' => 'appearance', 'scope' => 'theme.read', 'permission' => ['view', 'AdminModulesSf'],
+                'handler' => ['look', 'getAppearance'],
+                'description' => 'Overview of what can be configured on the LIVE shop without touching the theme code: the blocks of the home page in order, '
+                    . 'the native front modules (image slider, banner, custom text, featured / best sellers / new / on sale products, social links) with where they are shown and their settings. '
+                    . 'Call it before changing the look of the shop. Theme code (templates, CSS) is changed only in draft child themes, with the theme tools.',
+            ],
+            'list_slides' => [
+                'group' => 'appearance', 'scope' => 'theme.read', 'permission' => ['view', 'AdminModulesSf'],
+                'handler' => ['look', 'listSlides'],
+                'description' => 'Lists the slides of the home page image slider (native module ps_imageslider) in order: id, position, active, and per language title, legend, description, link and image. Also the slider settings.',
+            ],
+            'save_slide' => [
+                'group' => 'appearance', 'scope' => 'appearance.write', 'permission' => ['edit', 'AdminModulesSf'],
+                'handler' => ['look', 'saveSlide'],
+                'description' => 'Adds a slide to the home page slider (without id_slide) or changes one (with id_slide from list_slides). The image comes from a public address (JPEG, PNG, GIF, WebP), '
+                    . 'one for every language or one per language; it is re-encoded and stored in the slider module. Use a wide picture of the size of the other slides. '
+                    . 'Texts and link per language; only what is given changes. A new slide is INACTIVE unless active is true. To take a slide off the home page, set active false. '
+                    . 'Show the merchant the slide (texts, image, link) before calling. The answer gives the previous values.' . self::LOST_ANSWER,
+                'input' => ['properties' => [
+                    'id_slide' => self::id('Slide to change, from list_slides. Leave out to add a slide.'),
+                    'image_url' => ['type' => 'string', 'description' => 'Public https address of the picture, for every language.'],
+                    'translations' => self::translations(['title', 'legend', 'description', 'url', 'image_url'], 'Title, legend (short line over the picture), description (HTML), url (link of the slide: https://... or /page) and image_url for one language only.'),
+                    'active' => ['type' => 'boolean'],
+                    'position' => ['type' => 'integer', 'minimum' => 1, 'description' => 'Place in the slider, from 1 (first).'],
+                ]],
+            ],
+            'configure_slider' => [
+                'group' => 'appearance', 'scope' => 'appearance.write', 'permission' => ['edit', 'AdminModulesSf'],
+                'handler' => ['look', 'configureSlider'],
+                'description' => 'Sets the home page slider: how long each slide stays, pause when the mouse is over it, and whether it loops. Only what is given changes.',
+                'input' => ['properties' => [
+                    'speed_ms' => ['type' => 'integer', 'minimum' => 1000, 'maximum' => 30000, 'description' => 'Time each slide stays, in milliseconds (5000 = 5 s).'],
+                    'pause_on_hover' => ['type' => 'boolean'],
+                    'loop' => ['type' => 'boolean', 'description' => 'Go back to the first slide after the last one.'],
+                ]],
+            ],
+            'set_banner' => [
+                'group' => 'appearance', 'scope' => 'appearance.write', 'permission' => ['edit', 'AdminModulesSf'],
+                'handler' => ['look', 'setBanner'],
+                'description' => 'Changes the banner of the native module ps_banner (shown where get_appearance says, often the home page): picture from a public address, link and description per language. '
+                    . 'Only what is given changes; the previous picture file is kept and given back to undo.' . self::LOST_ANSWER,
+                'input' => ['properties' => [
+                    'image_url' => ['type' => 'string', 'description' => 'Public https address of the picture, for every language.'],
+                    'translations' => self::translations(['link', 'description', 'image_url'], 'Link (https://... or /page), description (alternative text of the picture) and image_url for one language only.'),
+                ]],
+            ],
+            'set_custom_text' => [
+                'group' => 'appearance', 'scope' => 'appearance.write', 'permission' => ['edit', 'AdminModulesSf'],
+                'handler' => ['look', 'setCustomText'],
+                'description' => 'Replaces the HTML of the custom text block (native module ps_customtext, often the reassurance or welcome text of the home page). '
+                    . 'Simple HTML only (headings, paragraphs, lists, links, images); scripts are refused. Read the current text with get_appearance and show the merchant the new one first.' . self::LOST_ANSWER,
+                'input' => ['properties' => [
+                    'translations' => self::translations(['html'], 'The HTML of the block.'),
+                ], 'required' => ['translations']],
+            ],
+            'configure_home_products' => [
+                'group' => 'appearance', 'scope' => 'appearance.write', 'permission' => ['edit', 'AdminModulesSf'],
+                'handler' => ['look', 'configureHomeProducts'],
+                'description' => 'Sets the product blocks of the home page (native modules): how many featured products and from which category (the products of that category are shown), random order, '
+                    . 'how many best sellers, new products (and for how many days a product counts as new), products on sale. Only what is given changes. To show or hide a block, use set_home_blocks.',
+                'input' => ['properties' => [
+                    'featured_count' => ['type' => 'integer', 'minimum' => 1, 'maximum' => 48],
+                    'featured_category' => self::id('Category whose products are featured (list_categories).'),
+                    'featured_random' => ['type' => 'boolean'],
+                    'bestsellers_count' => ['type' => 'integer', 'minimum' => 1, 'maximum' => 48],
+                    'new_products_count' => ['type' => 'integer', 'minimum' => 1, 'maximum' => 48],
+                    'new_products_days' => ['type' => 'integer', 'minimum' => 1, 'maximum' => 365],
+                    'specials_count' => ['type' => 'integer', 'minimum' => 1, 'maximum' => 48],
+                ]],
+            ],
+            'set_social_links' => [
+                'group' => 'appearance', 'scope' => 'appearance.write', 'permission' => ['edit', 'AdminModulesSf'],
+                'handler' => ['look', 'setSocialLinks'],
+                'description' => 'Sets the social network links shown by the native module ps_socialfollow (usually in the footer). Give only the networks to change; an empty address hides that network. Never invent an address: ask the merchant.',
+                'input' => ['properties' => [
+                    'links' => ['type' => 'object', 'description' => 'Network => https address.', 'additionalProperties' => false, 'properties' => array_fill_keys(PiskeeConnectorAppearance::networkNames(), ['type' => 'string'])],
+                ], 'required' => ['links']],
+            ],
+            'set_home_blocks' => [
+                'group' => 'appearance', 'scope' => 'appearance.write', 'permission' => ['edit', 'AdminModulesSf'],
+                'handler' => ['look', 'setHomeBlocks'],
+                'description' => 'Chooses which blocks (modules) the home page shows and in which order: give the WHOLE ordered list of module names (from get_appearance home_page_blocks). '
+                    . 'A module left out is taken off the home page but keeps its settings; an installed module can be added if it can display on the home page. Only the displayHome area changes. '
+                    . 'Show the merchant the new order first. The answer gives the previous list to undo.' . self::LOST_ANSWER,
+                'input' => ['properties' => [
+                    'blocks' => ['type' => 'array', 'minItems' => 1, 'maxItems' => 30, 'items' => ['type' => 'string'], 'description' => 'Module names, in display order.'],
+                ], 'required' => ['blocks']],
             ],
 
             // ----- Variants -----

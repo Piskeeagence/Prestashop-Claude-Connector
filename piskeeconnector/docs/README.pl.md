@@ -37,6 +37,8 @@ Następnie należy wpisać `/mcp` w Claude Code, aby się zalogować.
 
 **Kategorie i menu**: tworzenie kategorii w dowolnym miejscu drzewa (nieaktywnej do Państwa akceptacji, widocznej dla tych samych klientów co kategoria nadrzędna), przenoszenie jej, zmiana kolejności wśród kategorii siostrzanych oraz odczyt i edycja menu głównego sklepu (natywny moduł „Menu główne” motywów Classic, Hummingbird i większości innych): dodawanie, usuwanie i zmiana kolejności kategorii, stron CMS, marek i własnych linków. Kategoria utworzona pod kategorią z menu pojawia się w nim automatycznie. Zewnętrzne mega menu są wyświetlane, ale nie są zmieniane.
 
+**Wygląd sklepu bez kodu**: kod opublikowanego motywu nigdy nie jest zmieniany, ale jego ustawienia tak: slider strony głównej (dodawanie, edycja, zmiana kolejności lub wyłączanie slajdów, szybkość), baner, blok tekstu, bloki produktów strony głównej (ile i z której kategorii), linki do mediów społecznościowych oraz które bloki strona główna pokazuje i w jakiej kolejności. Działa z natywnymi modułami PrestaShop; moduły zewnętrzne są wyświetlane, ale konfiguruje się je na ich własnej stronie.
+
 **Kombinacje**: lista i tworzenie atrybutów (rozmiar, kolor...) oraz ich wartości, tworzenie do 100 kombinacji naraz z wpływem na cenę, indeksem, EAN i stanem magazynowym, edycja kombinacji.
 
 **Zdjęcia**: dodawanie zdjęcia z adresu internetowego, pisanie tekstów alternatywnych, wybór zdjęcia głównego, zmniejszanie zbyt ciężkich oryginałów, wyśrodkowanie ich na kwadratowym tle i ponowne generowanie wszystkich miniatur.

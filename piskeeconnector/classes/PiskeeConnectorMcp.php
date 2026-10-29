@@ -111,7 +111,7 @@ class PiskeeConnectorMcp
             'instructions' => 'You are connected to the PrestaShop shop "' . Configuration::get('PS_SHOP_NAME', null, null, $this->grant['id_shop']) . '". '
                 . 'Call shop_info first to learn the languages and settings. Read an object before changing it. '
                 . 'Every change needs the merchant\'s approval; never invent prices, EANs, discounts or product facts. '
-                . 'Theme work happens only in draft child themes; only the merchant puts a theme live. '
+                . 'Theme code (templates, CSS, JS) is changed only in draft child themes; only the merchant puts a theme live. The live shop is configured without code (slider, banner, texts, home page blocks, menu, social links) with the appearance and menu tools, after approval. '
                 . 'Answer the merchant in their own language. '
                 . PiskeeConnectorBrand::helpLine(),
         ];

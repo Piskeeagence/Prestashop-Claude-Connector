@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.0
+- Shop appearance, without code: Claude configures the live shop through PrestaShop's native front modules, never through the theme code. New tools: `get_appearance` (home page blocks, slider, banner, text, product blocks, social links), `list_slides`, `save_slide` (add or change a slide from a picture address, texts and link per language, position, active), `configure_slider`, `set_banner`, `set_custom_text`, `configure_home_products`, `set_social_links`, `set_home_blocks` (which blocks the home page shows, in which order). Pictures are downloaded from public addresses only and re-encoded; every answer gives the previous values to undo.
+- New permission "Configure the live shop without touching code", asked when Claude connects. Existing connections see the new reading tools at once and the new changes after reconnecting.
+
 ## 2.6.0
 - Categories: new tool `create_category` (under any parent, inactive until approved, same customer groups as its parent, at a chosen position). `update_category` can now move a category under another parent and change its position among its sister categories.
 - Main menu: new tools `get_menu` and `set_menu` for the native "Main menu" module (ps_mainmenu) of Classic, Hummingbird and most themes. Claude reads the menu with the subcategories each entry shows, then adds, removes or reorders categories, CMS pages and categories, products, brands, suppliers and custom links (created or relabelled in every language). The previous menu is returned to undo. Third-party mega menus are listed, not changed.

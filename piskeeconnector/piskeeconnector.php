@@ -33,6 +33,7 @@ require_once __DIR__ . '/classes/PiskeeConnectorOperations.php';
 require_once __DIR__ . '/classes/PiskeeConnectorOrders.php';
 require_once __DIR__ . '/classes/PiskeeConnectorCms.php';
 require_once __DIR__ . '/classes/PiskeeConnectorMenu.php';
+require_once __DIR__ . '/classes/PiskeeConnectorAppearance.php';
 require_once __DIR__ . '/classes/PiskeeConnectorLlms.php';
 require_once __DIR__ . '/classes/PiskeeConnectorCrossSelling.php';
 require_once __DIR__ . '/classes/PiskeeConnectorThemes.php';
@@ -50,7 +51,7 @@ class Piskeeconnector extends Module
     {
         $this->name = 'piskeeconnector';
         $this->tab = 'administration';
-        $this->version = '2.6.0';
+        $this->version = '2.7.0';
         $this->author = 'Piskee';
         $this->need_instance = 0;
         $this->bootstrap = true;

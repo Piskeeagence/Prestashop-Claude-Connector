@@ -37,6 +37,8 @@ Puis tapez `/mcp` dans Claude Code pour vous connecter.
 
 **Catégories et menu** : créer une catégorie n'importe où dans l'arborescence (inactive jusqu'à votre accord, visible des mêmes clients que sa catégorie parente), la déplacer, changer son ordre parmi ses catégories sœurs, et lire ou modifier le menu principal de la boutique (module natif « Menu principal » de Classic, Hummingbird et de la plupart des thèmes) : ajouter, retirer ou réordonner des catégories, pages CMS, marques et liens personnalisés. Une catégorie créée sous une catégorie du menu y apparaît d'elle-même. Les méga-menus tiers sont listés mais pas modifiés.
 
+**Apparence de la boutique, sans code** : le code du thème en ligne n'est jamais modifié, mais ses réglages oui : slider de la page d'accueil (ajouter, modifier, réordonner ou désactiver des slides, vitesse), bannière, bloc de texte personnalisé, blocs produits de l'accueil (combien, de quelle catégorie), liens des réseaux sociaux, et quels blocs la page d'accueil affiche dans quel ordre. Fonctionne avec les modules natifs de PrestaShop ; les modules tiers sont listés mais se règlent dans leur propre page.
+
 **Déclinaisons** : lister et créer des attributs (taille, couleur...) et leurs valeurs, créer jusqu'à 100 déclinaisons d'un coup avec impact prix, référence, EAN et stock, modifier une déclinaison.
 
 **Images** : ajouter une image depuis une adresse web, écrire les textes alternatifs, choisir l'image de couverture, réduire les originaux trop lourds, les centrer sur un fond carré et régénérer toutes les miniatures.
