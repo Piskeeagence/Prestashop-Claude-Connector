@@ -362,10 +362,13 @@ class PiskeeConnectorCrossSelling
         if ($after !== []) {
             $product->changeAccessories($after);
         }
+        $now = $this->relatedIds($idProduct);
+        $name = Product::getProductName($idProduct, null, (int) Configuration::get('PS_LANG_DEFAULT'));
+        PiskeeConnectorHelper::recordChange('RelatedProducts', $idProduct, (string) $name, 'update', ['related' => $before], ['related' => $now]);
 
         return PiskeeConnectorHelper::json([
             'id_product' => $idProduct,
-            'related_ids' => $this->relatedIds($idProduct),
+            'related_ids' => $now,
             'before' => $before,
             'updated' => true,
         ]);

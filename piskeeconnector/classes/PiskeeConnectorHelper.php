@@ -180,6 +180,27 @@ class PiskeeConnectorHelper
         }
     }
 
+    /**
+     * Hands a change that is not a PrestaShop object save (related products,
+     * tracking number, order status) to the history of Piskee Pro, when installed.
+     *
+     * @param array<string, mixed>|null $before
+     * @param array<string, mixed>|null $after
+     */
+    public static function recordChange(string $kind, int $id, string $label, string $action, ?array $before, ?array $after): void
+    {
+        try {
+            if (!class_exists('PiskeeProHistory', false) && Module::isInstalled('piskeeconnectorpro') && Module::isEnabled('piskeeconnectorpro')) {
+                Module::getInstanceByName('piskeeconnectorpro');
+            }
+            if (class_exists('PiskeeProHistory', false) && method_exists('PiskeeProHistory', 'record')) {
+                PiskeeProHistory::record($kind, $id, $label, $action, $before, $after);
+            }
+        } catch (Throwable $e) {
+            // The history must never stop a change.
+        }
+    }
+
     public static function error(string $message): array
     {
         return ['text' => $message, 'error' => true];

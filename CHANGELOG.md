@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.8.1
+Fixes from a full day of merchant testing on PrestaShop 9.1.
+- Child themes: a draft made from the live theme family now lists every module where the live shop shows it (with its page exceptions). Putting it live from Design > Theme & Logo no longer empties the home page, the menu or the footer.
+- Order status: a status that also marks an unpaid order as paid (Shipped, Delivered...) is refused until the merchant confirms (`confirm_paid`). A status change whose customer e-mail fails is now reported as done, with a warning, instead of "refused".
+- History (Piskee Pro 1.3.1): related products, tracking numbers, redirects and order statuses are now recorded. All but order statuses can be undone.
+- Redirects (Piskee Pro 1.3.1): an old address that still shows a live page is refused unless the merchant explicitly asks (`allow_live_page`); a redirect whose target is itself redirected now leads to the end of the chain instead of a 404; matching ignores upper / lower case; robot scans (.env, .json, .log, wp-login...) are left out of the 404 list.
+- Promotions: a second promotion on a product that already has one for the same period is refused, with the id of the existing one, unless `replace_existing`.
+- Features: `shared_value` reuses (or creates once) a predefined value, so the same text on many products is one filterable value.
+- Templates: date functions (`strtotime`, `mktime`, `gmdate`) are allowed.
+- llms.txt: each subcategory is listed under its own parent.
+- `shop_info` warns about debug mode, maintenance, friendly URLs off, page addresses with spaces and product slugs that do not match the product names.
+
 ## 2.8.0
 - Piskee Pro 1.3.0: mega menu composed by Claude. New Pro tools `get_mega_menu`, `set_mega_menu` (saved as a draft, with a private preview link) and `publish_mega_menu` (publish in place of the native main menu, unpublish, restore the previous version). Up to 12 entries, panels of up to 6 columns with categories, links with badges, pictures, products (chosen, from a category, new, best sellers, on sale), brands and text; accordion on mobile, integrated into the Classic mobile menu; cached HTML rebuilt when a category, product, CMS page or brand changes. Disabling or uninstalling Piskee Pro gives the native menu back.
 - Third-party mega menus: new tool `inspect_menu_module` reads, without changing anything, the entries and settings of an installed menu module (PrestaHero, Iqit...), so Claude can describe it or rebuild it as a Piskee mega menu.

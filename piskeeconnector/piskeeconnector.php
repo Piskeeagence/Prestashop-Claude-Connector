@@ -51,7 +51,7 @@ class Piskeeconnector extends Module
     {
         $this->name = 'piskeeconnector';
         $this->tab = 'administration';
-        $this->version = '2.8.0';
+        $this->version = '2.8.1';
         $this->author = 'Piskee';
         $this->need_instance = 0;
         $this->bootstrap = true;

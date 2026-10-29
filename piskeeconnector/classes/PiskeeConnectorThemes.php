@@ -196,6 +196,18 @@ class PiskeeConnectorThemes
         }
         // A draft never asks PrestaShop to reset, enable or disable modules.
         unset($config['global_settings']['modules']['to_reset'], $config['global_settings']['modules']['to_disable']);
+        // PrestaShop's own theme switch (Design > Theme & Logo) moves every module the theme lists to
+        // the hooks the theme lists. When the family is live, list the modules exactly where the shop
+        // shows them today, so that switch keeps the home page, menu and footer as they are.
+        $live = (string) Context::getContext()->shop->theme_name;
+        $hooksCopied = false;
+        if ($live !== '' && self::themeFamily($live) === $parent) {
+            $current = self::liveModuleHooks((int) Context::getContext()->shop->id);
+            if ($current !== []) {
+                $config['global_settings']['hooks']['modules_to_hook'] = $current;
+                $hooksCopied = true;
+            }
+        }
         $config['piskee_connector'] = ['created' => date('Y-m-d H:i:s'), 'source' => $source];
         if (file_put_contents($dir . 'config/theme.yml', Yaml::dump($config, 6, 2)) === false) {
             self::removeTree($dir);
@@ -227,7 +239,11 @@ class PiskeeConnectorThemes
             'parent' => $parent,
             'copied_from' => $isCopyOfChild ? $source : null,
             'live' => false,
-            'message' => 'Draft child theme created. It is not live: edit it with write_theme_file, then the merchant puts it live from the Piskee module page in the back office.',
+            'module_placement' => $hooksCopied ? 'copied from the live shop' : 'from the parent theme',
+            'message' => 'Draft child theme created. It is not live: edit it with write_theme_file, then the merchant puts it live from the Piskee module page in the back office '
+                . '(it only changes the templates). ' . ($hooksCopied
+                    ? 'The modules are listed where the live shop shows them, so a switch from Design > Theme & Logo keeps them in place too.'
+                    : 'The live shop uses another theme family: a switch reconfigures modules, so check the home page, menu and footer after it.'),
         ]);
     }
 
@@ -681,6 +697,35 @@ class PiskeeConnectorThemes
     }
 
     /**
+     * Modules of every display hook of the shop, in their order, as theme.yml lists them.
+     *
+     * @return array<string, array<int, mixed>>
+     */
+    private static function liveModuleHooks(int $idShop): array
+    {
+        $db = Db::getInstance();
+        $rows = $db->executeS('SELECT h.`name` AS hook, m.`name` AS module, hm.`id_hook`, hm.`id_module` FROM `' . _DB_PREFIX_ . 'hook_module` hm'
+            . ' INNER JOIN `' . _DB_PREFIX_ . 'hook` h ON h.`id_hook` = hm.`id_hook`'
+            . ' INNER JOIN `' . _DB_PREFIX_ . 'module` m ON m.`id_module` = hm.`id_module`'
+            . " WHERE hm.`id_shop` = " . $idShop . " AND h.`name` LIKE 'display%'"
+            . ' ORDER BY h.`name` ASC, hm.`position` ASC') ?: [];
+        // Pages where a module is hidden (Design > Positions > exceptions) are part of its placement.
+        $exceptions = [];
+        foreach ($db->executeS('SELECT `id_hook`, `id_module`, `file_name` FROM `' . _DB_PREFIX_ . 'hook_module_exceptions` WHERE `id_shop` = ' . $idShop) ?: [] as $row) {
+            $exceptions[(int) $row['id_hook'] . '-' . (int) $row['id_module']][] = (string) $row['file_name'];
+        }
+        $out = [];
+        foreach ($rows as $row) {
+            $key = (int) $row['id_hook'] . '-' . (int) $row['id_module'];
+            $out[(string) $row['hook']][] = isset($exceptions[$key])
+                ? [(string) $row['module'] => ['except_pages' => array_values(array_unique($exceptions[$key]))]]
+                : (string) $row['module'];
+        }
+
+        return $out;
+    }
+
+    /**
      * The parent theme a theme belongs to (itself for a parent theme).
      */
     private static function themeFamily(string $name): string
@@ -1021,8 +1066,8 @@ class PiskeeConnectorThemes
 
         // Inside {...} tags: every function call and every modifier must be
         // on the allow list.
-        $allowedFunctions = ['if', 'elseif', 'while', 'and', 'or', 'not', 'strpos', 'stripos', 'mt_rand', 'rand', 'stripslashes', 'file_exists', 'array_merge', 'ucwords', 'lcfirst', 'uniqid', 'str_pad', 'array_search', 'array_key_first', 'array_key_last', 'array_reverse', 'array_sum', 'array_unique', 'array_flip', 'array_column', 'is_float', 'http_build_query', 'urlencode', 'htmlspecialchars', 'str_repeat', 'strip_tags', 'mb_strlen', 'mb_substr', 'mb_strtolower', 'mb_strtoupper', 'nl2br', 'isset', 'empty', 'count', 'sizeof', 'in_array', 'is_array', 'array_key_exists', 'is_string', 'is_numeric', 'intval', 'floatval', 'strval', 'trim', 'strtolower', 'strtoupper', 'ucfirst', 'strlen', 'max', 'min', 'round', 'implode', 'nl2br', 'json_encode', 'array_keys', 'array_values', 'reset', 'end', 'current', 'key', 'substr', 'str_replace', 'sprintf', 'number_format', 'date', 'time', 'abs', 'ceil', 'floor', 'is_null', 'is_bool', 'is_int', 'is_object', 'array_slice', 'range', 'explode'];
-        $allowedModifiers = ['strpos', 'stripos', 'mt_rand', 'rand', 'date', 'ucwords', 'lcfirst', 'array_merge', 'array_reverse', 'str_pad', 'array_sum', 'array_unique', 'is_array', 'in_array', 'isset', 'empty', 'escape', 'default', 'truncate', 'strip_tags', 'replace', 'upper', 'lower', 'capitalize', 'count', 'count_characters', 'count_words', 'date_format', 'nl2br', 'spacify', 'string_format', 'strip', 'wordwrap', 'indent', 'regex_replace', 'cat', 'json_encode', 'intval', 'floatval', 'round', 'trim', 'implode', 'array_slice', 'number_format', 'urlencode', 'rawurlencode', 'htmlspecialchars', 'nofilter', 'classname', 'classnames', 'cleanHtml', 'unescape', 'strtolower', 'strtoupper', 'ucfirst', 'abs', 'str_replace', 'substr', 'sprintf', 'mb_strtolower', 'mb_strtoupper', 'mb_substr', 'json_decode', 'formatPrice', 'convertAndFormatPrice', 'boolval', 'strval', 'array_values', 'array_keys', 'implode', 'reset', 'end', 'max', 'min', 'sizeof', 'in_array', 'nl2br', 'ceil', 'floor', 'html_entity_decode', 'addslashes', 'stripslashes', 'md5', 'base64_encode', 'strlen'];
+        $allowedFunctions = ['if', 'elseif', 'while', 'and', 'or', 'not', 'strpos', 'stripos', 'mt_rand', 'rand', 'stripslashes', 'file_exists', 'array_merge', 'ucwords', 'lcfirst', 'uniqid', 'str_pad', 'array_search', 'array_key_first', 'array_key_last', 'array_reverse', 'array_sum', 'array_unique', 'array_flip', 'array_column', 'is_float', 'http_build_query', 'urlencode', 'htmlspecialchars', 'str_repeat', 'strip_tags', 'mb_strlen', 'mb_substr', 'mb_strtolower', 'mb_strtoupper', 'nl2br', 'isset', 'empty', 'count', 'sizeof', 'in_array', 'is_array', 'array_key_exists', 'is_string', 'is_numeric', 'intval', 'floatval', 'strval', 'trim', 'strtolower', 'strtoupper', 'ucfirst', 'strlen', 'max', 'min', 'round', 'implode', 'nl2br', 'json_encode', 'array_keys', 'array_values', 'reset', 'end', 'current', 'key', 'substr', 'str_replace', 'sprintf', 'number_format', 'date', 'time', 'strtotime', 'mktime', 'gmdate', 'checkdate', 'abs', 'ceil', 'floor', 'is_null', 'is_bool', 'is_int', 'is_object', 'array_slice', 'range', 'explode'];
+        $allowedModifiers = ['strpos', 'stripos', 'mt_rand', 'rand', 'date', 'strtotime', 'gmdate', 'ucwords', 'lcfirst', 'array_merge', 'array_reverse', 'str_pad', 'array_sum', 'array_unique', 'is_array', 'in_array', 'isset', 'empty', 'escape', 'default', 'truncate', 'strip_tags', 'replace', 'upper', 'lower', 'capitalize', 'count', 'count_characters', 'count_words', 'date_format', 'nl2br', 'spacify', 'string_format', 'strip', 'wordwrap', 'indent', 'regex_replace', 'cat', 'json_encode', 'intval', 'floatval', 'round', 'trim', 'implode', 'array_slice', 'number_format', 'urlencode', 'rawurlencode', 'htmlspecialchars', 'nofilter', 'classname', 'classnames', 'cleanHtml', 'unescape', 'strtolower', 'strtoupper', 'ucfirst', 'abs', 'str_replace', 'substr', 'sprintf', 'mb_strtolower', 'mb_strtoupper', 'mb_substr', 'json_decode', 'formatPrice', 'convertAndFormatPrice', 'boolval', 'strval', 'array_values', 'array_keys', 'implode', 'reset', 'end', 'max', 'min', 'sizeof', 'in_array', 'nl2br', 'ceil', 'floor', 'html_entity_decode', 'addslashes', 'stripslashes', 'md5', 'base64_encode', 'strlen'];
         if (preg_match_all('/\{(?!\s)([^{}]*)\}/', $code, $tags)) {
             foreach ($tags[1] as $tag) {
                 $inner = preg_replace('/(["\'])(?:\\\\.|(?!\1).)*\1/s', '""', $tag) ?? $tag;

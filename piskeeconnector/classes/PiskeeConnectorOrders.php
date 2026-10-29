@@ -206,22 +206,47 @@ class PiskeeConnectorOrders
         }
 
         $before = new OrderState((int) $order->current_state, $c['id_lang']);
+        // Statuses such as "Shipped" also count the order as paid (payment recorded, invoice created):
+        // never as a side effect the merchant did not see.
+        if ($state->paid && !$order->hasBeenPaid() && empty($args['confirm_paid'])) {
+            return PiskeeConnectorHelper::error('The status "' . $state->name . '" also marks this order as PAID' . ($state->invoice ? ' and creates its invoice' : '')
+                . ', and no payment has been recorded for it yet. Nothing was changed. Tell the merchant; if the payment was really received '
+                . '(or they accept it), call again with confirm_paid: true.');
+        }
         $history = new OrderHistory();
         $history->id_order = (int) $order->id;
         $history->id_employee = $c['id_employee'];
         $history->changeIdOrderState($idState, $order, true);
-        if (!$history->addWithemail(true)) {
+        if (!$history->add(true)) {
             return PiskeeConnectorHelper::error('PrestaShop refused the status change.');
         }
+        Order::cleanHistoryCache();
+        // The status is changed at this point: an e-mail that fails does not undo it.
+        $emailed = false;
+        $emailError = '';
+        if ($state->send_email) {
+            try {
+                $emailed = (bool) $history->sendEmail($order);
+            } catch (Throwable $e) {
+                $emailed = false;
+            }
+            if (!$emailed) {
+                $emailError = 'The status changed, but the e-mail to the customer could not be sent: check the shop e-mail settings (Advanced Parameters > E-mail).';
+            }
+        }
+
+        PiskeeConnectorHelper::recordChange('OrderStatus', (int) $order->id, (string) $order->reference, 'update',
+            ['status' => (string) $before->name, 'id_order_state' => (int) $before->id], ['status' => (string) $state->name, 'id_order_state' => $idState]);
 
         return PiskeeConnectorHelper::json([
             'id_order' => (int) $order->id,
             'reference' => (string) $order->reference,
             'updated' => true,
+            'marked_paid' => (bool) $state->paid,
             'from' => (string) $before->name,
             'to' => (string) $state->name,
-            'customer_emailed' => (bool) $state->send_email,
-        ]);
+            'customer_emailed' => $emailed,
+        ] + ($emailError !== '' ? ['warning' => $emailError] : []));
     }
 
     /**
@@ -257,6 +282,7 @@ class PiskeeConnectorOrders
         }
         $order->shipping_number = $number;
         $order->update();
+        PiskeeConnectorHelper::recordChange('TrackingNumber', (int) $orderCarrier->id, (string) $order->reference, 'update', ['tracking_number' => $before], ['tracking_number' => $number]);
 
         $emailed = false;
         if (!empty($args['notify_customer'])) {

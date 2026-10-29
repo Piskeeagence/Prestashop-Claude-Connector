@@ -640,12 +640,14 @@ class PiskeeConnectorTools
             'set_product_feature' => [
                 'group' => 'enrichment', 'scope' => 'catalog.write', 'permission' => ['edit', 'AdminProducts'],
                 'handler' => ['merch', 'setProductFeature'],
-                'description' => 'Sets one feature on a product, to a predefined value (id_feature_value) or to a free text for this product (custom_value). Replaces the previous value of that feature.',
+                'description' => 'Sets one feature on a product, to a predefined value (id_feature_value), to a predefined value found or created by its text (shared_value: use it when the same text goes on several products, so it is one value customers can filter on), '
+                    . 'or to a free text for this product only (custom_value). Replaces the previous value of that feature.',
                 'input' => ['properties' => [
                     'id_product' => $productId,
                     'id_feature' => self::id('From list_features.'),
                     'id_feature_value' => self::id('A predefined value from list_features.'),
-                    'custom_value' => self::translations(['value'], 'Free text per language.'),
+                    'shared_value' => self::translations(['value'], 'Text of a predefined value, per language: reused if it exists for this feature, created otherwise.'),
+                    'custom_value' => self::translations(['value'], 'Free text per language, for this product only.'),
                 ], 'required' => ['id_product', 'id_feature']],
             ],
             'list_brands' => [
@@ -728,6 +730,7 @@ class PiskeeConnectorTools
                     'date_to' => $date,
                     'from_quantity' => ['type' => 'integer', 'minimum' => 1],
                     'id_group' => ['type' => 'integer', 'minimum' => 0, 'description' => 'Customer group, 0 for everyone.'],
+                    'replace_existing' => ['type' => 'boolean', 'description' => 'Replace the promotion already set on this product for the same period. Without it, such a product is refused and the existing promotion is named.'],
                 ], 'required' => ['id_product', 'type', 'value']],
             ],
             'delete_promotion' => [
@@ -784,10 +787,12 @@ class PiskeeConnectorTools
                 'group' => 'orders', 'scope' => 'orders.write', 'permission' => ['edit', 'AdminOrders'],
                 'handler' => ['orders', 'setOrderStatus'],
                 'description' => 'Changes the status of one order, exactly as the back office does (history, stock, invoice and the customer email when the status sends one). '
-                    . 'Say which email the customer will receive before asking for approval.' . self::LOST_ANSWER,
+                    . 'Say which email the customer will receive before asking for approval. Some statuses (Shipped, Delivered...) also mark an unpaid order as paid and create its invoice: '
+                    . 'such a change is refused until the merchant confirms (confirm_paid).' . self::LOST_ANSWER,
                 'input' => ['properties' => [
                     'id_order' => self::id('Order id.'),
                     'id_order_state' => self::id('New status, from list_order_statuses.'),
+                    'confirm_paid' => ['type' => 'boolean', 'description' => 'true only when the merchant confirmed that this unpaid order may be marked as paid.'],
                 ], 'required' => ['id_order', 'id_order_state']],
             ],
             'set_tracking_number' => [

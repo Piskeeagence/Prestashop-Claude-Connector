@@ -74,11 +74,57 @@ class PiskeeConnectorCatalog
                 'categories' => (int) $db->getValue('SELECT COUNT(*) FROM `' . _DB_PREFIX_ . 'category_shop` WHERE `id_shop` = ' . $idShop),
                 'customers' => (int) $db->getValue('SELECT COUNT(*) FROM `' . _DB_PREFIX_ . 'customer` WHERE `deleted` = 0 AND `id_shop` = ' . $idShop),
             ],
+            'warnings' => $this->shopWarnings($idShop, $defaultLang),
             'connector' => [
                 'name' => 'Piskee for PrestaShop',
                 'support' => PiskeeConnectorBrand::helpLine(),
             ],
         ]);
+    }
+
+    /**
+     * Settings of the shop that hurt visitors or search engines, to mention to the merchant.
+     *
+     * @return array<int, string>
+     */
+    private function shopWarnings(int $idShop, int $idLang): array
+    {
+        $db = Db::getInstance();
+        $out = [];
+        if (defined('_PS_MODE_DEV_') && _PS_MODE_DEV_) {
+            $out[] = 'Debug mode is on: visitors may see technical messages, and old addresses can show a "This page has moved" page instead of a 301 redirect. '
+                . 'The merchant turns it off in Advanced Parameters > Performance.';
+        }
+        if (!(bool) Configuration::get('PS_SHOP_ENABLE', null, null, $idShop)) {
+            $out[] = 'The shop is in maintenance mode: visitors cannot see it (Shop Parameters > General > Maintenance).';
+        }
+        if (!(bool) Configuration::get('PS_REWRITING_SETTINGS', null, null, $idShop)) {
+            $out[] = 'Friendly URLs are off: addresses look like index.php?id_product=12 (Shop Parameters > Traffic & SEO).';
+        }
+        $spaces = $db->executeS('SELECT m.`page`, ml.`url_rewrite` FROM `' . _DB_PREFIX_ . 'meta` m INNER JOIN `' . _DB_PREFIX_ . 'meta_lang` ml ON ml.`id_meta` = m.`id_meta`'
+            . ' AND ml.`id_shop` = ' . $idShop . " WHERE ml.`url_rewrite` LIKE '% %' LIMIT 5") ?: [];
+        foreach ($spaces as $row) {
+            $out[] = 'The address of the page "' . $row['page'] . '" is "' . $row['url_rewrite'] . '" (with a space): fix it in Shop Parameters > Traffic & SEO.';
+        }
+        // Product slugs that do not follow the product names (often left in another language).
+        $rows = $db->executeS('SELECT pl.`name`, pl.`link_rewrite` FROM `' . _DB_PREFIX_ . 'product_lang` pl'
+            . ' INNER JOIN `' . _DB_PREFIX_ . 'product_shop` ps ON ps.`id_product` = pl.`id_product` AND ps.`id_shop` = ' . $idShop . ' AND ps.`active` = 1'
+            . ' WHERE pl.`id_lang` = ' . $idLang . ' AND pl.`id_shop` = ' . $idShop . ' LIMIT 200') ?: [];
+        $off = 0;
+        foreach ($rows as $row) {
+            $words = array_filter(explode('-', Tools::str2url((string) $row['name'])), static function ($w) {
+                return Tools::strlen($w) > 3;
+            });
+            if ($words !== [] && count(array_intersect($words, explode('-', (string) $row['link_rewrite']))) === 0) {
+                ++$off;
+            }
+        }
+        if ($rows !== [] && $off >= max(3, (int) ceil(count($rows) * 0.3))) {
+            $out[] = $off . ' of ' . count($rows) . ' product addresses share no word with the product name (often slugs left in another language). '
+                . 'Changing a slug changes the address: with Piskee Pro the old address is redirected automatically.';
+        }
+
+        return $out;
     }
 
     /**

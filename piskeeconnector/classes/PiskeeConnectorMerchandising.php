@@ -103,8 +103,37 @@ class PiskeeConnectorMerchandising
 
         $idValue = (int) ($args['id_feature_value'] ?? 0);
         $custom = $args['custom_value'] ?? null;
-        if (($idValue > 0) === ($custom !== null && $custom !== [])) {
-            return PiskeeConnectorHelper::error('Pass either id_feature_value (a predefined value) or custom_value (free text per language), not both.');
+        $shared = $args['shared_value'] ?? null;
+        $given = ($idValue > 0 ? 1 : 0) + ($custom !== null && $custom !== [] ? 1 : 0) + ($shared !== null && $shared !== [] ? 1 : 0);
+        if ($given !== 1) {
+            return PiskeeConnectorHelper::error('Pass one of id_feature_value (an existing predefined value), shared_value (a predefined value found or created by its text) or custom_value (free text for this product only).');
+        }
+        if ($given === 1 && $shared !== null && $shared !== []) {
+            // The same text on many products is one predefined value, reused: it can then be filtered on.
+            $translations = PiskeeConnectorHelper::translations($shared, $c['id_shop']);
+            if (!$translations['ok']) {
+                return PiskeeConnectorHelper::error($translations['error']);
+            }
+            $defaultLang = (int) Configuration::get('PS_LANG_DEFAULT');
+            $defaultText = trim((string) ($translations['map'][$defaultLang]['value'] ?? ''));
+            if ($defaultText === '') {
+                return PiskeeConnectorHelper::error('shared_value needs a "value" in the default language ("' . PiskeeConnectorHelper::iso($defaultLang) . '").');
+            }
+            $idValue = (int) Db::getInstance()->getValue('SELECT fv.`id_feature_value` FROM `' . _DB_PREFIX_ . 'feature_value` fv'
+                . ' INNER JOIN `' . _DB_PREFIX_ . 'feature_value_lang` fvl ON fvl.`id_feature_value` = fv.`id_feature_value` AND fvl.`id_lang` = ' . $defaultLang
+                . ' WHERE fv.`id_feature` = ' . $idFeature . ' AND fv.`custom` = 0 AND fvl.`value` = \'' . pSQL($defaultText) . '\'');
+            if ($idValue <= 0) {
+                $created = new FeatureValue();
+                $created->id_feature = $idFeature;
+                $created->custom = 0;
+                foreach (PiskeeConnectorHelper::languages($c['id_shop']) as $idLang) {
+                    $created->value[$idLang] = trim((string) ($translations['map'][$idLang]['value'] ?? $defaultText));
+                }
+                if (!$created->add()) {
+                    return PiskeeConnectorHelper::error('PrestaShop refused the value.');
+                }
+                $idValue = (int) $created->id;
+            }
         }
 
         $db = Db::getInstance();
@@ -245,6 +274,33 @@ class PiskeeConnectorMerchandising
             return PiskeeConnectorHelper::error('Customer group ' . $idGroup . ' not found in this shop.');
         }
 
+        // Another promotion already applying to the same product, combination, group and dates
+        // would compete with this one (PrestaShop keeps only one): never stack them silently.
+        $fromDate = $from !== '' ? $from . ' 00:00:00' : '0000-00-00 00:00:00';
+        $toDate = $to !== '' ? $to . ' 23:59:59' : '0000-00-00 00:00:00';
+        $quantity = max(1, (int) ($args['from_quantity'] ?? 1));
+        $conflicts = Db::getInstance()->executeS('SELECT `id_specific_price`, `reduction`, `reduction_type`, `from`, `to` FROM `' . _DB_PREFIX_ . 'specific_price`'
+            . ' WHERE `id_product` = ' . $idProduct . ' AND `id_cart` = 0 AND `id_customer` = 0 AND `id_shop` IN (0, ' . (int) $c['id_shop'] . ')'
+            . ' AND `id_product_attribute` IN (0, ' . $idCombination . ') AND `id_group` IN (0, ' . $idGroup . ') AND `from_quantity` = ' . $quantity
+            . " AND (`to` = '0000-00-00 00:00:00' OR `to` >= " . ($fromDate === '0000-00-00 00:00:00' ? 'NOW()' : "'" . pSQL($fromDate) . "'") . ')'
+            . ($toDate !== '0000-00-00 00:00:00' ? " AND (`from` = '0000-00-00 00:00:00' OR `from` <= '" . pSQL($toDate) . "')" : '')) ?: [];
+        if ($conflicts !== []) {
+            if (empty($args['replace_existing'])) {
+                $list = array_map(static function ($row) {
+                    return '#' . (int) $row['id_specific_price'] . ' (' . ($row['reduction_type'] === 'percentage' ? round((float) $row['reduction'] * 100, 2) . ' %' : (float) $row['reduction'] . ' off') . ')';
+                }, $conflicts);
+
+                return PiskeeConnectorHelper::error('This product already has a promotion for the same period: ' . implode(', ', $list)
+                    . '. Nothing was created. Ask the merchant: keep it, or replace it (call again with replace_existing: true, or delete_promotion).');
+            }
+            foreach ($conflicts as $row) {
+                $old = new SpecificPrice((int) $row['id_specific_price']);
+                if (Validate::isLoadedObject($old)) {
+                    $old->delete();
+                }
+            }
+        }
+
         $price = new SpecificPrice();
         $price->id_product = $idProduct;
         $price->id_product_attribute = $idCombination;
@@ -270,6 +326,7 @@ class PiskeeConnectorMerchandising
         return PiskeeConnectorHelper::json([
             'id_specific_price' => (int) $price->id,
             'created' => true,
+            'replaced' => array_map('intval', array_column($conflicts, 'id_specific_price')),
             'new_price_tax_incl' => PiskeeConnectorHelper::money((float) Product::getPriceStatic($idProduct, true, $price->id_product_attribute ?: null)),
         ]);
     }
@@ -319,10 +376,12 @@ class PiskeeConnectorMerchandising
             }
         }
 
+        $before = array_map('intval', array_column(Db::getInstance()->executeS('SELECT `id_product_2` FROM `' . _DB_PREFIX_ . 'accessory` WHERE `id_product_1` = ' . $idProduct, true, false) ?: [], 'id_product_2'));
         $product->deleteAccessories();
         if ($ids !== []) {
             $product->changeAccessories($ids);
         }
+        PiskeeConnectorHelper::recordChange('RelatedProducts', $idProduct, (string) Product::getProductName($idProduct), 'update', ['related' => $before], ['related' => $ids]);
 
         return PiskeeConnectorHelper::json(['id_product' => $idProduct, 'related_ids' => $ids]);
     }

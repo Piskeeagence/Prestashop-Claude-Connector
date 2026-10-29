@@ -187,7 +187,19 @@ class PiskeeConnectorLlms
             INNER JOIN `' . _DB_PREFIX_ . 'category_shop` cs ON cs.`id_category` = c.`id_category` AND cs.`id_shop` = ' . $idShop . '
             INNER JOIN `' . _DB_PREFIX_ . 'category_lang` cl ON cl.`id_category` = c.`id_category` AND cl.`id_lang` = ' . $idLang . ' AND cl.`id_shop` = ' . $idShop . '
             WHERE c.`active` = 1 AND (c.`id_parent` = ' . $homeCategory . ' OR c.`id_parent` IN (SELECT `id_category` FROM `' . _DB_PREFIX_ . 'category` WHERE `id_parent` = ' . $homeCategory . ' AND `active` = 1))
-            ORDER BY cs.`position` ASC LIMIT 120', true, false) ?: [];
+            ORDER BY c.`nleft` ASC LIMIT 120', true, false) ?: [];
+        // Tree order: each subcategory right under its own parent.
+        $byParent = [];
+        foreach ($categories as $row) {
+            $byParent[(int) $row['id_parent']][] = $row;
+        }
+        $categories = [];
+        foreach ($byParent[$homeCategory] ?? [] as $top) {
+            $categories[] = $top;
+            foreach ($byParent[(int) $top['id_category']] ?? [] as $child) {
+                $categories[] = $child;
+            }
+        }
         if ($categories !== []) {
             $out .= "## Categories\n\n";
             foreach ($categories as $row) {
